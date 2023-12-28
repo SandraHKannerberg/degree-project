@@ -1,4 +1,4 @@
-// Request to get the whole productlist
+// Request to get all products
 GET http://localhost:3000/api/products
 
 ###
@@ -19,11 +19,22 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "YOGA TESTAR CATEGORY",
-  "description": "Add with category",
-   "price": 599,
-  "image": "https://images.pexels.com/photos/3927387/pexels-photo-3927387.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  "inStock": 20,
-  "categories": ["658d55f76bba5c7dbc0e6bbe"],
-  "deleted":false
+    "title": "NATURAL PRACTICE MAT, 6MM - LILAC",
+    "description": [
+    {
+      "text": "Premium product! Natural yoga mat with great grip and cushioning that is made from natural rubber, is Oeko-tex certified and is biodegradable and recyclable.",
+      "specifications": ["2.4kg", "183cm x 61cm x 0.6cm"],
+      "careAdvice": "The easiest way to clean the carpet is with a damp cloth. Make sure the carpet is dry before rolling it up."
+    }
+  ],
+    "price": [
+    {
+      "unit_amount": 999,
+      "currency": "SEK"
+    }
+  ],
+    "image": "https://www.yogagrossisten.se/images/2.189404/yogamatta-natural-practice-mat-6-mm-shadow-lilac-yogiraj.jpeg",
+    "inStock": 10,
+    "categories": ["658d55f76bba5c7dbc0e6bbe"],
+    "deleted": false
 }
