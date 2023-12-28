@@ -17,6 +17,14 @@ async function getProduct(req, res) {
   res.status(200).json(product);
 }
 
+// GET products by category
+async function getProductsByCategory(req, res) {
+  const products = await ProductModel.find({
+    categories: { $in: [req.params.id] },
+  });
+  res.status(200).json(products);
+}
+
 // Add a new product
 async function addProduct(req, res, next) {
   try {
@@ -31,5 +39,6 @@ async function addProduct(req, res, next) {
 module.exports = {
   getAllProducts,
   getProduct,
+  getProductsByCategory,
   addProduct,
 };

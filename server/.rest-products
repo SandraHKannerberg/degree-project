@@ -9,6 +9,13 @@ Content-Type: application/json
 
 ###
 
+// Request to get products by category
+GET http://localhost:3000/api/products/byCategory/658d55f76bba5c7dbc0e6bbe
+Content-Type: application/json
+
+###
+
+
 // Request to add a new product
 POST http://localhost:3000/api/products
 Content-Type: application/json
