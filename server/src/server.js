@@ -2,13 +2,17 @@ const mongoose = require("mongoose");
 const { app } = require("./app");
 const dotenv = require("dotenv").config();
 
+const PORT = process.env.PORT;
+const databaseURL = process.env.MONGODB_CONNECTION_STRING;
+
 main().catch((err) => console.log(err));
 
+//Connect to server and database
 async function main() {
   console.log("Connect to DB & start server");
   mongoose.set("strictQuery", true);
-  await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
-  app.listen(process.env.PORT || 3001, () =>
-    console.log("Server is up and running on Localhost port:", process.env.PORT)
+  await mongoose.connect(databaseURL);
+  app.listen(PORT || 3001, () =>
+    console.log(`Server is up and running on http://localhost:${PORT}`)
   );
 }
