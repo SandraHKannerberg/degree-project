@@ -1,0 +1,14 @@
+GET http://localhost:3000/api/products
+
+###
+
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "title": "YOGA TEST",
+  "price": 399,
+  "description": "Testing",
+  "image": "https://images.pexels.com/photos/3927387/pexels-photo-3927387.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  "inStock": 30
+}
