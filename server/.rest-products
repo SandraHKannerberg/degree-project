@@ -3,13 +3,8 @@ GET http://localhost:3000/api/products
 
 ###
 
-// Request to get all categories
-GET http://localhost:3000/api/categories
-
-###
-
-// Request to get a specific category by id
-GET http://localhost:3000/api/categories/658d55f76bba5c7dbc0e6bbe
+// Request to get a specific product by id
+GET http://localhost:3000/api/products/658d700621a2186757280e60
 Content-Type: application/json
 
 ###

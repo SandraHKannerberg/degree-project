@@ -8,6 +8,16 @@ async function getAllProducts(req, res) {
   res.status(200).json(products);
 }
 
+//GET product by id
+async function getProduct(req, res) {
+  const product = await ProductModel.findOne({
+    _id: req.params.id,
+    deleted: false,
+  });
+  res.status(200).json(product);
+}
+
+// Add a new product
 async function addProduct(req, res, next) {
   try {
     const product = new ProductModel(req.body);
@@ -20,5 +30,6 @@ async function addProduct(req, res, next) {
 
 module.exports = {
   getAllProducts,
+  getProduct,
   addProduct,
 };
