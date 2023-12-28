@@ -28,6 +28,7 @@ async function getProductsByCategory(req, res) {
 // Add a new product
 async function addProduct(req, res, next) {
   try {
+    console.log("Incoming JSON:", req.body);
     const product = new ProductModel(req.body);
     await product.save();
     res.status(201).json(product);

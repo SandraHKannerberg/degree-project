@@ -6,7 +6,8 @@ const ProductSchema = new Schema({
   description: [
     {
       text: { type: String, required: true },
-      specifications: { type: [String], required: false },
+      brand: { type: String, required: false },
+      features: { type: [String], required: false },
       careAdvice: { type: String, required: false },
     },
   ],
@@ -30,6 +31,16 @@ const ProductModel = models.product || model("product", ProductSchema);
 
 const ProductCreateValidationSchema = Joi.object({
   title: Joi.string().strict().required(),
+  description: Joi.array()
+    .items(
+      Joi.object({
+        text: Joi.string().strict().required(),
+        brand: Joi.string().strict(),
+        features: Joi.array().items(Joi.string().strict()),
+        careAdvice: Joi.string().strict(),
+      })
+    )
+    .required(),
   price: Joi.array()
     .items(
       Joi.object({
@@ -41,15 +52,6 @@ const ProductCreateValidationSchema = Joi.object({
   image: Joi.string().uri().allow("image/png", "image/jpeg").required(),
   inStock: Joi.number().strict().required(),
   categories: Joi.array().min(1),
-  description: Joi.array()
-    .items(
-      Joi.object({
-        text: Joi.string().strict().required(),
-        specifications: Joi.array().items(Joi.string().strict()),
-        cleaning: Joi.string().strict(),
-      })
-    )
-    .required(),
 });
 
 const ProductUpdateValidationSchema = ProductCreateValidationSchema.keys({
