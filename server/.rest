@@ -1,0 +1,28 @@
+// Create a new user
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "firstName": "User",
+  "lastName": "Usersson",
+  "email": "user@mail.com",
+  "password": "user123",
+  "isAdmin": false
+}
+
+###
+
+// Log in here
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "user@mail.com",
+  "password": "user123"
+}
+
+###
+
+// Log out here
+POST http://localhost:3000/api/users/logout
+Content-Type: application/json
