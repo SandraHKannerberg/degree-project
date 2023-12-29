@@ -41,3 +41,32 @@ Content-Type: application/json
   "categories": ["658d59ac6bba5c7dbc0e6bbf"],
   "deleted": false
 }
+
+###
+
+// Request to update a product
+PUT http://localhost:3000/api/products/658d6e9321a2186757280e5c
+Content-Type: application/json
+
+{
+  "_id": "658d6e9321a2186757280e5c",
+  "title": "PREMIUM WOOL MAT, 2CM - NATURAL",
+  "description": [
+    {
+      "text": "Say hello to a really cozy yoga buddy. Yoga mat in 100% Merino wool. You can advantageously use a wool yoga mat for a nice moment for all calmer forms of yoga or meditation.",
+      "brand": "Yogiraj",
+      "features": ["1.95kg", "200cm x 75cm x 2cm"],
+      "careAdvice": "The wool in this product is certified by Woolmark, which recommends that the wool is primarily wetted to keep it fresh."
+    }
+  ],
+  "price": [
+    {
+      "unit_amount": 1199,
+      "currency": "SEK"
+    }
+  ],
+  "image": "https://www.yogagrossisten.se/images/2.189669/yogamatta-ull-premium-wool-mat-natural-75-x-200-cm-yogiraj.jpeg",
+  "inStock": 20,
+  "categories": ["658d55f76bba5c7dbc0e6bbe"],
+  "deleted": false
+}

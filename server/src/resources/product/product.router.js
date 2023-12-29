@@ -4,9 +4,11 @@ const {
   getProduct,
   getProductsByCategory,
   addProduct,
+  updateProduct,
+  deleteProduct,
 } = require("./product.controller");
 
-const { exists } = require("../middlewares");
+const { exists, validate } = require("../middlewares");
 
 const {
   ProductCreateValidationSchema,
@@ -20,6 +22,12 @@ const productRouter = Router()
   .get("/products", getAllProducts)
   .get("/products/:id", exists(ProductModel), getProduct)
   .get("/products/byCategory/:id", exists(CategoryModel), getProductsByCategory)
-  .post("/products", addProduct);
+  .post("/products", addProduct)
+  .put(
+    "/products/:id",
+    exists(ProductModel),
+    validate(ProductUpdateValidationSchema),
+    updateProduct
+  );
 
 module.exports = { productRouter };

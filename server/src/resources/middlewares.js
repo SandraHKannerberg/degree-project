@@ -1,3 +1,13 @@
+/** Validate request body based on a joi schema */
+function validate(joiSchema) {
+  return (req, res, next) => {
+    const validation = joiSchema.validate(req.body);
+    if (!validation.error) return next();
+    res.status(400).json(validation.error.message);
+  };
+}
+
+/** Check existence */
 function exists(Model) {
   return async (req, res, next) => {
     const document = await Model.findById(req.params.id);
@@ -8,4 +18,5 @@ function exists(Model) {
 
 module.exports = {
   exists,
+  validate,
 };

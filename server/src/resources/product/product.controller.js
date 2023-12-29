@@ -8,7 +8,7 @@ async function getAllProducts(req, res) {
   res.status(200).json(products);
 }
 
-//GET product by id
+//GET a single product by id
 async function getProduct(req, res) {
   const product = await ProductModel.findOne({
     _id: req.params.id,
@@ -37,9 +37,32 @@ async function addProduct(req, res, next) {
   }
 }
 
+// Update a product
+async function updateProduct(req, res) {
+  if (req.body._id !== req.params.id) {
+    return res.status(400).json("Body and param id are not the same");
+  }
+
+  const product = await ProductModel.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json(product);
+}
+
+// Delete a product
+async function deleteProduct(req, res) {
+  await ProductModel.findOneAndDelete({ _id: req.params.id });
+  res.status(204).json(null);
+}
+
 module.exports = {
   getAllProducts,
   getProduct,
   getProductsByCategory,
   addProduct,
+  updateProduct,
+  deleteProduct,
 };
