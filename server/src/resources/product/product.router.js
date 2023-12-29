@@ -8,7 +8,7 @@ const {
   deleteProduct,
 } = require("./product.controller");
 
-const { exists, validate } = require("../middlewares");
+const { adminOnly, auth, exists, validate } = require("../middlewares");
 
 const {
   ProductCreateValidationSchema,
@@ -22,13 +22,27 @@ const productRouter = Router()
   .get("/products", getAllProducts)
   .get("/products/:id", exists(ProductModel), getProduct)
   .get("/products/byCategory/:id", exists(CategoryModel), getProductsByCategory)
-  .post("/products", addProduct)
+  .post(
+    "/products",
+    auth,
+    adminOnly,
+    validate(ProductCreateValidationSchema),
+    addProduct
+  )
   .put(
     "/products/:id",
+    auth,
+    adminOnly,
     exists(ProductModel),
     validate(ProductUpdateValidationSchema),
     updateProduct
   )
-  .delete("/products/:id", exists(ProductModel), deleteProduct);
+  .delete(
+    "/products/:id",
+    auth,
+    adminOnly,
+    exists(ProductModel),
+    deleteProduct
+  );
 
 module.exports = { productRouter };

@@ -1,3 +1,5 @@
+//** TESTING PRODUCTS ENDPOINTS */
+
 // Request to get all products
 GET http://localhost:3000/api/products
 
@@ -21,13 +23,13 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "SCENTED CANDLE - LAVENDER",
+  "title": "TESTAR ADMIN AUTH",
   "description": [
     {
-      "text": "A wonderful scented candle that also provides aromatherapy with its lavender essential oil. Relax, meditate or just light this scented candle when you want to feel calm and well-being. The scent of lavender is medium in its intensity and spreads pleasantly in the room.",
-      "brand": "Yogiraj",
-      "features": ["200g", "Medium intensity", "Burn time 40-60 hours", "Hand poured in Sweden"],
-      "careAdvice": "Allow the candle to burn out at the edge the first time to extend its life."
+      "text": "Testing",
+      "brand": "Admin",
+      "features": ["Test"],
+      "careAdvice": "Test"
     }
   ],
   "price": [
@@ -37,9 +39,7 @@ Content-Type: application/json
     }
   ],
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
-  "inStock": 30,
-  "categories": ["658d59ac6bba5c7dbc0e6bbf"],
-  "deleted": false
+  "inStock": 30
 }
 
 ###
@@ -66,7 +66,7 @@ Content-Type: application/json
     }
   ],
   "image": "https://www.yogagrossisten.se/images/2.190434/yogamatta-natural-practice-travel-mat-shadow-lilac-yogiraj.jpeg",
-  "inStock": 10,
+  "inStock": 12,
   "categories": ["658d55f76bba5c7dbc0e6bbe"],
   "deleted": false
 }
@@ -75,5 +75,44 @@ Content-Type: application/json
 ###
 
 // Request to delete a product
-DELETE http://localhost:3000/api/products/658d72d321a2186757280e6c
+DELETE http://localhost:3000/api/products/658e91fa4f998436b693e323
+Content-Type: application/json
+
+###
+
+//** TESTING USERS ENDPOINTS */
+
+// Create a new user
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "firstName": "User",
+  "lastName": "Usersson",
+  "email": "user@mail.com",
+  "password": "user123",
+  "isAdmin": false
+}
+
+###
+
+// Log in here
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "password": "admin123"
+}
+
+###
+
+// Log out here
+POST http://localhost:3000/api/users/logout
+Content-Type: application/json
+
+###
+
+// Check auth
+GET http://localhost:3000/api/users/authorize
 Content-Type: application/json
