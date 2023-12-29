@@ -28,6 +28,7 @@ const productRouter = Router()
     exists(ProductModel),
     validate(ProductUpdateValidationSchema),
     updateProduct
-  );
+  )
+  .delete("/products/:id", exists(ProductModel), deleteProduct);
 
 module.exports = { productRouter };

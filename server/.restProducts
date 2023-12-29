@@ -45,28 +45,35 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/658d6e9321a2186757280e5c
+PUT http://localhost:3000/api/products/658d71c621a2186757280e68
 Content-Type: application/json
 
 {
-  "_id": "658d6e9321a2186757280e5c",
-  "title": "PREMIUM WOOL MAT, 2CM - NATURAL",
+  "_id": "658d71c621a2186757280e68",
+  "title": "PRACTICE TRAVEL MAT, GREY",
   "description": [
     {
-      "text": "Say hello to a really cozy yoga buddy. Yoga mat in 100% Merino wool. You can advantageously use a wool yoga mat for a nice moment for all calmer forms of yoga or meditation.",
+      "text": "The Practice travel mat has great grip and is only 1.4 mm thick, making it perfect for traveling. The mat is foldable in the suitcase but for longer storage, we recommend that it is stored rolled up.",
       "brand": "Yogiraj",
-      "features": ["1.95kg", "200cm x 75cm x 2cm"],
-      "careAdvice": "The wool in this product is certified by Woolmark, which recommends that the wool is primarily wetted to keep it fresh."
+      "features": ["1kg", "183cm x 61cm x 0.14cm"],
+      "careAdvice": "The easiest way to clean the carpet is with a damp cloth. Make sure the carpet is dry before rolling it up."
     }
   ],
   "price": [
     {
-      "unit_amount": 1199,
+      "unit_amount": 499,
       "currency": "SEK"
     }
   ],
-  "image": "https://www.yogagrossisten.se/images/2.189669/yogamatta-ull-premium-wool-mat-natural-75-x-200-cm-yogiraj.jpeg",
-  "inStock": 20,
+  "image": "https://www.yogagrossisten.se/images/2.190434/yogamatta-natural-practice-travel-mat-shadow-lilac-yogiraj.jpeg",
+  "inStock": 10,
   "categories": ["658d55f76bba5c7dbc0e6bbe"],
   "deleted": false
 }
+
+
+###
+
+// Request to delete a product
+DELETE http://localhost:3000/api/products/658d72d321a2186757280e6c
+Content-Type: application/json
