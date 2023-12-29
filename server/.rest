@@ -110,3 +110,9 @@ Content-Type: application/json
 // Log out here
 POST http://localhost:3000/api/users/logout
 Content-Type: application/json
+
+###
+
+// Check auth
+GET http://localhost:3000/api/users/authorize
+Content-Type: application/json
