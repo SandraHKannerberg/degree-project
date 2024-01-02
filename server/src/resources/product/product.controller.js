@@ -1,4 +1,8 @@
 const { ProductModel } = require("./product.model");
+const { initStripe } = require("../../stripe");
+const stripe = initStripe();
+
+// *********** ENDPOINTS PRODUCTS *********** //
 
 // GET all existing products
 async function getAllProducts(req, res) {
@@ -31,6 +35,7 @@ async function addProduct(req, res, next) {
     console.log("Incoming JSON:", req.body);
     const product = new ProductModel(req.body);
     await product.save();
+    await createProductInStripe(product);
     res.status(201).json(product);
   } catch (err) {
     next(err);
@@ -56,6 +61,38 @@ async function updateProduct(req, res) {
 async function deleteProduct(req, res) {
   await ProductModel.findOneAndDelete({ _id: req.params.id });
   res.status(204).json(null);
+}
+
+// *********** SYNC TO STRIPE *********** //
+
+// Create a product in Stripe and update MongoDB database with Stripe ID
+async function createProductInStripe(product) {
+  try {
+    // Create the product in Stripe and connect with the price
+    const stripeProduct = await stripe.products.create({
+      name: product.title,
+      description: product.description,
+      images: [product.image],
+      metadata: { mongoDBId: product._id.toString() },
+    });
+
+    // Create the price in Stripe
+    const price = await stripe.prices.create({
+      unit_amount: product.price * 100,
+      currency: "sek",
+      product: stripeProduct.id,
+    });
+
+    // Update the database with Stripe ID
+    await ProductModel.findByIdAndUpdate(product._id, {
+      stripeProductId: price.product,
+    });
+
+    return stripeProduct;
+  } catch (error) {
+    console.error("Error occurred - can't sync product with Stripe:", error);
+    throw error;
+  }
 }
 
 module.exports = {

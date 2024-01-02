@@ -23,21 +23,12 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TESTAR ADMIN AUTH",
-  "description": [
-    {
-      "text": "Testing",
-      "brand": "Admin",
-      "features": ["Test"],
-      "careAdvice": "Test"
-    }
-  ],
-  "price": [
-    {
-      "unit_amount": 349,
-      "currency": "SEK"
-    }
-  ],
+  "title": "TEST STRIPE PRICE",
+  "brand": "New Product in Stripe",
+  "description": "Testing with price",
+  "features": ["Test"],
+  "careAdvice": "Test",
+  "price": 349,
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 30
 }
@@ -45,29 +36,19 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/658d71c621a2186757280e68
+PUT http://localhost:3000/api/products/658ebb2a531bdff130f10d1e
 Content-Type: application/json
 
 {
-  "_id": "658d71c621a2186757280e68",
-  "title": "PRACTICE TRAVEL MAT, GREY",
-  "description": [
-    {
-      "text": "The Practice travel mat has great grip and is only 1.4 mm thick, making it perfect for traveling. The mat is foldable in the suitcase but for longer storage, we recommend that it is stored rolled up.",
-      "brand": "Yogiraj",
-      "features": ["1kg", "183cm x 61cm x 0.14cm"],
-      "careAdvice": "The easiest way to clean the carpet is with a damp cloth. Make sure the carpet is dry before rolling it up."
-    }
-  ],
-  "price": [
-    {
-      "unit_amount": 499,
-      "currency": "SEK"
-    }
-  ],
-  "image": "https://www.yogagrossisten.se/images/2.190434/yogamatta-natural-practice-travel-mat-shadow-lilac-yogiraj.jpeg",
-  "inStock": 12,
-  "categories": ["658d55f76bba5c7dbc0e6bbe"],
+  "_id": "658ebb2a531bdff130f10d1e",
+  "title": "BIG YOGA KIT DELUXE",
+  "brand": "Yogiraj",
+  "description": "Everything you need for at relaxing moment and to take your yoga to the next level. Yoga Blankets, Yoga Bolster, Yoga Blocks, Eye Pillows and Yoga Belt Standard.",
+  "features": ["Yoga Blankets (2pcs)", "Yoga Bolster", "Yoga Blocks Cork (2pcs)", "Eye Pillows (3pcs)", "Yoga Belt Standard"],
+  "price": 3199,
+  "image": "https://www.yogagrossisten.se/images/2.163078/yoga-kit-restorative-kit-deluxe-yogiraj.jpeg",
+  "inStock": 10,
+  "categories": ["658d5b0f6bba5c7dbc0e6bc2"],
   "deleted": false
 }
 
