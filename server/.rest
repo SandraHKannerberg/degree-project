@@ -36,20 +36,19 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/658ebb2a531bdff130f10d1e
+PUT http://localhost:3000/api/products/659422a98bbbef6051a4263d
 Content-Type: application/json
 
 {
-  "_id": "658ebb2a531bdff130f10d1e",
-  "title": "BIG YOGA KIT DELUXE",
-  "brand": "Yogiraj",
-  "description": "Everything you need for at relaxing moment and to take your yoga to the next level. Yoga Blankets, Yoga Bolster, Yoga Blocks, Eye Pillows and Yoga Belt Standard.",
-  "features": ["Yoga Blankets (2pcs)", "Yoga Bolster", "Yoga Blocks Cork (2pcs)", "Eye Pillows (3pcs)", "Yoga Belt Standard"],
-  "price": 3199,
-  "image": "https://www.yogagrossisten.se/images/2.163078/yoga-kit-restorative-kit-deluxe-yogiraj.jpeg",
+  "_id": "659422a98bbbef6051a4263d",
+  "title": "TEST UPDATE",
+  "brand": "Update in Stripe",
+  "description": "Update in Stripe",
+  "price": 499,
+  "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 10,
-  "categories": ["658d5b0f6bba5c7dbc0e6bc2"],
-  "deleted": false
+  "deleted": false,
+  "stripeProductId": "prod_PIkoMn9UPeeJFi"
 }
 
 

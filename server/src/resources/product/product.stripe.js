@@ -34,6 +34,49 @@ async function createProductInStripe(product) {
   }
 }
 
+// Sync update with Stripe
+async function updateProductInStripe(product, newPrice) {
+  try {
+    // Update productinformation Stripe
+    const stripeProduct = await stripe.products.update(
+      product.stripeProductId,
+      {
+        name: product.title,
+        description: product.description,
+        images: [product.image],
+        metadata: { mongoDBId: product._id.toString() },
+      }
+    );
+
+    // Update the price in Stripe if there is new price information
+    if (newPrice) {
+      let priceIdToUpdate = null;
+      // Check if product have a price ID. If yes - update
+      if (product.price && product.price.stripePriceId) {
+        priceIdToUpdate = product.price.stripePriceId;
+      } else {
+        // If no - create a new price and connect to the product
+        const price = await stripe.prices.create({
+          unit_amount: newPrice * 100,
+          currency: "sek",
+          product: product.stripeProductId,
+        });
+
+        // Save price ID
+        priceIdToUpdate = price.id;
+        await product.save();
+      }
+    }
+
+    console.log("Product updated in Stripe:", stripeProduct);
+    return stripeProduct;
+  } catch (error) {
+    console.error("Error updating product in Stripe:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   createProductInStripe,
+  updateProductInStripe,
 };

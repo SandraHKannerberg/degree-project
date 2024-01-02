@@ -1,5 +1,8 @@
 const { ProductModel } = require("./product.model");
-const { createProductInStripe } = require("./product.stripe");
+const {
+  createProductInStripe,
+  updateProductInStripe,
+} = require("./product.stripe");
 
 // *********** ENDPOINTS PRODUCTS *********** //
 
@@ -63,13 +66,15 @@ async function updateProduct(req, res) {
     return res.status(400).json("Body and param id are not the same");
   }
 
-  const product = await ProductModel.findByIdAndUpdate(
+  const updateProduct = await ProductModel.findByIdAndUpdate(
     req.params.id,
     req.body,
     { new: true }
   );
 
-  res.status(200).json(product);
+  await updateProductInStripe(updateProduct, req.body.price);
+
+  res.status(200).json(updateProduct);
 }
 
 // Delete a product
