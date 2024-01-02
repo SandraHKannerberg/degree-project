@@ -23,7 +23,7 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TEST STRIPE PRICE",
+  "title": "TEST STRIPE PRICE version 3",
   "brand": "New Product in Stripe",
   "description": "Testing with price",
   "features": ["Test"],

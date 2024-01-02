@@ -34,8 +34,24 @@ async function addProduct(req, res, next) {
   try {
     console.log("Incoming JSON:", req.body);
     const product = new ProductModel(req.body);
+
+    let stripeProduct;
+
+    // Create product Stripe
+    try {
+      stripeProduct = await createProductInStripe(product);
+    } catch (stripeError) {
+      throw new Error(
+        `Failed to create product in Stripe: ${stripeError.message}`
+      );
+    }
+
+    // Sync with Stripe and save Stripe ID in MongoDB
+    product.stripeProductId = stripeProduct.id;
+
+    // Save product in Mongo DB
     await product.save();
-    await createProductInStripe(product);
+
     res.status(201).json(product);
   } catch (err) {
     next(err);
@@ -63,7 +79,7 @@ async function deleteProduct(req, res) {
   res.status(204).json(null);
 }
 
-// *********** SYNC TO STRIPE *********** //
+// *********** STRIPE FUNCTIONS *********** //
 
 // Create a product in Stripe and update MongoDB database with Stripe ID
 async function createProductInStripe(product) {
@@ -76,7 +92,7 @@ async function createProductInStripe(product) {
       metadata: { mongoDBId: product._id.toString() },
     });
 
-    // Create the price in Stripe
+    // // Create the price in Stripe
     const price = await stripe.prices.create({
       unit_amount: product.price * 100,
       currency: "sek",
