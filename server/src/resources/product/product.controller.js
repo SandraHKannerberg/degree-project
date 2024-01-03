@@ -2,6 +2,7 @@ const { ProductModel } = require("./product.model");
 const {
   createProductInStripe,
   updateProductInStripe,
+  syncProductListWithStripe,
 } = require("./product.stripe");
 
 // *********** ENDPOINTS PRODUCTS *********** //
@@ -39,7 +40,7 @@ async function addProduct(req, res, next) {
 
     let stripeProduct;
 
-    // Create product Stripe
+    // Create product in Stripe
     try {
       stripeProduct = await createProductInStripe(product);
     } catch (stripeError) {
@@ -51,7 +52,7 @@ async function addProduct(req, res, next) {
     // Sync with Stripe and save Stripe ID in MongoDB
     product.stripeProductId = stripeProduct.id;
 
-    // Save product in Mongo DB
+    // Save product in MongoDB
     await product.save();
 
     res.status(201).json(product);
@@ -77,10 +78,27 @@ async function updateProduct(req, res) {
   res.status(200).json(updateProduct);
 }
 
+// // Delete a product
+// async function deleteProduct(req, res) {
+//   await ProductModel.findOneAndDelete({ _id: req.params.id });
+//   res.status(204).json(null);
+// }
+
 // Delete a product
 async function deleteProduct(req, res) {
-  await ProductModel.findOneAndDelete({ _id: req.params.id });
-  res.status(204).json(null);
+  try {
+    const deletedProduct = await ProductModel.findOneAndDelete({
+      _id: req.params.id,
+    });
+
+    // Update ProductList in Stripe
+    await syncProductListWithStripe([deletedProduct]);
+
+    res.status(204).json(null);
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
 
 module.exports = {

@@ -55,7 +55,7 @@ Content-Type: application/json
 ###
 
 // Request to delete a product
-DELETE http://localhost:3000/api/products/658e91fa4f998436b693e323
+DELETE http://localhost:3000/api/products/659422a98bbbef6051a4263d
 Content-Type: application/json
 
 ###
