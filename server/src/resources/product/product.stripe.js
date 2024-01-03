@@ -5,7 +5,8 @@ const stripe = initStripe();
 // *********** STRIPE FUNCTIONS *********** //
 
 // Sync Productlist from database MongoDB with Stripe
-// Runs just once in server.js
+// Runs once in server.js to add existing products in database to Stripe for the first time
+// or if products manually adds in MongoDB and not through restAPI for products
 async function syncProductListWithStripe() {
   try {
     // Get data from MongoDB
@@ -19,7 +20,7 @@ async function syncProductListWithStripe() {
           name: product.title,
           description: product.description,
           images: [product.image],
-          metadata: { mongoDBId: product._id.toString() },
+          metadata: { mongoDBId: product._id.toString() }, // ADD PRICE AS METADATA??????????
         });
 
         console.log(`Successfully created product in Stripe: ${product.title}`);
@@ -66,20 +67,26 @@ async function createProductInStripe(product) {
       name: product.title,
       description: product.description,
       images: [product.image],
-      metadata: { mongoDBId: product._id.toString() },
+      metadata: { mongoDBId: product._id.toString(), price: product.price },
     });
 
     // Create the price in Stripe
-    const price = await stripe.prices.create({
-      unit_amount: product.price * 100,
-      currency: "sek",
-      product: stripeProduct.id,
-    });
+    // const price = await stripe.prices.create({
+    //   unit_amount: product.price * 100,
+    //   currency: "sek",
+    //   product: stripeProduct.id,
+    // });
 
     // Update the database with Stripe ID
-    await ProductModel.findByIdAndUpdate(product._id, {
-      stripeProductId: price.product,
-    });
+    // await ProductModel.findByIdAndUpdate(product._id, {
+    //   stripeProductId: price.product,
+    // });
+
+    // Update products in MongoDB with StripeID
+    await ProductModel.updateOne(
+      { _id: product._id },
+      { $set: { stripeId: stripeProduct.id } }
+    );
 
     return stripeProduct;
   } catch (error) {
@@ -89,41 +96,20 @@ async function createProductInStripe(product) {
 }
 
 // Sync updateProduct with Stripe
-async function updateProductInStripe(product, newPrice) {
+async function syncUpdateProductWithStripe(product) {
   try {
-    // Update productinformation Stripe
-    const stripeProduct = await stripe.products.update(
+    // Update product information in Stripe
+    const updatedStripeProduct = await stripe.products.update(
       product.stripeProductId,
       {
         name: product.title,
         description: product.description,
         images: [product.image],
-        metadata: { mongoDBId: product._id.toString() },
+        metadata: { mongoDBId: product._id.toString(), price: product.price },
       }
     );
 
-    // Update the price in Stripe if there is new price information
-    if (newPrice) {
-      let priceIdToUpdate = null;
-      // Check if product have a price ID. If yes - update
-      if (product.price && product.price.stripePriceId) {
-        priceIdToUpdate = product.price.stripePriceId;
-      } else {
-        // If no - create a new price and connect to the product
-        const price = await stripe.prices.create({
-          unit_amount: newPrice * 100,
-          currency: "sek",
-          product: product.stripeProductId,
-        });
-
-        // Save price ID
-        priceIdToUpdate = price.id;
-        await product.save();
-      }
-    }
-
-    console.log("Product updated in Stripe:", stripeProduct);
-    return stripeProduct;
+    console.log("Product updated in Stripe:", updatedStripeProduct);
   } catch (error) {
     console.error("Error updating product in Stripe:", error);
     throw error;
@@ -132,6 +118,6 @@ async function updateProductInStripe(product, newPrice) {
 
 module.exports = {
   createProductInStripe,
-  updateProductInStripe,
+  syncUpdateProductWithStripe,
   syncProductListWithStripe,
 };

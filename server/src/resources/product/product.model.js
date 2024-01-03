@@ -36,7 +36,6 @@ const ProductCreateValidationSchema = Joi.object({
 const ProductUpdateValidationSchema = ProductCreateValidationSchema.keys({
   _id: Joi.string().strict().required(),
   deleted: Joi.boolean().strict().required(),
-  stripeProductId: Joi.string().strict().required(),
 });
 
 module.exports = {
