@@ -23,7 +23,7 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TEST PRODUCT TO UPDATE",
+  "title": "TEST PRODUCT FOR DELETE/archive",
   "brand": "New Test Product.",
   "description": "Testing product, price update in Stripe",
   "features": ["Test"],
@@ -54,7 +54,7 @@ Content-Type: application/json
 ###
 
 // Request to delete a product
-DELETE http://localhost:3000/api/products/659593483a0d81d2544f9ef7
+DELETE http://localhost:3000/api/products/6595bdaaadef1e7b2bd54a1f
 Content-Type: application/json
 
 ###

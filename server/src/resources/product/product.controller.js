@@ -11,8 +11,6 @@ const stripe = initStripe();
 // GET all existing products
 async function getAllProducts(req, res) {
   const products = await ProductModel.find({ deleted: false });
-
-  console.log("Productlist: ", products);
   res.status(200).json(products);
 }
 
@@ -119,42 +117,27 @@ async function updateProduct(req, res) {
 
 async function deleteProduct(req, res) {
   try {
+    //Product to delete
     const productId = req.params.id;
 
+    //Check if product exists
     const existingProduct = await ProductModel.findById(productId);
 
     if (!existingProduct) {
       throw new Error("No product found.");
     }
 
-    // Fetch prices related to the product in Stripe
-    const prices = await stripe.prices.list({
-      product: existingProduct.stripeProductId,
+    //Archive prosuct in Stripe
+    await stripe.products.update(existingProduct.stripeProductId, {
+      active: false,
     });
+    console.log("Produkt är arkiverad i Stripe");
 
-    // Inactive all prices
-    for (const price of prices.data) {
-      await stripe.prices.update(price.id, {
-        active: false,
-      });
-      console.log(`Price ${price.id} is inactive in Stripe`);
-    }
+    // Delete from MongoDB
+    await ProductModel.findByIdAndDelete({ _id: req.params.id });
+    res.status(204).json(null);
 
-    // Check if prices are inactive
-    const allPricesInactive = prices.data.every((price) => !price.active);
-
-    if (allPricesInactive) {
-      // Delete from Stripe
-      await stripe.products.del(existingProduct.stripeProductId);
-      console.log("Product is deleted from Stripe");
-
-      // Delete from MongoDB
-      await ProductModel.findByIdAndDelete({ _id: req.params.id });
-
-      res.status(204).json(null);
-
-      return existingProduct;
-    }
+    return existingProduct;
   } catch (error) {
     console.error("Error occurred - can't delete product:", error);
     res.status(500).json({ error: "Internal Server Error" });
