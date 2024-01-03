@@ -23,9 +23,9 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TEST PRODUCT price metadata",
+  "title": "TEST PRODUCT TO UPDATE",
   "brand": "New Test Product.",
-  "description": "Testing product",
+  "description": "Testing product, price update in Stripe",
   "features": ["Test"],
   "careAdvice": "Test",
   "price": 349,
@@ -36,15 +36,15 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/65957ba15f04771938f3d6af
+PUT http://localhost:3000/api/products/6595a8bdceb4a2b2a92bb38a
 Content-Type: application/json
 
 {
-  "_id": "65957ba15f04771938f3d6af",
-  "title": "TEST PRODUCT update price metadata",
-  "brand": "Test Update Price as metadata",
-  "description": "ONE OR MORE? Update database, then sync with Stripe.",
-  "price": 199,
+  "_id": "6595a8bdceb4a2b2a92bb38a",
+  "title": "TEST PRODUCT another title",
+  "brand": "Test Update Price",
+  "description": "Update price.",
+  "price": 99,
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 10,
   "deleted": false
@@ -54,7 +54,7 @@ Content-Type: application/json
 ###
 
 // Request to delete a product
-DELETE http://localhost:3000/api/products/659572d886252a0c9920f2b0
+DELETE http://localhost:3000/api/products/659593483a0d81d2544f9ef7
 Content-Type: application/json
 
 ###

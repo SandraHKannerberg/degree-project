@@ -91,29 +91,73 @@ async function updateProduct(req, res) {
   }
 }
 
-// Delete a product
+// Delete a product USE THIS IF I SEND PRICE TO STRIPE AS METADATA
+// async function deleteProduct(req, res) {
+//   try {
+//     const productToDelete = await ProductModel.findById({ _id: req.params.id });
+
+//     // Check if product exists and have a Stripe Id
+//     if (productToDelete && productToDelete.stripeProductId) {
+//       // Delete from Stripe
+//       await stripe.products.del(productToDelete.stripeProductId);
+//       console.log(
+//         `Product with ID ${productToDelete._id} is successfully deleted from Stripe.`
+//       );
+//     }
+
+//     // Delete from MongoDB
+//     await ProductModel.findByIdAndDelete({ _id: req.params.id });
+//     res.status(204).json(null);
+
+//     console.log(
+//       `Product with ID ${req.params.id} is successfully deleted from the database.`
+//     );
+//   } catch (error) {
+//     console.error("Error occurred with Stripe:", error.message);
+//   }
+// }
+
 async function deleteProduct(req, res) {
   try {
-    const productToDelete = await ProductModel.findById({ _id: req.params.id });
+    const productId = req.params.id;
 
-    // Check if product exists and have a Stripe Id
-    if (productToDelete && productToDelete.stripeProductId) {
-      // Delete from Stripe
-      await stripe.products.del(productToDelete.stripeProductId);
-      console.log(
-        `Product with ID ${productToDelete._id} is successfully deleted from Stripe.`
-      );
+    const existingProduct = await ProductModel.findById(productId);
+
+    if (!existingProduct) {
+      throw new Error("No product found.");
     }
 
-    // Delete from MongoDB
-    await ProductModel.findByIdAndDelete({ _id: req.params.id });
-    res.status(204).json(null);
+    // Fetch prices related to the product in Stripe
+    const prices = await stripe.prices.list({
+      product: existingProduct.stripeProductId,
+    });
 
-    console.log(
-      `Product with ID ${req.params.id} is successfully deleted from the database.`
-    );
+    // Inactive all prices
+    for (const price of prices.data) {
+      await stripe.prices.update(price.id, {
+        active: false,
+      });
+      console.log(`Price ${price.id} is inactive in Stripe`);
+    }
+
+    // Check if prices are inactive
+    const allPricesInactive = prices.data.every((price) => !price.active);
+
+    if (allPricesInactive) {
+      // Delete from Stripe
+      await stripe.products.del(existingProduct.stripeProductId);
+      console.log("Product is deleted from Stripe");
+
+      // Delete from MongoDB
+      await ProductModel.findByIdAndDelete({ _id: req.params.id });
+
+      res.status(204).json(null);
+
+      return existingProduct;
+    }
   } catch (error) {
-    console.error("Error occurred with Stripe:", error.message);
+    console.error("Error occurred - can't delete product:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
