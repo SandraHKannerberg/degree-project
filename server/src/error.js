@@ -9,12 +9,7 @@ const errorRequestHandler = (error, req, res, next) => {
   }
 
   // Mongoose validation error
-  if (error instanceof MongooseError.StrictModeError) {
-    return res.status(400).json(error.message);
-  }
-
-  // Mongoose validation error
-  if (error instanceof MongooseError.ValidationError) {
+  if (error instanceof Error) {
     return res.status(400).json(error.message);
   }
 
