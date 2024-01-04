@@ -1,7 +1,7 @@
 const { initStripe } = require("../../stripe");
 const stripe = initStripe();
 
-const CLIENT_URL = "http://localhost";
+const CLIENT_URL = "http://localhost:5173";
 
 // Send cart to Stripe
 const createCheckOutSession = async (req, res) => {
