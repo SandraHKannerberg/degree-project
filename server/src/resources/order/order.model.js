@@ -33,6 +33,11 @@ const OrderSchema = new Schema(
     totalAmount: { type: Number, required: true },
     deliveryAddress: { type: AddressSchema, required: true },
     shipped: { type: Boolean, required: false, default: false },
+    shippingMethod: {
+      type: Schema.Types.ObjectId,
+      ref: "shippingMethod",
+      required: true,
+    },
     stripePaymentIntentId: { type: String, required: false, unique: true },
   },
   {
@@ -49,6 +54,7 @@ const OrderCreateValidationSchema = Joi.object({
   totalAmount: Joi.number().required(),
   deliveryAddress: AddressSchema.required(),
   shipped: Joi.boolean().default(false),
+  shippingMethod: Joi.string().strict().required(),
   stripePaymentIntentId: Joi.string(),
 });
 
