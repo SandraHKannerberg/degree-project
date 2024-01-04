@@ -8,6 +8,8 @@ const { categoryRouter } = require("./resources/category/category.router");
 const { userRouter } = require("./resources/user/user.router");
 const { checkOutRouter } = require("./resources/checkout/checkout.router");
 
+const { errorRequestHandler } = require("./error");
+
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
@@ -27,5 +29,14 @@ app.use("/api", productRouter);
 app.use("/api", categoryRouter);
 app.use("/api", userRouter);
 app.use("/api", checkOutRouter);
+
+// Error
+app.use((req, res) => {
+  console.log("!404!");
+  res.status(404).json("Missing resource");
+});
+
+// Error handler
+app.use(errorRequestHandler);
 
 module.exports = { app };
