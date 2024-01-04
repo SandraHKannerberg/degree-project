@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true, select: false },
   isAdmin: { type: Boolean, required: true, default: false },
+  stripeCustomerId: { type: String, required: false },
 });
 
 const UserModel = models.user || model("user", UserSchema);
@@ -17,6 +18,7 @@ const UserCreateValidationSchema = Joi.object({
   email: Joi.string().email().strict().required(),
   password: Joi.string().strict().required(),
   isAdmin: Joi.boolean().strict(),
+  stripeCustomerId: Joi.string().strict(),
 });
 
 module.exports = { UserModel, UserCreateValidationSchema };
