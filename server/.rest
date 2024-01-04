@@ -95,3 +95,17 @@ Content-Type: application/json
 // Check auth
 GET http://localhost:3000/api/users/authorize
 Content-Type: application/json
+
+###
+
+//** TESTING SHIPPINGMETHODS ENDPOINTS */
+
+// Add shippingmethods
+POST http://localhost:3000/api/shippingMethod
+Content-Type: application/json
+
+{
+  "company": "Standard",
+  "price": 79,
+  "deliveryTimeInHours": 72
+}

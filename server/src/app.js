@@ -7,6 +7,9 @@ const { productRouter } = require("./resources/product/product.router");
 const { categoryRouter } = require("./resources/category/category.router");
 const { userRouter } = require("./resources/user/user.router");
 const { checkOutRouter } = require("./resources/checkout/checkout.router");
+const {
+  shippingMethodRouter,
+} = require("./resources/shippingMethod/shippingMethod.router");
 
 const { errorRequestHandler } = require("./error");
 
@@ -29,6 +32,7 @@ app.use("/api", productRouter);
 app.use("/api", categoryRouter);
 app.use("/api", userRouter);
 app.use("/api", checkOutRouter);
+app.use("/api", shippingMethodRouter);
 
 // Error
 app.use((req, res) => {
