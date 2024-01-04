@@ -1,8 +1,10 @@
 const { UserModel } = require("../user/user.model");
 const bcrypt = require("bcrypt");
+const { initStripe } = require("../../stripe");
+const stripe = initStripe();
 
 // Register a new user
-async function register(req, res) {
+async function registerNewUser(req, res) {
   // Check if the user exists
   const existingUser = await UserModel.findOne({ email: req.body.email });
   if (existingUser) {
@@ -10,9 +12,24 @@ async function register(req, res) {
   }
 
   const user = new UserModel(req.body);
+
+  // Hash the password
   user.password = await bcrypt.hash(user.password, 10);
+
+  // Save user to MongoDB
   await user.save();
 
+  // Create a customer in Stripe
+  const stripeCustomer = await stripe.customers.create({
+    email: user.email,
+    name: user.firstName + " " + user.lastName,
+  });
+
+  // Attach the Stripe customer ID to the user in MongoDB
+  user.stripeCustomerId = stripeCustomer.id;
+  await user.save();
+
+  // Delete the password before user info are send as 201 status
   const jsonUser = user.toJSON();
   jsonUser._id = user._id;
   delete jsonUser.password;
@@ -34,6 +51,7 @@ async function login(req, res) {
     return res.status(401).json("Wrong password or username");
   }
 
+  // Delete the password before user info are send to session
   const user = existingUser.toJSON();
   user._id = existingUser._id;
   delete user.password;
@@ -65,4 +83,4 @@ async function authorize(req, res) {
   res.status(200).json(req.session);
 }
 
-module.exports = { register, login, logout, authorize };
+module.exports = { registerNewUser, login, logout, authorize };

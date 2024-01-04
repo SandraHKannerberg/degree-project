@@ -1,6 +1,9 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const { app } = require("./app");
-const dotenv = require("dotenv").config();
+const {
+  syncProductListWithStripe,
+} = require("../src/resources/product/product.stripe");
 
 const PORT = process.env.PORT;
 const databaseURL = process.env.MONGODB_CONNECTION_STRING;
@@ -16,3 +19,13 @@ async function main() {
     console.log(`Server is up and running on http://localhost:${PORT}`)
   );
 }
+
+// I ONLY NEEDED TO CALL THIS FUNCTION ONCE WHEN EXISTING DATABASE FROM MONGODB WAS SYNCHRONIZED WITH STRIPE.
+// THEREFORE IT IS NOW COMMENTED OUT
+// syncProductListWithStripe()
+//   .then(() => {
+//     console.log("Synchronization completed successfully.");
+//   })
+//   .catch((error) => {
+//     console.error("Error during synchronization:", error);
+//   });

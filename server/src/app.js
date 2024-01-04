@@ -6,6 +6,7 @@ require("express-async-errors");
 const { productRouter } = require("./resources/product/product.router");
 const { categoryRouter } = require("./resources/category/category.router");
 const { userRouter } = require("./resources/user/user.router");
+const { checkOutRouter } = require("./resources/checkout/checkout.router");
 
 const app = express();
 app.use(express.json());
@@ -25,5 +26,6 @@ app.use(
 app.use("/api", productRouter);
 app.use("/api", categoryRouter);
 app.use("/api", userRouter);
+app.use("/api", checkOutRouter);
 
 module.exports = { app };

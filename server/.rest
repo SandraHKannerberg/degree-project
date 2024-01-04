@@ -23,21 +23,12 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TESTAR ADMIN AUTH",
-  "description": [
-    {
-      "text": "Testing",
-      "brand": "Admin",
-      "features": ["Test"],
-      "careAdvice": "Test"
-    }
-  ],
-  "price": [
-    {
-      "unit_amount": 349,
-      "currency": "SEK"
-    }
-  ],
+  "title": "TEST PRODUCT FOR DELETE/archive",
+  "brand": "New Test Product.",
+  "description": "Testing product, price update in Stripe",
+  "features": ["Test"],
+  "careAdvice": "Test",
+  "price": 349,
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 30
 }
@@ -45,29 +36,17 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/658d71c621a2186757280e68
+PUT http://localhost:3000/api/products/6595a8bdceb4a2b2a92bb38a
 Content-Type: application/json
 
 {
-  "_id": "658d71c621a2186757280e68",
-  "title": "PRACTICE TRAVEL MAT, GREY",
-  "description": [
-    {
-      "text": "The Practice travel mat has great grip and is only 1.4 mm thick, making it perfect for traveling. The mat is foldable in the suitcase but for longer storage, we recommend that it is stored rolled up.",
-      "brand": "Yogiraj",
-      "features": ["1kg", "183cm x 61cm x 0.14cm"],
-      "careAdvice": "The easiest way to clean the carpet is with a damp cloth. Make sure the carpet is dry before rolling it up."
-    }
-  ],
-  "price": [
-    {
-      "unit_amount": 499,
-      "currency": "SEK"
-    }
-  ],
-  "image": "https://www.yogagrossisten.se/images/2.190434/yogamatta-natural-practice-travel-mat-shadow-lilac-yogiraj.jpeg",
-  "inStock": 12,
-  "categories": ["658d55f76bba5c7dbc0e6bbe"],
+  "_id": "6595a8bdceb4a2b2a92bb38a",
+  "title": "TEST PRODUCT another title",
+  "brand": "Test Update Price",
+  "description": "Update price.",
+  "price": 99,
+  "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
+  "inStock": 10,
   "deleted": false
 }
 
@@ -75,7 +54,7 @@ Content-Type: application/json
 ###
 
 // Request to delete a product
-DELETE http://localhost:3000/api/products/658e91fa4f998436b693e323
+DELETE http://localhost:3000/api/products/6595bdaaadef1e7b2bd54a1f
 Content-Type: application/json
 
 ###
@@ -87,11 +66,11 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "firstName": "User",
-  "lastName": "Usersson",
-  "email": "user@mail.com",
-  "password": "user123",
-  "isAdmin": false
+  "firstName": "Admin",
+  "lastName": "Adminsson",
+  "email": "admin@mail.com",
+  "password": "admin123",
+  "isAdmin": true
 }
 
 ###
