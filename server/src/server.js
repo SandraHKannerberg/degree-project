@@ -20,7 +20,8 @@ async function main() {
   );
 }
 
-// THIS WAS RUN ONCE WHEN THE MONGODB DATABASE WAS GOING INTO THE STRIPE.
+// I ONLY NEEDED TO CALL THIS FUNCTION ONCE WHEN EXISTING DATABASE FROM MONGODB WAS SYNCHRONIZED WITH STRIPE.
+// THEREFORE IT IS NOW COMMENTED OUT
 // syncProductListWithStripe()
 //   .then(() => {
 //     console.log("Synchronization completed successfully.");

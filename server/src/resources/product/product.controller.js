@@ -82,6 +82,8 @@ async function updateProduct(req, res) {
     );
 
     res.status(200).json(updatedProduct);
+
+    // Call the function to update the prdocut in Stripe
     syncUpdateProductWithStripe(updatedProduct);
   } catch (error) {
     console.error("Error updating product:", error);
@@ -127,11 +129,11 @@ async function deleteProduct(req, res) {
       throw new Error("No product found.");
     }
 
-    //Archive prosuct in Stripe
+    //Archive product in Stripe
     await stripe.products.update(existingProduct.stripeProductId, {
       active: false,
     });
-    console.log("Produkt är arkiverad i Stripe");
+    console.log("The product is successfully archived in Stripe");
 
     // Delete from MongoDB
     await ProductModel.findByIdAndDelete({ _id: req.params.id });

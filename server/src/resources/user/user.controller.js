@@ -29,6 +29,7 @@ async function registerNewUser(req, res) {
   user.stripeCustomerId = stripeCustomer.id;
   await user.save();
 
+  // Delete the password before user info are send as 201 status
   const jsonUser = user.toJSON();
   jsonUser._id = user._id;
   delete jsonUser.password;
@@ -50,6 +51,7 @@ async function login(req, res) {
     return res.status(401).json("Wrong password or username");
   }
 
+  // Delete the password before user info are send to session
   const user = existingUser.toJSON();
   user._id = existingUser._id;
   delete user.password;
