@@ -109,3 +109,13 @@ Content-Type: application/json
   "price": 79,
   "deliveryTimeInHours": 72
 }
+
+###
+
+// Available shippingmethods
+GET http://localhost:3000/api/shippingMethod
+
+###
+
+//** TESTING ORDERS ENDPOINTS */
+GET http://localhost:3000/api/orders

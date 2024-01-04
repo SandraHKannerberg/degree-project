@@ -48,12 +48,24 @@ const OrderSchema = new Schema(
 const OrderModel = models.order || model("order", OrderSchema);
 
 const OrderCreateValidationSchema = Joi.object({
-  orderNumber: Joi.number().required(),
-  customer: Joi.string().required(),
-  orderItems: Joi.array().items(OrderItemSchema).required(),
-  totalAmount: Joi.number().required(),
-  deliveryAddress: AddressSchema.required(),
-  shipped: Joi.boolean().default(false),
+  orderItems: Joi.array()
+    .items(
+      Joi.object({
+        product: Joi.string().strict().required(),
+        quantity: Joi.number().strict().required(),
+        price: Joi.number(),
+      })
+    )
+    .strict()
+    .required(),
+  deliveryAddress: Joi.object({
+    street: Joi.string().strict().required(),
+    zipcode: Joi.string().strict().required(),
+    city: Joi.string().strict().required(),
+    country: Joi.string().strict().required(),
+  })
+    .strict()
+    .required(),
   shippingMethod: Joi.string().strict().required(),
   stripePaymentIntentId: Joi.string(),
 });

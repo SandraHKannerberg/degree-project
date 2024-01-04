@@ -10,6 +10,7 @@ const { checkOutRouter } = require("./resources/checkout/checkout.router");
 const {
   shippingMethodRouter,
 } = require("./resources/shippingMethod/shippingMethod.router");
+const { orderRouter } = require("./resources/order/order.router");
 
 const { errorRequestHandler } = require("./error");
 
@@ -33,10 +34,11 @@ app.use("/api", categoryRouter);
 app.use("/api", userRouter);
 app.use("/api", checkOutRouter);
 app.use("/api", shippingMethodRouter);
+app.use("/api", orderRouter);
 
 // Error
 app.use((req, res) => {
-  console.log("!404!");
+  console.log("!****ERRORCODE 404****!");
   res.status(404).json("Missing resource");
 });
 
