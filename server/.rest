@@ -119,3 +119,19 @@ GET http://localhost:3000/api/shippingMethod
 
 //** TESTING ORDERS ENDPOINTS */
 GET http://localhost:3000/api/orders
+
+###
+
+//** TESTING STRIPE CHECKOUT */
+POST http://localhost:3000/api/create-checkout-session
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "product": "price_1OWHujBolJmyEpQOE66v7YIb",
+      "quantity": 2
+    }
+]
+}
+

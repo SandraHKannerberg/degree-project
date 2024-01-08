@@ -18,10 +18,10 @@ const createCheckOutSession = async (req, res) => {
       customer: req.session.id,
       mode: "payment",
       success_url: `${CLIENT_URL}/confirmation`,
-      cancel_url: CLIENT_URL,
+      cancel_url: CLIENT_URL, // Cancel payment - go back to homepage
       payment_method_types: ["card"],
       allow_promotion_codes: true,
-      currency: "SEK",
+      currency: "sek",
     });
 
     // Send back URL and session-id
