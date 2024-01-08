@@ -1,6 +1,7 @@
 const { initStripe } = require("../../stripe");
 const stripe = initStripe();
 const { OrderModel } = require("../order/order.model");
+const { ProductModel } = require("../product/product.model");
 
 const CLIENT_URL = "http://localhost:5173";
 
@@ -45,24 +46,23 @@ const createCheckOutSession = async (req, res) => {
 
     // Payment begins - start session
     const session = await stripe.checkout.sessions.create({
-      // Shipping address
+      // Delivery address
       shipping_address_collection: {
         allowed_countries: ["SE"],
       },
-      // Available Shipping-options
-      shipping_options: shippingOptions,
+      shipping_options: shippingOptions, // Available Shipping-options
       line_items: lineItems,
       customer: req.session.id,
       mode: "payment",
-      success_url: `${CLIENT_URL}/confirmation`, // Successfull payment - confirmationpage
-      cancel_url: CLIENT_URL, // Cancel payment - go back to homepage
       payment_method_types: ["card"],
       allow_promotion_codes: true,
       currency: "sek",
+      success_url: `${CLIENT_URL}/confirmation`, // Successfull payment - confirmationpage
+      cancel_url: CLIENT_URL, // Cancel payment - go back to homepage
     });
 
     // Send back URL and session-id
-    console.log("SESSION INFO: ", session);
+    console.log("SESSION INFO: ", session); // RADERA NÄR HELA CHECKOUT ÄR KLAR!!!!!!!
     res.status(200).json({ url: session.url, sessionId: session.id });
   } catch (error) {
     console.log(error.message);
@@ -75,33 +75,90 @@ const verifySession = async (req, res) => {
   try {
     // Retrieve session from Stripe
     const session = await stripe.checkout.sessions.retrieve(req.body.sessionId);
+    console.log("VERIFY SESSION", session);
 
     // Check payment status
     if (session.payment_status !== "paid") {
       return res.status(400).json({ verified: false });
     }
 
-    // Paymeny - success
+    // Payment - success
     const line_items = await stripe.checkout.sessions.listLineItems(
       req.body.sessionId
     );
 
-    const createdDate = new Date(session.created * 1000);
-    const formattedDate = createdDate.toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
+    // Fetch inStock-value from database
+    const productStocks = await Promise.all(
+      line_items.data.map(async (item) => {
+        const product = await ProductModel.findOne({
+          stripeProductId: item.price.product,
+        });
+        return {
+          product,
+          quantity: item.quantity,
+        };
+      })
+    );
+
+    // Create new order
+    const newOrder = new OrderModel({
+      customer: session.customer_details.name,
+      email: session.customer_details.email,
+      orderItems: line_items.data.map((item) => {
+        const product = item.description;
+        const price = item.price.unit_amount / 100;
+        const quantity = item.quantity;
+        const stripeProductId = item.price.product;
+
+        return {
+          product,
+          price,
+          currency: item.price.currency,
+          quantity,
+          stripeProductId,
+        };
+      }),
+      totalOrderItemsAmount: session.amount_subtotal / 100,
+      totalAmount: session.amount_total / 100,
+      deliveryAddress: {
+        street: session.shipping_details.address.line1,
+        postal_code: session.shipping_details.address.postal_code,
+        city: session.shipping_details.address.city,
+        country: session.shipping_details.address.country,
+      },
+      shipped: false,
+      shippingMethod: {
+        shipping: session.shipping_cost.display_name,
+        amount_total: session.shipping_cost.amount_total,
+        stripeShippingId: session.shipping_cost.shipping_rate,
+      },
+      stripePaymentIntentId: session.payment_intent,
     });
 
-    console.log(typeof formattedDate);
+    await Promise.all(
+      productStocks.map(async ({ product, quantity }) => {
+        // Check inStock before complete the order
+        if (product.inStock >= quantity) {
+          // Save order in MongoDB
+          await newOrder.save();
 
-    //ADD CODE HERE FOR CREATE ORDER
-    //ID, CREATED, CUSTOMER/USER, EMAIL, PRODUCTS/ORDERITEMS [], TOTAL PRICE
-    res.status(200).json({ verified: true });
+          // Update inStock
+          product.inStock -= quantity;
+          await product.save();
+        } else {
+          throw new Error(
+            `Error occurred for product ${product.title}. Not inStock`
+          );
+        }
+      })
+    );
+
+    console.log("ORDER: ", newOrder);
+    console.log("SESSION-ID: ", req.body.sessionId);
+    console.log("Created:", newOrder.createdAt);
+    res
+      .status(200)
+      .json({ verified: true, message: "New order successfully created" });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ verified: false, error: "Internal Server Error" });

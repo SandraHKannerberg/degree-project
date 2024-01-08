@@ -135,3 +135,20 @@ Content-Type: application/json
 ]
 }
 
+###
+
+//** TESTING VERIFY SESSION */
+POST http://localhost:3000/api/verify-session
+Content-Type: application/json
+
+{
+  "sessionId": "cs_test_b1DkMsGM50SL9kp70KYQCXYRYIk8gFkHBYeg4jcnARUyDhjRlOCyE7v8Af",
+  "customer": "cus_PJPc4ENJQtjiiq",
+    "items": [
+    {
+      "product": "price_1OWHujBolJmyEpQOE66v7YIb",
+      "quantity": 2
+    }
+]
+
+}
