@@ -1,23 +1,60 @@
 const { initStripe } = require("../../stripe");
 const stripe = initStripe();
+const { OrderModel } = require("../order/order.model");
 
 const CLIENT_URL = "http://localhost:5173";
 
 // Send cart to Stripe
 const createCheckOutSession = async (req, res) => {
   try {
+    // CartItems
+    const lineItems = req.body.items.map((item) => {
+      return {
+        price: item.product,
+        quantity: item.quantity,
+      };
+    });
+
+    // ShippingMethods - fetch from Stripe
+    const shippingRates = await stripe.shippingRates.list({
+      limit: 2,
+    });
+
+    // Map throught shipping-rates to create a variable for shipping-options
+    // They are a part of checkout-session
+    const shippingOptions = shippingRates.data.map((rate) => ({
+      shipping_rate_data: {
+        type: rate.type || "",
+        fixed_amount: {
+          amount: rate.fixed_amount?.amount || 0,
+          currency: rate.fixed_amount?.currency || "",
+        },
+        display_name: rate.display_name || "",
+        delivery_estimate: {
+          minimum: {
+            unit: rate.delivery_estimate?.minimum?.unit || "",
+            value: rate.delivery_estimate?.minimum?.value || 0,
+          },
+          maximum: {
+            unit: rate.delivery_estimate?.maximum?.unit || "",
+            value: rate.delivery_estimate?.maximum?.value || 0,
+          },
+        },
+      },
+    }));
+
     // Payment begins - start session
     const session = await stripe.checkout.sessions.create({
-      line_items: req.body.items.map((item) => {
-        return {
-          price: item.product,
-          quantity: item.quantity,
-        };
-      }),
-
+      // Shipping address
+      shipping_address_collection: {
+        allowed_countries: ["SE"],
+      },
+      // Available Shipping-options
+      shipping_options: shippingOptions,
+      line_items: lineItems,
       customer: req.session.id,
       mode: "payment",
-      success_url: `${CLIENT_URL}/confirmation`,
+      success_url: `${CLIENT_URL}/confirmation`, // Successfull payment - confirmationpage
       cancel_url: CLIENT_URL, // Cancel payment - go back to homepage
       payment_method_types: ["card"],
       allow_promotion_codes: true,
@@ -25,6 +62,7 @@ const createCheckOutSession = async (req, res) => {
     });
 
     // Send back URL and session-id
+    console.log("SESSION INFO: ", session);
     res.status(200).json({ url: session.url, sessionId: session.id });
   } catch (error) {
     console.log(error.message);
@@ -63,10 +101,10 @@ const verifySession = async (req, res) => {
 
     //ADD CODE HERE FOR CREATE ORDER
     //ID, CREATED, CUSTOMER/USER, EMAIL, PRODUCTS/ORDERITEMS [], TOTAL PRICE
-
-    // ADD LOGIC HERE TO SAVE ORDER IN MONGODB
+    res.status(200).json({ verified: true });
   } catch (error) {
     console.error(error.message);
+    res.status(500).json({ verified: false, error: "Internal Server Error" });
   }
 };
 

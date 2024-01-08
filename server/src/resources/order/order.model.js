@@ -45,6 +45,17 @@ const OrderSchema = new Schema(
   }
 );
 
+// Pre-hook - generate ordernumber
+OrderSchema.pre("save", function (next) {
+  const order = this;
+
+  if (!order.orderNumber) {
+    order.orderNumber = Math.floor(Math.random() * 1000000);
+  }
+
+  next();
+});
+
 const OrderModel = models.order || model("order", OrderSchema);
 
 const OrderCreateValidationSchema = Joi.object({
