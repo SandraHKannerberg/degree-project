@@ -119,3 +119,43 @@ GET http://localhost:3000/api/shippingMethod
 
 //** TESTING ORDERS ENDPOINTS */
 GET http://localhost:3000/api/orders
+
+###
+
+//** TESTING STRIPE CHECKOUT */
+POST http://localhost:3000/api/create-checkout-session
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "product": "price_1OWHujBolJmyEpQOE66v7YIb",
+      "quantity": 1
+    },
+    {
+      "product": "price_1OWHuJBolJmyEpQOJm606CYS",
+      "quantity": 2
+    }
+]
+}
+
+###
+
+//** TESTING VERIFY SESSION */
+POST http://localhost:3000/api/verify-session
+Content-Type: application/json
+
+{
+  "sessionId": "cs_test_b13L4eHvhmVGnWpfZ1D6G5TcoadH4F6aSQz6e5H7ilEku0AIMUBwunUDXQ",
+  "customer": "cus_PJPc4ENJQtjiiq",
+  "items": [
+    {
+      "product": "price_1OWHujBolJmyEpQOE66v7YIb",
+      "quantity": 1
+    },
+    {
+      "product": "price_1OWHuJBolJmyEpQOJm606CYS",
+      "quantity": 2
+    }
+]
+}

@@ -16,7 +16,8 @@ const { errorRequestHandler } = require("./error");
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true }));
+// app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: "*" }));
 app.use(
   cookieSession({
     name: "session",
