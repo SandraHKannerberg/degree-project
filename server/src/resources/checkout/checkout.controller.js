@@ -8,6 +8,23 @@ const CLIENT_URL = "http://localhost:5173";
 // Send cart to Stripe
 const createCheckOutSession = async (req, res) => {
   try {
+    // Logged in customer or a guest?
+    const user = req.session;
+
+    let customer;
+
+    // If the customer is logged in - get the stripeCustomerId
+    if (user && user.stripeCustomerId) {
+      customer = user.stripeCustomerId;
+    } else {
+      // If the customer is not logged in - create a new customer in Stripe and use the stripeCustomerId
+      const newCustomer = await stripe.customers.create({
+        email: req.body.email,
+      });
+
+      customer = newCustomer.id;
+    }
+
     // CartItems
     const lineItems = req.body.items.map((item) => {
       return {
@@ -52,7 +69,7 @@ const createCheckOutSession = async (req, res) => {
       },
       shipping_options: shippingOptions, // Available Shipping-options
       line_items: lineItems,
-      customer: req.session.id,
+      customer,
       mode: "payment",
       payment_method_types: ["card"],
       allow_promotion_codes: true,
@@ -62,7 +79,6 @@ const createCheckOutSession = async (req, res) => {
     });
 
     // Send back URL and session-id
-    console.log("SESSION INFO: ", session); // RADERA NÄR HELA CHECKOUT ÄR KLAR!!!!!!!
     res.status(200).json({ url: session.url, sessionId: session.id });
   } catch (error) {
     console.log(error.message);
@@ -75,7 +91,6 @@ const verifySession = async (req, res) => {
   try {
     // Retrieve session from Stripe
     const session = await stripe.checkout.sessions.retrieve(req.body.sessionId);
-    console.log("VERIFY SESSION", session);
 
     // Check payment status
     if (session.payment_status !== "paid") {
@@ -139,23 +154,20 @@ const verifySession = async (req, res) => {
       productStocks.map(async ({ product, quantity }) => {
         // Check inStock before complete the order
         if (product.inStock >= quantity) {
-          // Save order in MongoDB
-          await newOrder.save();
-
           // Update inStock
           product.inStock -= quantity;
           await product.save();
         } else {
-          throw new Error(
-            `Error occurred for product ${product.title}. Not inStock`
-          );
+          throw new Error(`Error occurred. ${product.title} out of stock`);
         }
       })
     );
 
+    // Save order in MongoDB
+    await newOrder.save();
+
     console.log("ORDER: ", newOrder);
     console.log("SESSION-ID: ", req.body.sessionId);
-    console.log("Created:", newOrder.createdAt);
     res
       .status(200)
       .json({ verified: true, message: "New order successfully created" });

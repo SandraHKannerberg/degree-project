@@ -130,6 +130,10 @@ Content-Type: application/json
   "items": [
     {
       "product": "price_1OWHujBolJmyEpQOE66v7YIb",
+      "quantity": 1
+    },
+    {
+      "product": "price_1OWHuJBolJmyEpQOJm606CYS",
       "quantity": 2
     }
 ]
@@ -142,13 +146,16 @@ POST http://localhost:3000/api/verify-session
 Content-Type: application/json
 
 {
-  "sessionId": "cs_test_b1DkMsGM50SL9kp70KYQCXYRYIk8gFkHBYeg4jcnARUyDhjRlOCyE7v8Af",
+  "sessionId": "cs_test_b13L4eHvhmVGnWpfZ1D6G5TcoadH4F6aSQz6e5H7ilEku0AIMUBwunUDXQ",
   "customer": "cus_PJPc4ENJQtjiiq",
-    "items": [
+  "items": [
     {
       "product": "price_1OWHujBolJmyEpQOE66v7YIb",
+      "quantity": 1
+    },
+    {
+      "product": "price_1OWHuJBolJmyEpQOJm606CYS",
       "quantity": 2
     }
 ]
-
 }
