@@ -1,7 +1,13 @@
 import Header from "../../components/Header/Header";
+import ProductList from "../../components/ProductList/ProductList";
 
 function Shop() {
-  return <div>Shop</div>;
+  return (
+    <>
+      <Header />
+      <ProductList />
+    </>
+  );
 }
 
 export default Shop;

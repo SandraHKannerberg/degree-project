@@ -3,7 +3,6 @@ import {
   useContext,
   useState,
   PropsWithChildren,
-  useEffect,
   Dispatch,
   SetStateAction,
 } from "react";
@@ -71,10 +70,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
       console.log(err);
     }
   };
-
-  //   useEffect(() => {
-  //     getAllProducts();
-  //   }, []);
 
   return (
     <ProductContext.Provider
