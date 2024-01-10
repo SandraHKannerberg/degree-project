@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useProductContext } from "../../context/ProductContext";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 
 function ProductList() {
   const { products, getAllProducts } = useProductContext();
@@ -10,14 +10,18 @@ function ProductList() {
   }, []);
 
   return (
-    <>
-      <Row>
-        <h1>Lotus Harmony</h1>
-      </Row>
-      <Row xs={1} md={2} lg={4} className="g-2">
+    <Container fluid style={{ padding: 0 }}>
+      <h1 style={{ textAlign: "center", marginTop: "2rem" }}>Lotus Harmony</h1>
+      <Row
+        xs={1}
+        sm={2}
+        md={3}
+        lg={4}
+        className="d-flex justify-content-center px-4 gy-4 mt-2 flex-wrap"
+      >
         {products.map((product, index) => (
-          <Col key={index}>
-            <Card className="h-100" style={{ width: "22rem" }}>
+          <Col key={index} className="mb-3">
+            <Card className="h-100">
               <Card.Img variant="top" src={product.image} />
               <Card.Body className="d-flex flex-column">
                 <Card.Title
@@ -56,7 +60,7 @@ function ProductList() {
           </Col>
         ))}
       </Row>
-    </>
+    </Container>
   );
 }
 
