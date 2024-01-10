@@ -9,6 +9,7 @@ function LogInBtn() {
         border: "none",
         borderRadius: 0,
         color: "#EFE1D1",
+        fontWeight: 500,
       }}
     >
       Log In
