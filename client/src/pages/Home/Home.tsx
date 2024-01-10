@@ -6,7 +6,7 @@ import "./Home.css";
 
 function Home() {
   return (
-    <Container fluid>
+    <Container fluid style={{ padding: 0 }}>
       <Header />
       <Row className="video-background">
         <video className="video" autoPlay loop muted>

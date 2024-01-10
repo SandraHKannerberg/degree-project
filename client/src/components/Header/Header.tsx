@@ -27,7 +27,7 @@ function Header() {
           margin: 0,
         }}
       >
-        <Col md="auto" xs={2} style={{ padding: 0, backgroundColor: "red" }}>
+        <Col md="auto" xs={2} style={{ padding: 0 }}>
           <Logotype />
         </Col>
         <Col
