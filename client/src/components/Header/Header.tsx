@@ -12,6 +12,8 @@ function Header() {
       style={{
         backgroundColor: "#A78295",
         height: "5rem",
+        padding: 0,
+        margin: 0,
       }}
     >
       <Row
@@ -20,8 +22,9 @@ function Header() {
           justifyContent: "space-between",
           alignItems: "center",
           height: "100%",
-          marginLeft: "2rem",
-          marginRight: "2rem",
+          paddingLeft: "2rem",
+          paddingRight: "2rem",
+          margin: 0,
         }}
       >
         <Col md="auto" xs={2} style={{ padding: 0, backgroundColor: "red" }}>
