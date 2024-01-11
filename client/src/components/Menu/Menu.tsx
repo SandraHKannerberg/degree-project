@@ -40,9 +40,9 @@ function Menu() {
                   <NavLink to="/shop" className="menu-link">
                     All
                   </NavLink>
-                  {categories.map((category, index) => (
+                  {categories.map((category) => (
                     <NavLink
-                      key={index}
+                      key={category._id}
                       to={`/categories/${category._id}`}
                       className="menu-link"
                     >

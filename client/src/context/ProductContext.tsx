@@ -32,7 +32,7 @@ export interface NewProduct {
   price: number;
   image: string;
   inStock: number;
-  categories: string[];
+  categories: Category[];
 }
 
 //Category
@@ -49,7 +49,6 @@ export interface IProductContext {
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
   getAllCategories: () => void;
-  getCategory: () => void;
 }
 
 const defaultValues = {
@@ -59,7 +58,6 @@ const defaultValues = {
   categories: [],
   setCategories: () => {},
   getAllCategories: () => {},
-  getCategory: () => {},
 };
 
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -80,43 +78,28 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         throw new Error("Failed to fetch products");
       }
 
-      const productData = await responseFetchProducts.json();
-      setProducts(productData);
+      const products = await responseFetchProducts.json();
+      setProducts(products);
     } catch (err) {
       console.log(err);
     }
   };
 
-  //Get all categories
+  //Get all categories in the shop
   const getAllCategories = async () => {
     try {
-      const responseFetchCategories = await fetch("api/categories");
+      const responseFetchCategories = await fetch("/api/categories");
 
       // Check response status
       if (!responseFetchCategories.ok) {
-        throw new Error("Failed to fetch categories");
+        const errorText = await responseFetchCategories.text();
+        throw new Error(
+          `Failed to fetch categories. Server response: ${errorText}`
+        );
       }
 
       const categoriesData = await responseFetchCategories.json();
       setCategories(categoriesData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  //Get a category
-  const getCategory = async () => {
-    try {
-      const responseFetchCategory = await fetch("api/categories/:id");
-
-      // Check response status
-      if (!responseFetchCategory.ok) {
-        throw new Error("Failed to fetch selected category");
-      }
-
-      const categoryData = await responseFetchCategory.json();
-      console.log(categoryData);
-      setCategories(categoryData);
     } catch (err) {
       console.log(err);
     }
@@ -131,7 +114,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         categories,
         setCategories,
         getAllCategories,
-        getCategory,
       }}
     >
       {children}
