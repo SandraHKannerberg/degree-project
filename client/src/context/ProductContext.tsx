@@ -35,16 +35,29 @@ export interface NewProduct {
   categories: string[];
 }
 
+//Category
+export interface Category {
+  _id: string;
+  title: string;
+  description: string;
+}
+
 export interface IProductContext {
   products: Product[];
   setProducts: Dispatch<SetStateAction<Product[]>>;
   getAllProducts: () => void;
+  categories: Category[];
+  setCategories: Dispatch<SetStateAction<Category[]>>;
+  getAllCategories: () => void;
 }
 
 const defaultValues = {
   products: [],
   setProducts: () => {},
   getAllProducts: () => {},
+  categories: [],
+  setCategories: () => {},
+  getAllCategories: () => {},
 };
 
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -53,6 +66,7 @@ export const useProductContext = () => useContext(ProductContext);
 
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   //Get all products
   const getAllProducts = async () => {
@@ -71,12 +85,32 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
+  //Get all categories
+  const getAllCategories = async () => {
+    try {
+      const responseFetchCategories = await fetch("api/categories");
+
+      // Check response status
+      if (!responseFetchCategories.ok) {
+        throw new Error("Failed to fetch categories");
+      }
+
+      const categoryData = await responseFetchCategories.json();
+      setCategories(categoryData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <ProductContext.Provider
       value={{
         products,
         setProducts,
         getAllProducts,
+        categories,
+        setCategories,
+        getAllCategories,
       }}
     >
       {children}
