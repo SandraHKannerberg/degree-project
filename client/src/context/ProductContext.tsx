@@ -85,12 +85,21 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
-  //Get all categories in the shop
+  //Get all categories in the shop and save them in localStorage to sustainably save category-data at refresh
   const getAllCategories = async () => {
     try {
+      // Get categories from localStorage (cached data)
+      const cachedCategories = localStorage.getItem("categories");
+
+      // If there is cached data, set it to state and return
+      if (cachedCategories) {
+        setCategories(JSON.parse(cachedCategories));
+        return;
+      }
+
       const responseFetchCategories = await fetch("/api/categories");
 
-      // Check response status
+      // Response status?
       if (!responseFetchCategories.ok) {
         const errorText = await responseFetchCategories.text();
         throw new Error(
@@ -99,6 +108,10 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
       }
 
       const categoriesData = await responseFetchCategories.json();
+
+      // Save categories in localStorage
+      localStorage.setItem("categories", JSON.stringify(categoriesData));
+
       setCategories(categoriesData);
     } catch (err) {
       console.log(err);
