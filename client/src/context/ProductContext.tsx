@@ -49,6 +49,7 @@ export interface IProductContext {
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
   getAllCategories: () => void;
+  getCategory: () => void;
 }
 
 const defaultValues = {
@@ -58,6 +59,7 @@ const defaultValues = {
   categories: [],
   setCategories: () => {},
   getAllCategories: () => {},
+  getCategory: () => {},
 };
 
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -95,7 +97,25 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         throw new Error("Failed to fetch categories");
       }
 
-      const categoryData = await responseFetchCategories.json();
+      const categoriesData = await responseFetchCategories.json();
+      setCategories(categoriesData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //Get a category
+  const getCategory = async () => {
+    try {
+      const responseFetchCategory = await fetch("api/categories/:id");
+
+      // Check response status
+      if (!responseFetchCategory.ok) {
+        throw new Error("Failed to fetch selected category");
+      }
+
+      const categoryData = await responseFetchCategory.json();
+      console.log(categoryData);
       setCategories(categoryData);
     } catch (err) {
       console.log(err);
@@ -111,6 +131,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         categories,
         setCategories,
         getAllCategories,
+        getCategory,
       }}
     >
       {children}
