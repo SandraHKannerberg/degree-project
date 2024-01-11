@@ -1,6 +1,6 @@
 import Header from "../../components/Header/Header";
 import yoga from "../../assets/yoga.mp4";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col, Nav } from "react-bootstrap";
 import { ArrowRight } from "react-bootstrap-icons";
 import "./Home.css";
 
@@ -41,8 +41,10 @@ function Home() {
               fontWeight: 500,
             }}
           >
-            To the shop{" "}
-            <ArrowRight style={{ margin: 0, padding: 0, fontSize: "30px" }} />
+            <Nav.Link href="/shop">
+              To the shop{" "}
+              <ArrowRight style={{ margin: 0, padding: 0, fontSize: "30px" }} />
+            </Nav.Link>
           </Button>
         </Col>
       </Row>
