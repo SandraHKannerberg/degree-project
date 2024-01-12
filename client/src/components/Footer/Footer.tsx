@@ -28,7 +28,7 @@ function Footer() {
             first order
           </h6>
         </Col>
-        <Col xs={12} lg={4} className="pb-3">
+        <Col xs={10} sm={8} md={7} lg={5} className="pb-3">
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Enter your e-mail"
