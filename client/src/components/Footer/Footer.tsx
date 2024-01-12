@@ -28,7 +28,7 @@ function Footer() {
             first order
           </h6>
         </Col>
-        <Col xs={12} lg={4} className="pb-3">
+        <Col xs={10} sm={8} md={7} lg={5} className="pb-3">
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Enter your e-mail"
@@ -46,39 +46,32 @@ function Footer() {
       </Row>
       <Row className="d-flex justify-content-around text-center">
         <Col>
-          <h5>
+          <h6>
             <Link to="/about" className="menu-link">
               About us
             </Link>
-          </h5>
+          </h6>
         </Col>
         <Col>
-          <h5>
+          <h6>
             <Link to="/contact" className="menu-link">
               Contact us
             </Link>
-          </h5>
+          </h6>
         </Col>
         <Col className="d-flex justify-content-center text-center">
-          <Col lg={1}>
+          <div className="d-flex gap-2">
             <h5>
               <Facebook />
             </h5>
-          </Col>
-
-          <Col lg={1}>
             <h5>
               <Instagram />
             </h5>
-          </Col>
-
-          <Col lg={1}>
             <h5>
               <Linkedin />
             </h5>
-          </Col>
+          </div>
         </Col>
-
         <Col
           xs={12}
           className="d-flex justify-content-center alig-items-center pt-3"
