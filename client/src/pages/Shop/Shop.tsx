@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 import ProductList from "../../components/ProductList/ProductList";
@@ -8,6 +9,7 @@ function Shop() {
       <Header />
       <Menu />
       <ProductList />
+      <Footer />
     </>
   );
 }

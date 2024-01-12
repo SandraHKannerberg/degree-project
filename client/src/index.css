@@ -10,4 +10,20 @@
 body {
   background-color: #f8ede3;
   font-family: "Quicksand", sans-serif;
+  color: #331d2c;
+}
+
+/**CSS Style for links in menu*/
+.menu-link {
+  text-decoration: none;
+  color: #331d2c;
+}
+
+.menu-link:hover {
+  text-decoration: underline;
+}
+
+.menu-link:visited {
+  text-decoration: none;
+  color: #331d2c;
 }

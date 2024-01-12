@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 function ProductsCategory() {
   const { id } = useParams();
@@ -80,6 +81,7 @@ function ProductsCategory() {
           ))}
         </Row>
       </Container>
+      <Footer />
     </>
   ) : null;
 }
