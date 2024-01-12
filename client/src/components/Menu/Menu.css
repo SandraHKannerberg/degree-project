@@ -1,0 +1,13 @@
+.menu-link {
+  text-decoration: none;
+  color: #331d2c;
+}
+
+.menu-link:hover {
+  text-decoration: underline;
+}
+
+.menu-link:visited {
+  text-decoration: none;
+  color: #331d2c;
+}
