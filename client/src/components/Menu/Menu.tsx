@@ -2,7 +2,6 @@ import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { useProductContext } from "../../context/ProductContext";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import "./Menu.css";
 
 //Menu with categories and link to each category
 function Menu() {

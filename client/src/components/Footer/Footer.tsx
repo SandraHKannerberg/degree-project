@@ -1,5 +1,6 @@
 import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { Facebook, Instagram, Linkedin } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -45,10 +46,18 @@ function Footer() {
       </Row>
       <Row className="d-flex justify-content-around text-center">
         <Col>
-          <h5>About us</h5>
+          <h5>
+            <Link to="/about" className="menu-link">
+              About us
+            </Link>
+          </h5>
         </Col>
         <Col>
-          <h5>Contact us</h5>
+          <h5>
+            <Link to="/contact" className="menu-link">
+              Contact us
+            </Link>
+          </h5>
         </Col>
         <Col className="d-flex justify-content-center text-center">
           <Col lg={1}>
@@ -74,7 +83,7 @@ function Footer() {
           xs={12}
           className="d-flex justify-content-center alig-items-center pt-3"
         >
-          <p>
+          <p style={{ fontSize: "12px" }}>
             Copyright &copy; Degree project 2024 - Sandra Höst Kannerberg -
             Medieinstitutet
           </p>
