@@ -27,23 +27,18 @@ function Header() {
           margin: 0,
         }}
       >
-        <Col md="auto" xs={2} style={{ padding: 0 }}>
+        <Col xs={6} style={{ padding: 0 }}>
           <Logotype />
         </Col>
         <Col
-          md="auto"
-          sm={4}
-          xs={4}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: "1rem",
-            padding: 0,
-          }}
+          xs={6}
+          className="d-flex justify-content-end"
+          style={{ padding: 0 }}
         >
-          <LogInBtn />
-          <ShoppingCartIcon />
+          <div className="d-flex gap-2">
+            <LogInBtn />
+            <ShoppingCartIcon />
+          </div>
         </Col>
       </Row>
     </Container>

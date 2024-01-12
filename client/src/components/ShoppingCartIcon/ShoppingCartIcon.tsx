@@ -1,9 +1,9 @@
-import { Badge, Col } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
 
 function ShoppingCartIcon() {
   return (
-    <Col lg={4} className="position-relative">
+    <div className="position-relative">
       <Cart
         style={{
           border: "none",
@@ -14,12 +14,16 @@ function ShoppingCartIcon() {
       ></Cart>
       <Badge
         bg="dark"
-        className="position-absolute top-0 end-0"
-        style={{ borderRadius: "50%" }}
+        className="position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
+        style={{
+          borderRadius: "50%",
+          height: "25px",
+          width: "25px",
+        }}
       >
         9
       </Badge>
-    </Col>
+    </div>
   );
 }
 
