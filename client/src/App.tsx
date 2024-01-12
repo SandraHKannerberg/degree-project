@@ -3,8 +3,8 @@ import Confirmation from "./pages/Confirmation";
 import Home from "./pages/Home/Home";
 import Shop from "./pages/Shop/Shop";
 import { ProductProvider } from "./context/ProductContext";
-import ProductDetails from "./components/ProductDetails/ProductDetails";
-import ProductsCategory from "./pages/Category/ProductsCategory";
+import ProductDetails from "./pages/Shop/ProductDetails";
+import ProductsCategory from "./pages/Shop/ProductsCategory";
 
 function App() {
   return (
