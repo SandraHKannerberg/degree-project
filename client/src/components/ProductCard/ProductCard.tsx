@@ -7,6 +7,25 @@ type Props = {
 };
 
 function ProductCard({ product }: Props) {
+  // Check in stock status
+  function inStockStatus(inStock: number) {
+    let status: string;
+    let inStockValue: string;
+
+    if (inStock <= 3) {
+      inStockValue = "🔴 ";
+      status = "Not in stock";
+    } else if (inStock < 10) {
+      inStockValue = "🟡 ";
+      status = "In stock";
+    } else {
+      inStockValue = "🟢 ";
+      status = "In stock";
+    }
+
+    return `${inStockValue}${status}`;
+  }
+
   return (
     <Card className="h-100">
       <Link to={`/${product._id}`} key={product._id}>
@@ -22,7 +41,7 @@ function ProductCard({ product }: Props) {
         </Card.Text>
         <Row className="justify-content-between">
           <Col xs={6}>
-            <Card.Text>{product.inStock} inStock</Card.Text>
+            <Card.Text>{inStockStatus(product.inStock)}</Card.Text>
           </Col>
           <Col xs={6} className="d-flex justify-content-end">
             <Button
