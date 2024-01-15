@@ -12,9 +12,9 @@ main().catch((err) => console.log(err));
 
 //Connect to server and database
 async function main() {
-  console.log("Connect to DB & start server");
   mongoose.set("strictQuery", true);
   await mongoose.connect(databaseURL);
+  console.log("DB Connection Successfull!");
   app.listen(PORT || 3001, () =>
     console.log(`Server is up and running on http://localhost:${PORT}`)
   );

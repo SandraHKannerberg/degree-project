@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const ProductSchema = new Schema({
   title: { type: String, required: true },
-  brand: { type: String, required: false },
+  brand: { type: String, required: true },
   description: { type: String, required: true },
   features: { type: [String], required: false },
   careAdvice: { type: String, required: false },

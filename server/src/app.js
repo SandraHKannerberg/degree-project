@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
+const crypto = require("crypto");
+
 require("express-async-errors");
 
 const { productRouter } = require("./resources/product/product.router");
@@ -11,6 +13,8 @@ const { orderRouter } = require("./resources/order/order.router");
 
 const { errorRequestHandler } = require("./error");
 
+const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
+
 const app = express();
 app.use(express.json());
 // app.use(cors({ origin: true, credentials: true }));
@@ -18,7 +22,7 @@ app.use(cors({ origin: "*" }));
 app.use(
   cookieSession({
     name: "session",
-    keys: ["aVeryS3cr3tK3y"],
+    keys: [cookieSecretKey],
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
     sameSite: "strict",
     httpOnly: true,
@@ -35,7 +39,7 @@ app.use("/api", orderRouter);
 
 // Error
 app.use((req, res) => {
-  console.log("!****ERRORCODE 404****!");
+  console.log("404-ERROR OCCURED: Missing Resource");
   res.status(404).json("Missing resource");
 });
 

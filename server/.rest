@@ -23,9 +23,9 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TEST PRODUCT FOR DELETE/archive",
-  "brand": "New Test Product.",
-  "description": "Testing product, price update in Stripe",
+  "title": "TEST PRODUCT FOR new DB name",
+  "brand": "Test",
+  "description": "Test",
   "features": ["Test"],
   "careAdvice": "Test",
   "price": 349,
@@ -76,11 +76,11 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "firstName": "Admin",
-  "lastName": "Adminsson",
-  "email": "admin@mail.com",
-  "password": "admin123",
-  "isAdmin": true
+  "firstName": "Testar",
+  "lastName": "Testing",
+  "email": "testar@mail.com",
+  "password": "test123",
+  "isAdmin": false
 }
 
 ###
