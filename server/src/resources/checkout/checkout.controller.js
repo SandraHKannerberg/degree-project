@@ -75,7 +75,7 @@ const createCheckOutSession = async (req, res) => {
       allow_promotion_codes: true,
       currency: "sek",
       success_url: `${CLIENT_URL}/confirmation`, // Successfull payment - confirmationpage
-      cancel_url: CLIENT_URL, // Cancel payment - go back to homepage
+      cancel_url: `${CLIENT_URL}/shop`, // Cancel payment - go back to the shop
     });
 
     // Send back URL and session-id
