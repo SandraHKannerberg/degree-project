@@ -1,9 +1,15 @@
 import { Badge } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
 import { useCartContext } from "../../context/CartContext";
+import { useState } from "react";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 function ShoppingCartIcon() {
   const { cartTotalQuantity } = useCartContext();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div className="position-relative">
@@ -14,6 +20,7 @@ function ShoppingCartIcon() {
           color: "#EFE1D1",
           fontSize: "2.5rem",
         }}
+        onClick={handleShow}
       ></Cart>
       <Badge
         bg="dark"
@@ -23,9 +30,22 @@ function ShoppingCartIcon() {
           height: "25px",
           width: "25px",
         }}
+        onClick={handleShow}
       >
         {cartTotalQuantity}
       </Badge>
+
+      <Offcanvas show={show} onHide={handleClose} placement="end">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>ShoppingCart</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {cartTotalQuantity !== 0 && (
+            <p>You have {cartTotalQuantity} items in your shoppingcart</p>
+          )}
+          {cartTotalQuantity === 0 && <p>Your shoppingcart is empty</p>}
+        </Offcanvas.Body>
+      </Offcanvas>
     </div>
   );
 }
