@@ -58,7 +58,6 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // Function to add a product to shoppingcart or increase the quantity if the product already in cart
   function addToCart(id: string) {
-    console.log("addToCart function called with ID:", id);
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
         return [...currItems, { id, quantity: 1 }];

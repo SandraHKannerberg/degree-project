@@ -1,7 +1,10 @@
 import { Badge } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
+import { useCartContext } from "../../context/CartContext";
 
 function ShoppingCartIcon() {
+  const { cartTotalQuantity } = useCartContext();
+
   return (
     <div className="position-relative">
       <Cart
@@ -21,7 +24,7 @@ function ShoppingCartIcon() {
           width: "25px",
         }}
       >
-        9
+        {cartTotalQuantity}
       </Badge>
     </div>
   );
