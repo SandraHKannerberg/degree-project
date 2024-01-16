@@ -17,6 +17,7 @@ const ProductSchema = new Schema({
   },
   deleted: { type: Boolean, required: false, default: false },
   stripeProductId: { type: String, required: false },
+  stripePriceId: { type: String, required: false },
 });
 
 const ProductModel = models.product || model("product", ProductSchema);
