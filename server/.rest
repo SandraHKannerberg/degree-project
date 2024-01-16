@@ -23,12 +23,12 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "TEST PRODUCT FOR new DB name",
+  "title": "ADD TO TEST DELETE",
   "brand": "Test",
-  "description": "Test",
+  "description": "Testar adding price-id",
   "features": ["Test"],
   "careAdvice": "Test",
-  "price": 349,
+  "price": 49,
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 30
 }
@@ -36,15 +36,15 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/6595a8bdceb4a2b2a92bb38a
+PUT http://localhost:3000/api/products/65a66b8f9d436decffc506db
 Content-Type: application/json
 
 {
-  "_id": "6595a8bdceb4a2b2a92bb38a",
-  "title": "TEST PRODUCT another title",
+  "_id": "65a66b8f9d436decffc506db",
+  "title": "TEST PRODUCT update",
   "brand": "Test Update Price",
   "description": "Update price.",
-  "price": 99,
+  "price": 199,
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 10,
   "deleted": false
@@ -54,7 +54,7 @@ Content-Type: application/json
 ###
 
 // Request to delete a product
-DELETE http://localhost:3000/api/products/6595bdaaadef1e7b2bd54a1f
+DELETE http://localhost:3000/api/products/65a6849b4c380dcc6d5c4ff2
 Content-Type: application/json
 
 ###
@@ -141,10 +141,6 @@ Content-Type: application/json
     {
       "product": "price_1OWHujBolJmyEpQOE66v7YIb",
       "quantity": 1
-    },
-    {
-      "product": "price_1OWHuJBolJmyEpQOJm606CYS",
-      "quantity": 2
     }
 ]
 }
