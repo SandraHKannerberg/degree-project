@@ -1,6 +1,6 @@
 import LogInBtn from "../LogInBtn/LogInBtn";
 import Logotype from "../Logotype/Logotype";
-import ShoppingCartIcon from "../ShoppingCartIcon/ShoppingCartIcon";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -37,7 +37,7 @@ function Header() {
         >
           <div className="d-flex gap-2">
             <LogInBtn />
-            <ShoppingCartIcon />
+            <ShoppingCart />
           </div>
         </Col>
       </Row>
