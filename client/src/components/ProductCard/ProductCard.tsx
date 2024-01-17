@@ -1,12 +1,15 @@
 import { Product } from "../../context/ProductContext";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useCartContext } from "../../context/CartContext";
 
-type Props = {
+type ProductProps = {
   product: Product;
 };
 
-function ProductCard({ product }: Props) {
+function ProductCard({ product }: ProductProps) {
+  const { addToCart } = useCartContext();
+
   // Check in stock status
   function inStockStatus(inStock: number) {
     let status: string;
@@ -53,6 +56,9 @@ function ProductCard({ product }: Props) {
                 color: "#EFE1D1",
                 fontWeight: 500,
               }}
+              onClick={() =>
+                addToCart(product._id, product.title, product.price)
+              }
             >
               Add to cart
             </Button>
