@@ -81,6 +81,8 @@ function CartItems() {
           );
         })}
       </ul>
+
+      {/* Dont't show Checkout-button if shoppingcart is empty */}
       {cartItems.length > 0 && (
         <Row>
           <CheckoutBtn />
