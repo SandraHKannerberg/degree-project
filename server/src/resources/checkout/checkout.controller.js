@@ -80,7 +80,7 @@ const createCheckOutSession = async (req, res) => {
   }
 };
 
-// Verify session
+// Verify session and payment. Create order after successfull payment
 const verifySession = async (req, res) => {
   try {
     // Retrieve session from Stripe
@@ -100,7 +100,7 @@ const verifySession = async (req, res) => {
     const productStocks = await Promise.all(
       line_items.data.map(async (item) => {
         const product = await ProductModel.findOne({
-          stripeProductId: item.price.product,
+          title: item.description,
         });
         return {
           product,
@@ -114,17 +114,15 @@ const verifySession = async (req, res) => {
       customer: session.customer_details.name,
       email: session.customer_details.email,
       orderItems: line_items.data.map((item) => {
-        const product = item.description;
+        const product = item.description; // Product title
         const price = item.price.unit_amount / 100;
         const quantity = item.quantity;
-        const stripeProductId = item.price.product;
 
         return {
           product,
           price,
           currency: item.price.currency,
           quantity,
-          stripeProductId,
         };
       }),
       totalOrderItemsAmount: session.amount_subtotal / 100,
@@ -144,9 +142,9 @@ const verifySession = async (req, res) => {
       stripePaymentIntentId: session.payment_intent,
     });
 
+    // Check inStock before complete the order
     await Promise.all(
       productStocks.map(async ({ product, quantity }) => {
-        // Check inStock before complete the order
         if (product.inStock >= quantity) {
           // Update inStock
           product.inStock -= quantity;

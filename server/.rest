@@ -139,8 +139,9 @@ Content-Type: application/json
 {
   "items": [
     {
-      "product": "price_1OWHujBolJmyEpQOE66v7YIb",
-      "quantity": 1
+      "name": "TEST PRODUCT update",
+      "price": 19900,
+      "quantity": 2
     }
 ]
 }
@@ -152,15 +153,12 @@ POST http://localhost:3000/api/verify-session
 Content-Type: application/json
 
 {
-  "sessionId": "cs_test_b13L4eHvhmVGnWpfZ1D6G5TcoadH4F6aSQz6e5H7ilEku0AIMUBwunUDXQ",
-  "customer": "cus_PJPc4ENJQtjiiq",
+  "sessionId": "cs_test_b1OlHhMvJAhdAb3iaEX7RohtzotKAaifiy2KuJo4eg6k6AEZ3PEagrcvv8",
+  "customer": "test@mail.com",
   "items": [
     {
-      "product": "price_1OWHujBolJmyEpQOE66v7YIb",
-      "quantity": 1
-    },
-    {
-      "product": "price_1OWHuJBolJmyEpQOJm606CYS",
+      "name": "TEST PRODUCT update",
+      "price": 199,
       "quantity": 2
     }
 ]
