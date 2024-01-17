@@ -4,42 +4,20 @@ const { OrderModel } = require("../order/order.model");
 const { ProductModel } = require("../product/product.model");
 
 const CLIENT_URL = "http://localhost:5173";
+const DEFAULT_CURRENCY = "SEK";
 
-// Send cart to Stripe
+// *********** ENDPOINTS CHECKOUT *********** //
+
+// Send cart to Stripe and create a session
 const createCheckOutSession = async (req, res) => {
   try {
-    // Logged in customer or a guest?
-    const user = req.session;
-
-    let customer;
-
-    // If the customer is logged in - get the stripeCustomerId
-    if (user && user.stripeCustomerId) {
-      customer = user.stripeCustomerId;
-    } else {
-      // If the customer is not logged in - create a new customer in Stripe and use the stripeCustomerId
-      const newCustomer = await stripe.customers.create({
-        email: req.body.email,
-      });
-
-      customer = newCustomer.id;
-    }
-
-    // CartItems
-    const lineItems = req.body.items.map((item) => {
-      return {
-        price: item.product,
-        quantity: item.quantity,
-      };
-    });
-
-    // ShippingMethods - fetch from Stripe
+    // ShippingMethods are saved in Stripe. Fetch them here from Stripe
     const shippingRates = await stripe.shippingRates.list({
       limit: 2,
     });
 
     // Map throught shipping-rates to create a variable for shipping-options
-    // They are a part of checkout-session
+    // Shipping options - use in create-session as the value of shipping_options
     const shippingOptions = shippingRates.data.map((rate) => ({
       shipping_rate_data: {
         type: rate.type || "",
@@ -61,6 +39,23 @@ const createCheckOutSession = async (req, res) => {
       },
     }));
 
+    // Customer - use in create-session as the value of customer
+    const customer = req.body.email;
+
+    // LineItems - use in create-session as the value of line_items
+    const lineItems = req.body.items.map((item) => {
+      return {
+        price_data: {
+          currency: DEFAULT_CURRENCY,
+          product_data: {
+            name: item.name,
+          },
+          unit_amount: item.price * 100,
+        },
+        quantity: item.quantity,
+      };
+    });
+
     // Payment begins - start session
     const session = await stripe.checkout.sessions.create({
       // Delivery address
@@ -68,14 +63,13 @@ const createCheckOutSession = async (req, res) => {
         allowed_countries: ["SE"],
       },
       shipping_options: shippingOptions, // Available Shipping-options
-      line_items: lineItems,
-      customer,
+      line_items: lineItems, // With data from database
+      customer, // Customers e-mail
       mode: "payment",
       payment_method_types: ["card"],
       allow_promotion_codes: true,
-      currency: "sek",
-      success_url: `${CLIENT_URL}/confirmation`, // Successfull payment - confirmationpage
-      cancel_url: `${CLIENT_URL}/shop`, // Cancel payment - go back to the shop
+      success_url: `${CLIENT_URL}/confirmation`, // If payment success
+      cancel_url: `${CLIENT_URL}/shop`, // If customer cancel the payment before submit
     });
 
     // Send back URL and session-id
