@@ -9,14 +9,16 @@ import {
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export interface CartItem {
-  id: string; //Id from stripePriceId
+  id: string; //Id from database
+  name: string; //Product title from database
+  price: number; //Price from database
   quantity: number;
 }
 
 export interface ICartContext {
   cartItems: CartItem[];
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
-  addToCart: (id: string) => void;
+  addToCart: (id: string, name: string, price: number) => void;
   getCartItemQuantity: (id: string) => void;
   decreaseCartQuantity: (id: string) => void;
   removeFromCart: (id: string) => void;
@@ -57,20 +59,29 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
   }
 
   // Function to add a product to shoppingcart or increase the quantity if the product already in cart
-  function addToCart(id: string) {
-    setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id) == null) {
-        return [...currItems, { id, quantity: 1 }];
-      } else {
-        return currItems.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            return item;
-          }
-        });
-      }
-    });
+  function addToCart(id: string, name: string, price: number) {
+    //Get the quantity
+    const quantity = getCartItemQuantity(id);
+
+    if (quantity === 0) {
+      //If product not in cart
+      setCartItems([
+        ...cartItems,
+        {
+          id: id,
+          name: name,
+          price: price,
+          quantity: 1,
+        },
+      ]);
+    } else {
+      //If product already in cart
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      );
+    }
   }
 
   // Function to be able to decrease cartitem quantity
