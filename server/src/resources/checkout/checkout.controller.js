@@ -100,7 +100,7 @@ const verifySession = async (req, res) => {
     const productStocks = await Promise.all(
       line_items.data.map(async (item) => {
         const product = await ProductModel.findOne({
-          title: item.description,
+          id: item._id,
         });
         return {
           product,

@@ -153,8 +153,8 @@ POST http://localhost:3000/api/verify-session
 Content-Type: application/json
 
 {
-  "sessionId": "cs_test_b1OlHhMvJAhdAb3iaEX7RohtzotKAaifiy2KuJo4eg6k6AEZ3PEagrcvv8",
-  "customer": "test@mail.com",
+  "sessionId": "cs_test_b1yGZarrXY1SLEa8L9gjnQUCufpgfqXrtb12jreZbwHc2IIWK2gXj2UxBG",
+  "customer": "new@mail.nu",
   "items": [
     {
       "name": "TEST PRODUCT update",
