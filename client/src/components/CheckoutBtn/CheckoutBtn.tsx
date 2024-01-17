@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useCartContext } from "../../context/CartContext";
 
+// Component for Go To Checkout
 const CheckoutButton = () => {
   const { cartItems } = useCartContext();
 

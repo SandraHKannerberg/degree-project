@@ -16,6 +16,7 @@ function ShoppingCart() {
 
   return (
     <div className="position-relative">
+      {/* Shoppingcarticon */}
       <Cart
         style={{
           border: "none",
@@ -25,6 +26,7 @@ function ShoppingCart() {
         }}
         onClick={handleShow}
       ></Cart>
+      {/* Badge to show totalt items in cart */}
       <Badge
         bg="dark"
         className="position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
@@ -38,6 +40,7 @@ function ShoppingCart() {
         {cartTotalQuantity}
       </Badge>
 
+      {/* Shoppingcart. Show when click the icon */}
       <Offcanvas
         show={show}
         onHide={handleClose}
