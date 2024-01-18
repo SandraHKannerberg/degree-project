@@ -24,6 +24,7 @@ export interface ICartContext {
   removeFromCart: (id: string) => void;
   emptyCart: () => void;
   cartTotalQuantity: number;
+  handlePayment: () => void;
 }
 
 const defaultValues = {
@@ -35,6 +36,7 @@ const defaultValues = {
   removeFromCart: () => {},
   emptyCart: () => {},
   cartTotalQuantity: 0,
+  handlePayment: () => {},
 };
 
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -113,6 +115,34 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     setCartItems([]);
   }
 
+  // This function handle payment and connect to Stripe Checkout
+  async function handlePayment() {
+    const cartToStripe = cartItems.map((item) => ({
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    }));
+
+    console.log(cartToStripe);
+
+    const response = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ items: cartToStripe }),
+    });
+
+    if (!response.ok) {
+      return;
+    }
+
+    //Save session id to localStorage
+    const { url, sessionId } = await response.json();
+    localStorage.setItem("session-id", sessionId);
+    window.location = url;
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -124,6 +154,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         decreaseCartQuantity,
         removeFromCart,
         emptyCart,
+        handlePayment,
       }}
     >
       {children}

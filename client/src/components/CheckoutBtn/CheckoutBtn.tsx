@@ -3,34 +3,8 @@ import { useCartContext } from "../../context/CartContext";
 
 // Component for Go To Checkout
 const CheckoutButton = () => {
-  const { cartItems } = useCartContext();
+  const { handlePayment } = useCartContext();
 
-  async function handlePayment() {
-    const cartToStripe = cartItems.map((item) => ({
-      name: item.name,
-      price: item.price,
-      quantity: item.quantity,
-    }));
-
-    console.log(cartToStripe);
-
-    const response = await fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ items: cartToStripe }),
-    });
-
-    if (!response.ok) {
-      return;
-    }
-
-    //Save session id to localStorage
-    const { url, sessionId } = await response.json();
-    localStorage.setItem("session-id", sessionId);
-    window.location = url;
-  }
   return (
     <>
       <Button
