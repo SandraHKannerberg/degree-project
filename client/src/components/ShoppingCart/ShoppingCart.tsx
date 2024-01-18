@@ -46,7 +46,7 @@ function ShoppingCart() {
         onHide={handleClose}
         placement="end"
         className="w-90 w-md-100"
-        style={{ color: "#331D2C" }}
+        style={{ color: "#331D2C", backgroundColor: "#f8ede3" }}
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>ShoppingCart</Offcanvas.Title>

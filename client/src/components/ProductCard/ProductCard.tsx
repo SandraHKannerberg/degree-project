@@ -30,7 +30,7 @@ function ProductCard({ product }: ProductProps) {
   }
 
   return (
-    <Card className="h-100">
+    <Card className="h-100 shadow">
       <Link to={`/${product._id}`} key={product._id}>
         <Card.Img variant="top" src={product.image} />
       </Link>

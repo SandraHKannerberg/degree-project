@@ -77,7 +77,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     const quantity = getCartItemQuantity(id);
 
     if (quantity === 0) {
-      //If product not in cart
+      //If product not in cart - add item/product
       setCartItems([
         ...cartItems,
         {
@@ -88,7 +88,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         },
       ]);
     } else {
-      //If product already in cart
+      //If product already in cart - add 1 to quantity
       setCartItems(
         cartItems.map((item) =>
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
