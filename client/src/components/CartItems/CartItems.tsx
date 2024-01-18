@@ -38,7 +38,7 @@ function CartItems() {
             <Row
               fluid
               key={index}
-              className="d-flex justify-content-between align-items-center"
+              className="d-flex justify-content-between align-items-center my-2"
               style={{
                 padding: 0,
                 margin: 0,
@@ -51,6 +51,7 @@ function CartItems() {
                     width: "60px",
                     height: "60px",
                     objectFit: "cover",
+                    border: "1px solid #331D2C",
                   }}
                 />
               </Col>
