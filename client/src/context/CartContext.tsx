@@ -20,6 +20,7 @@ export interface ICartContext {
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   addToCart: (id: string, name: string, price: number) => void;
   getCartItemQuantity: (id: string) => void;
+  calculateTotalPrice: () => void;
   decreaseCartQuantity: (id: string) => void;
   removeFromCart: (id: string) => void;
   emptyCart: () => void;
@@ -32,6 +33,7 @@ const defaultValues = {
   setCartItems: () => {},
   addToCart: () => "",
   getCartItemQuantity: () => {},
+  calculateTotalPrice: () => {},
   decreaseCartQuantity: () => {},
   removeFromCart: () => {},
   emptyCart: () => {},
@@ -54,6 +56,15 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     (quantity, item) => item.quantity + quantity,
     0
   );
+
+  // Count totalprice for cartitems
+  function calculateTotalPrice() {
+    let total = 0;
+    for (const item of cartItems) {
+      total += item.price * item.quantity;
+    }
+    return total;
+  }
 
   // This function handle the quantity of every cartItem in the shoppingcart
   function getCartItemQuantity(id: string) {
@@ -150,6 +161,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         setCartItems,
         addToCart,
         getCartItemQuantity,
+        calculateTotalPrice,
         cartTotalQuantity,
         decreaseCartQuantity,
         removeFromCart,

@@ -3,12 +3,28 @@ import { useCartContext } from "../../context/CartContext";
 import { useProductContext } from "../../context/ProductContext";
 import CheckoutBtn from "../CheckoutBtn/CheckoutBtn";
 import { Trash, PlusCircle, DashCircle } from "react-bootstrap-icons";
+import { useEffect, useState } from "react";
 
 // Component to show content (cart items) in the shoppingcart
 function CartItems() {
-  const { cartItems, addToCart, decreaseCartQuantity, removeFromCart } =
-    useCartContext();
+  const {
+    cartItems,
+    addToCart,
+    decreaseCartQuantity,
+    removeFromCart,
+    calculateTotalPrice,
+  } = useCartContext();
   const { products } = useProductContext();
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const price = calculateTotalPrice();
+    if (typeof price === "number" && !isNaN(price)) {
+      setTotalPrice(price);
+    } else {
+      console.error("Price is not a valid number:", price);
+    }
+  }, [calculateTotalPrice]);
 
   return (
     <>
@@ -81,6 +97,13 @@ function CartItems() {
           );
         })}
       </ul>
+
+      {/* Totalprice for cart items. (Shippingcost adds in the checkout from Stripe. Dont't show totalprice if shoppingcart is empty */}
+      <Row className="mt-5 mb-3" style={{ borderTop: "2px solid #EFE1D1" }}>
+        <h5 className="mt-2 d-flex justify-content-end">
+          TOTALPRICE --- {totalPrice} kr
+        </h5>
+      </Row>
 
       {/* Dont't show Checkout-button if shoppingcart is empty */}
       {cartItems.length > 0 && (
