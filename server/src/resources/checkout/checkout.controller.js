@@ -74,39 +74,48 @@ const createCheckOutSession = async (req, res) => {
 
     // Send back URL and session-id
     res.status(200).json({ url: session.url, sessionId: session.id });
+    console.log("SessionId from checkout", session.id);
   } catch (error) {
     console.log(error.message);
     res.status(400).json("ERROR: Something went wrong with the checkout");
   }
 };
 
-// Verify session and payment. Create order after successfull payment
+// Function to update stock value
+async function updateStock(productTitle, quantity) {
+  try {
+    const product = await ProductModel.findOne({ title: productTitle });
+    if (!product) {
+      console.error(`Couldn't find product with ID ${productTitle}.`);
+      return;
+    }
+
+    // Update inStock value based on the quantity of each product in the order
+    product.inStock -= quantity;
+
+    // Save updated values in the database
+    await product.save();
+  } catch (error) {
+    console.error("Error occurred when trying to update instock value", error);
+  }
+}
+
+// Verify session and payment. And create order and save to database after successfull payment
 const verifySession = async (req, res) => {
   try {
     // Retrieve session from Stripe
     const session = await stripe.checkout.sessions.retrieve(req.body.sessionId);
+    console.log("Session from verify-session", session);
 
     // Check payment status
     if (session.payment_status !== "paid") {
       return res.status(400).json({ verified: false });
     }
 
-    // Payment - success
+    // Payment success? List line_items and save in a variable.
+    // Line_items = orderItems in Order
     const line_items = await stripe.checkout.sessions.listLineItems(
       req.body.sessionId
-    );
-
-    // Fetch inStock-value from database
-    const productStocks = await Promise.all(
-      line_items.data.map(async (item) => {
-        const product = await ProductModel.findOne({
-          id: item._id,
-        });
-        return {
-          product,
-          quantity: item.quantity,
-        };
-      })
     );
 
     // Create new order
@@ -117,6 +126,9 @@ const verifySession = async (req, res) => {
         const product = item.description; // Product title
         const price = item.price.unit_amount / 100;
         const quantity = item.quantity;
+
+        // Update inStock value in database
+        updateStock(product, quantity);
 
         return {
           product,
@@ -142,24 +154,11 @@ const verifySession = async (req, res) => {
       stripePaymentIntentId: session.payment_intent,
     });
 
-    // Check inStock before complete the order
-    await Promise.all(
-      productStocks.map(async ({ product, quantity }) => {
-        if (product.inStock >= quantity) {
-          // Update inStock
-          product.inStock -= quantity;
-          await product.save();
-        } else {
-          throw new Error(`Error occurred. ${product.title} out of stock`);
-        }
-      })
-    );
-
     // Save order in MongoDB
     await newOrder.save();
 
     console.log("ORDER: ", newOrder);
-    console.log("SESSION-ID: ", req.body.sessionId);
+
     res
       .status(200)
       .json({ verified: true, message: "New order successfully created" });
