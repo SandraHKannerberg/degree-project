@@ -4,7 +4,6 @@ const Joi = require("joi");
 const OrderItemSchema = new Schema(
   {
     product: { type: String, required: true }, // Title
-    stripeProductId: { type: String, required: true }, // ProductId from Stripe
     quantity: { type: Number, required: true },
     price: { type: Number, default: 0 },
   },

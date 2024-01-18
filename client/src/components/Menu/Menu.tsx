@@ -13,11 +13,12 @@ function Menu() {
 
   return (
     <>
-      {["md"].map((expand) => (
+      {["md"].map((expand, index) => (
         <Navbar
           expand={expand}
           className="mb-3"
           style={{ backgroundColor: "#DFD3C3" }}
+          key={index}
         >
           <Container fluid>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

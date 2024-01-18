@@ -20,6 +20,7 @@ export interface Product {
   inStock: number;
   categories?: string[];
   stripeProductId: string;
+  stripePriceId: string;
 }
 
 //New product

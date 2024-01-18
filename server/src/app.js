@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const crypto = require("crypto");
@@ -17,7 +18,7 @@ const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
 
 const app = express();
 app.use(express.json());
-// app.use(cors({ origin: true, credentials: true }));
+app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
 app.use(
   cookieSession({

@@ -31,17 +31,17 @@ async function getProductsByCategory(req, res) {
   res.status(200).json(products);
 }
 
-// Add a new product
-async function addProduct(req, res, next) {
+// Create a new product
+async function createProduct(req, res, next) {
   try {
     console.log("Incoming JSON:", req.body);
-    const product = new ProductModel(req.body);
+    const newProduct = new ProductModel(req.body);
 
-    let stripeProduct;
+    let stripeProduct, stripePrice;
 
-    // Create product in Stripe
+    // Create product in Stripe - call the function createProductInStripe from product.stripe.js
     try {
-      stripeProduct = await createProductInStripe(product);
+      stripeProduct = await createProductInStripe(newProduct);
     } catch (stripeError) {
       throw new Error(
         `Failed to create product in Stripe: ${stripeError.message}`
@@ -49,12 +49,28 @@ async function addProduct(req, res, next) {
     }
 
     // Sync with Stripe and save Stripe ID in MongoDB
-    product.stripeProductId = stripeProduct.id;
+    newProduct.stripeProductId = stripeProduct.id;
+
+    // Fetch prices for the created product in Stripe
+    try {
+      const stripePrices = await stripe.prices.list({
+        product: stripeProduct.id,
+      });
+
+      stripePrice = stripePrices.data[0];
+    } catch (stripeError) {
+      throw new Error(
+        `Failed to fetch prices for product from Stripe: ${stripeError.message}`
+      );
+    }
+
+    // Save Stripe Price ID in MongoDB
+    newProduct.stripePriceId = stripePrice.id;
 
     // Save product in MongoDB
-    await product.save();
+    await newProduct.save();
 
-    res.status(201).json(product);
+    res.status(201).json(newProduct);
   } catch (err) {
     next(err);
   }
@@ -83,7 +99,7 @@ async function updateProduct(req, res) {
 
     res.status(200).json(updatedProduct);
 
-    // Call the function to update the prdocut in Stripe
+    // Call the function to update the product in Stripe
     syncUpdateProductWithStripe(updatedProduct);
   } catch (error) {
     console.error("Error updating product:", error);
@@ -91,32 +107,7 @@ async function updateProduct(req, res) {
   }
 }
 
-// Delete a product USE THIS IF I SEND PRICE TO STRIPE AS METADATA
-// async function deleteProduct(req, res) {
-//   try {
-//     const productToDelete = await ProductModel.findById({ _id: req.params.id });
-
-//     // Check if product exists and have a Stripe Id
-//     if (productToDelete && productToDelete.stripeProductId) {
-//       // Delete from Stripe
-//       await stripe.products.del(productToDelete.stripeProductId);
-//       console.log(
-//         `Product with ID ${productToDelete._id} is successfully deleted from Stripe.`
-//       );
-//     }
-
-//     // Delete from MongoDB
-//     await ProductModel.findByIdAndDelete({ _id: req.params.id });
-//     res.status(204).json(null);
-
-//     console.log(
-//       `Product with ID ${req.params.id} is successfully deleted from the database.`
-//     );
-//   } catch (error) {
-//     console.error("Error occurred with Stripe:", error.message);
-//   }
-// }
-
+// Delete a product from MongoDB and archived the product in Stripe
 async function deleteProduct(req, res) {
   try {
     //Product to delete
@@ -150,7 +141,7 @@ module.exports = {
   getAllProducts,
   getProduct,
   getProductsByCategory,
-  addProduct,
+  createProduct,
   updateProduct,
   deleteProduct,
 };

@@ -3,7 +3,7 @@ const {
   getAllProducts,
   getProduct,
   getProductsByCategory,
-  addProduct,
+  createProduct,
   updateProduct,
   deleteProduct,
 } = require("./product.controller");
@@ -27,7 +27,7 @@ const productRouter = Router()
     auth,
     adminOnly,
     validate(ProductCreateValidationSchema),
-    addProduct
+    createProduct
   )
   .put(
     "/products/:id",
