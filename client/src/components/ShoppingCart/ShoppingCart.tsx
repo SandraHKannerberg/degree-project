@@ -1,4 +1,4 @@
-import { Badge } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
 import { useCartContext } from "../../context/CartContext";
 import { useState } from "react";
