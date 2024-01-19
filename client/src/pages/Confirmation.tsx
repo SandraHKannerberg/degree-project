@@ -24,8 +24,7 @@ function Confirmation() {
         ) : (
           <div>
             <p>
-              Something went wrong with the payment. Your purchase was not
-              successful
+              Something went wrong with the payment. We can't handle your order.
             </p>
           </div>
         )}

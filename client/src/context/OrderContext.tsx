@@ -40,8 +40,6 @@ export interface Order {
 }
 
 export interface IOrderContext {
-  isPaymentVerified: boolean;
-  verifyPayment: () => void;
   orders: Order[];
   setOrders: Dispatch<SetStateAction<Order[]>>;
   message: string;
@@ -50,8 +48,6 @@ export interface IOrderContext {
 }
 
 const defaultValues = {
-  isPaymentVerified: false,
-  verifyPayment: () => {},
   orders: [],
   setOrders: () => {},
   message: "",
@@ -61,40 +57,11 @@ const defaultValues = {
 
 export const OrderContext = createContext<IOrderContext>(defaultValues);
 
-export const useCartContext = () => useContext(OrderContext);
+export const useOrderContext = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
-  const [isPaymentVerified, setIsPaymentverified] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [message, setMessage] = useState("");
-
-  //This function verify payment
-  const verifyPayment = async () => {
-    try {
-      const sessionId = localStorage.getItem("session-id");
-
-      // Fetch from server to verify-session
-      const response = await fetch("/api/verify-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ sessionId }),
-      });
-
-      const { verified } = await response.json();
-
-      //Check if payment is verified
-      if (verified) {
-        setIsPaymentverified(true);
-        localStorage.removeItem("session-id");
-      } else {
-        setIsPaymentverified(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Function to get orderhistory
   const getOrders = async () => {
@@ -157,8 +124,6 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   return (
     <OrderContext.Provider
       value={{
-        isPaymentVerified,
-        verifyPayment,
         orders,
         setOrders,
         message,
