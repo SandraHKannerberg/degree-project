@@ -4,6 +4,8 @@ import Menu from "../components/Menu/Menu";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useCartContext } from "../context/CartContext";
+import Failed from "../components/ConfirmationDetails/Failed";
+import Success from "../components/ConfirmationDetails/Success";
 
 function Confirmation() {
   const { verifyPayment, isPaymentVerified } = useCartContext();
@@ -16,18 +18,8 @@ function Confirmation() {
     <>
       <Header />
       <Menu />
-      <Container>
-        {isPaymentVerified ? (
-          <div>
-            <p>Thank you for your order</p>
-          </div>
-        ) : (
-          <div>
-            <p>
-              Something went wrong with the payment. We can't handle your order.
-            </p>
-          </div>
-        )}
+      <Container fluid className="my-5" style={{ minHeight: "35vh" }}>
+        {isPaymentVerified ? <Success /> : <Failed />}
       </Container>
       <Footer />
     </>

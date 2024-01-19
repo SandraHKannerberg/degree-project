@@ -1,4 +1,4 @@
-import { Badge } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 import { Cart } from "react-bootstrap-icons";
 import { useCartContext } from "../../context/CartContext";
 import { useState } from "react";
@@ -17,28 +17,32 @@ function ShoppingCart() {
   return (
     <div className="position-relative">
       {/* Shoppingcarticon */}
-      <Cart
-        style={{
-          border: "none",
-          borderRadius: 0,
-          color: "#EFE1D1",
-          fontSize: "2.5rem",
-        }}
+      <Button
         onClick={handleShow}
-      ></Cart>
-      {/* Badge to show totalt items in cart */}
-      <Badge
-        bg="dark"
-        className="position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
-        style={{
-          borderRadius: "50%",
-          height: "25px",
-          width: "25px",
-        }}
-        onClick={handleShow}
+        style={{ background: "none", border: "none" }}
       >
-        {cartTotalQuantity}
-      </Badge>
+        <Cart
+          style={{
+            border: "none",
+            borderRadius: 0,
+            color: "#EFE1D1",
+            fontSize: "2rem",
+          }}
+        ></Cart>
+        {/* Badge to show totalt items in cart */}
+        <Badge
+          bg="dark"
+          className="position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
+          style={{
+            borderRadius: "50%",
+            height: "25px",
+            width: "25px",
+          }}
+          onClick={handleShow}
+        >
+          {cartTotalQuantity}
+        </Badge>
+      </Button>
 
       {/* Shoppingcart. Show when click the icon */}
       <Offcanvas
