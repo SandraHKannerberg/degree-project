@@ -26,7 +26,7 @@ async function getProductsByCategory(req, res) {
 }
 
 // Create a new product
-async function createProduct(req, res, next) {
+async function createProduct(req, res) {
   try {
     const newProduct = new ProductModel(req.body);
 
@@ -35,7 +35,6 @@ async function createProduct(req, res, next) {
 
     res.status(201).json(newProduct);
   } catch (error) {
-    // next(err);
     console.log("Error occurred. Can't create a new product", error);
     return res.status(400).json("Error - Can't create a new product");
   }
