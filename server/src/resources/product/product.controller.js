@@ -1,10 +1,4 @@
 const { ProductModel } = require("./product.model");
-const {
-  createProductInStripe,
-  syncUpdateProductWithStripe,
-} = require("./product.stripe");
-const { initStripe } = require("../../stripe");
-const stripe = initStripe();
 
 // *********** ENDPOINTS PRODUCTS *********** //
 
@@ -32,47 +26,17 @@ async function getProductsByCategory(req, res) {
 }
 
 // Create a new product
-async function createProduct(req, res, next) {
+async function createProduct(req, res) {
   try {
-    console.log("Incoming JSON:", req.body);
     const newProduct = new ProductModel(req.body);
-
-    let stripeProduct, stripePrice;
-
-    // Create product in Stripe - call the function createProductInStripe from product.stripe.js
-    try {
-      stripeProduct = await createProductInStripe(newProduct);
-    } catch (stripeError) {
-      throw new Error(
-        `Failed to create product in Stripe: ${stripeError.message}`
-      );
-    }
-
-    // Sync with Stripe and save Stripe ID in MongoDB
-    newProduct.stripeProductId = stripeProduct.id;
-
-    // Fetch prices for the created product in Stripe
-    try {
-      const stripePrices = await stripe.prices.list({
-        product: stripeProduct.id,
-      });
-
-      stripePrice = stripePrices.data[0];
-    } catch (stripeError) {
-      throw new Error(
-        `Failed to fetch prices for product from Stripe: ${stripeError.message}`
-      );
-    }
-
-    // Save Stripe Price ID in MongoDB
-    newProduct.stripePriceId = stripePrice.id;
 
     // Save product in MongoDB
     await newProduct.save();
 
     res.status(201).json(newProduct);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.log("Error occurred. Can't create a new product", error);
+    return res.status(400).json("Error - Can't create a new product");
   }
 }
 
@@ -98,9 +62,6 @@ async function updateProduct(req, res) {
     );
 
     res.status(200).json(updatedProduct);
-
-    // Call the function to update the product in Stripe
-    syncUpdateProductWithStripe(updatedProduct);
   } catch (error) {
     console.error("Error updating product:", error);
     res.status(500).json("Internal Server Error");
@@ -120,12 +81,6 @@ async function deleteProduct(req, res) {
       throw new Error("No product found.");
     }
 
-    //Archive product in Stripe
-    await stripe.products.update(existingProduct.stripeProductId, {
-      active: false,
-    });
-    console.log("The product is successfully archived in Stripe");
-
     // Delete from MongoDB
     await ProductModel.findByIdAndDelete({ _id: req.params.id });
     res.status(204).json(null);
@@ -133,7 +88,7 @@ async function deleteProduct(req, res) {
     return existingProduct;
   } catch (error) {
     console.error("Error occurred - can't delete product:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json("Internal Server Error");
   }
 }
 

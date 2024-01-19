@@ -110,7 +110,14 @@ Content-Type: application/json
 
 
 //** TESTING ORDERS ENDPOINTS */
+
+// Get all orders. Admin get everyone, and users get their own orderhistory
 GET http://localhost:3000/api/orders
+
+###
+
+// Get a specific order
+GET http://localhost:3000/api/orders/659d020ad08dc70fd5d6efa8
 
 ###
 

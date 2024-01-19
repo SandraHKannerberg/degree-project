@@ -2,9 +2,20 @@ const { OrderModel } = require("./order.model");
 
 // Get all orders
 const getAllOrders = async (req, res) => {
-  const query = req.session.isAdmin ? {} : { customer: req.session._id };
-  const orders = await OrderModel.find(query).populate("customer");
-  res.status(200).json(orders);
+  try {
+    // Search for the customer email since this are saved in the orderdetails
+    const customer = req.session;
+    const customerMail = customer.email;
+
+    // Check if it is Admin or a regular user
+    const query = req.session.isAdmin ? {} : { email: customerMail };
+    // Find orders in database based on the query above
+    const orders = await OrderModel.find(query).populate("customer");
+    res.status(200).json(orders);
+  } catch (error) {
+    console.log("Error occurred. Can't show orders", error);
+    return res.status(400).json("Error occurred with showing orders");
+  }
 };
 
 // Get a single order by id
