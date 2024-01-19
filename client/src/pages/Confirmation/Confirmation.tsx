@@ -2,7 +2,15 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Nav,
+  Row,
+  Spinner,
+} from "react-bootstrap";
 import { useCartContext } from "../../context/CartContext";
 import { PatchCheckFill, Stars } from "react-bootstrap-icons";
 import sad from "../../assets/sad.png";
@@ -11,6 +19,7 @@ import sad from "../../assets/sad.png";
 function Confirmation() {
   const { emptyCart } = useCartContext();
   const [isPaymentVerified, setIsPaymentVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [confirmationDetails, setConfirmationDetails] = useState({
     email: "",
     totalAmount: 0,
@@ -57,6 +66,9 @@ function Confirmation() {
       }
     } catch (error) {
       console.error("Error during payment verification:", error);
+    } finally {
+      // Set loading to false once verification is complete
+      setIsLoading(false);
     }
   };
 
@@ -69,7 +81,14 @@ function Confirmation() {
       <Header />
       <Menu />
       <Container fluid className="my-5" style={{ minHeight: "35vh" }}>
-        {isPaymentVerified ? (
+        {isLoading ? (
+          // Display loader while verifying payment
+          <div className="text-center">
+            <Spinner animation="border" /> <br />
+            <p>Please wait while processing your payment...</p>
+            {/* You can add a spinner or any loading indicator here */}
+          </div>
+        ) : isPaymentVerified ? (
           // If payment = success - show this content
           <Row className="d-flex justify-content-center flex-column align-items-center">
             <Col lg={5} className="d-flex justify-content-center mb-3">
