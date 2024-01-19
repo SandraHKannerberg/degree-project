@@ -159,9 +159,15 @@ const verifySession = async (req, res) => {
 
     console.log("ORDER: ", newOrder);
 
-    res
-      .status(200)
-      .json({ verified: true, message: "New order successfully created" });
+    res.status(200).json({
+      verified: true,
+      message: "New order successfully created",
+      orderDetails: {
+        email: newOrder.email,
+        totalAmount: newOrder.totalAmount,
+        orderNumber: newOrder.orderNumber,
+      },
+    });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ verified: false, error: "Internal Server Error" });

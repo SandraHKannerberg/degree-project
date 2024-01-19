@@ -6,7 +6,7 @@ import Home from "./pages/Home/Home";
 import Shop from "./pages/Shop/Shop";
 import About from "./pages/About/About";
 import ContactUs from "./pages/ContactUs/ContactUs";
-import Confirmation from "./pages/Confirmation";
+import Confirmation from "./pages/Confirmation/Confirmation";
 import ProductDetails from "./pages/Shop/ProductDetails";
 import ProductsCategory from "./pages/Shop/ProductsCategory";
 
