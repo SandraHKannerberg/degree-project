@@ -18,7 +18,8 @@
     "joi-password": "^4.1.1",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
-    "stripe": "^14.10.0"
+    "stripe": "^14.10.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "cookie-session": "^2.0.0",

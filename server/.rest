@@ -108,24 +108,6 @@ Content-Type: application/json
 
 ###
 
-//** TESTING SHIPPINGMETHODS ENDPOINTS */
-
-// Add shippingmethods
-POST http://localhost:3000/api/shippingMethod
-Content-Type: application/json
-
-{
-  "company": "Standard",
-  "price": 79,
-  "deliveryTimeInHours": 72
-}
-
-###
-
-// Available shippingmethods
-GET http://localhost:3000/api/shippingMethod
-
-###
 
 //** TESTING ORDERS ENDPOINTS */
 GET http://localhost:3000/api/orders
@@ -139,9 +121,9 @@ Content-Type: application/json
 {
   "items": [
     {
-      "name": "TEST PRODUCT update",
-      "price": 19900,
-      "quantity": 2
+      "name": "PRACTICE TRAVEL MAT, GREY",
+      "price": 499,
+      "quantity": 1
     }
 ]
 }
@@ -153,13 +135,13 @@ POST http://localhost:3000/api/verify-session
 Content-Type: application/json
 
 {
-  "sessionId": "cs_test_b1yGZarrXY1SLEa8L9gjnQUCufpgfqXrtb12jreZbwHc2IIWK2gXj2UxBG",
-  "customer": "new@mail.nu",
+  "sessionId": "cs_test_b14zGnpllsvKxAGOYF8YxUYKf3i0UJsArOJDLS0ctP7Umyj5HuK7THJZbq",
+  "customer": "test@mail.com",
   "items": [
     {
-      "name": "TEST PRODUCT update",
-      "price": 199,
-      "quantity": 2
+      "name": "PRACTICE TRAVEL MAT, GREY",
+      "price": 499,
+      "quantity": 1
     }
 ]
 }

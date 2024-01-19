@@ -1,5 +1,6 @@
 const { model, Schema, models } = require("mongoose");
 const Joi = require("joi");
+const { v4: uuidv4 } = require("uuid");
 
 const OrderItemSchema = new Schema(
   {
@@ -13,13 +14,13 @@ const OrderItemSchema = new Schema(
 const OrderSchema = new Schema(
   {
     orderNumber: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
-      default: Math.floor(Math.random() * 1000000),
+      default: uuidv4,
     },
-    //customer: { type: Schema.Types.ObjectId, ref: "user", required: true },
-    customer: { type: String, required: true },
+    customer: { type: Schema.Types.ObjectId, ref: "user", required: true },
+    // customer: { type: String, required: true },
     email: { type: String, required: true },
     orderItems: { type: [OrderItemSchema], required: true },
     totalOrderItemsAmount: { type: Number, required: true }, // Without shipping-price
@@ -49,12 +50,12 @@ const OrderSchema = new Schema(
   }
 );
 
-// Pre-hook - generate ordernumber
+// create a unique string as ordernumber with uuid
 OrderSchema.pre("save", function (next) {
   const order = this;
 
   if (!order.orderNumber) {
-    order.orderNumber = Math.floor(Math.random() * 1000000);
+    order.orderNumber = uuidv4().slice(0, 8);
   }
 
   next();

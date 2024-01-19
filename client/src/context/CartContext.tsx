@@ -4,6 +4,7 @@ import {
   PropsWithChildren,
   Dispatch,
   SetStateAction,
+  useState,
 } from "react";
 
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -26,6 +27,8 @@ export interface ICartContext {
   emptyCart: () => void;
   cartTotalQuantity: number;
   handlePayment: () => void;
+  isPaymentVerified: boolean;
+  verifyPayment: () => void;
 }
 
 const defaultValues = {
@@ -39,6 +42,8 @@ const defaultValues = {
   emptyCart: () => {},
   cartTotalQuantity: 0,
   handlePayment: () => {},
+  isPaymentVerified: false,
+  verifyPayment: () => {},
 };
 
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -50,6 +55,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     "shopping-cart",
     []
   );
+  const [isPaymentVerified, setIsPaymentVerified] = useState(false);
 
   // Count total items in cart
   const cartTotalQuantity = cartItems.reduce(
@@ -134,8 +140,6 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       quantity: item.quantity,
     }));
 
-    console.log(cartToStripe);
-
     const response = await fetch("/api/create-checkout-session", {
       method: "POST",
       headers: {
@@ -154,6 +158,39 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     window.location = url;
   }
 
+  //This function verify payment
+  const verifyPayment = async () => {
+    try {
+      // Get the sessionId saved in localStorage
+      const sessionId = localStorage.getItem("session-id");
+
+      // Fetch from server to verify-session
+      const response = await fetch("/api/verify-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sessionId }),
+      });
+
+      const { verified } = await response.json();
+
+      //Check if payment is verified
+      if (verified) {
+        setIsPaymentVerified(true);
+
+        //If payment is verified remove session-id from loaclStorage
+        localStorage.removeItem("session-id");
+        //If payment is verified empty shoppingcart
+        emptyCart();
+      } else {
+        setIsPaymentVerified(false);
+      }
+    } catch (error) {
+      console.error("Error during payment verification:", error);
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -167,6 +204,8 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         removeFromCart,
         emptyCart,
         handlePayment,
+        isPaymentVerified,
+        verifyPayment,
       }}
     >
       {children}

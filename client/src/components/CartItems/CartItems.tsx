@@ -36,9 +36,8 @@ function CartItems() {
 
           return (
             <Row
-              fluid
               key={index}
-              className="d-flex justify-content-between align-items-center"
+              className="d-flex justify-content-between align-items-center my-2"
               style={{
                 padding: 0,
                 margin: 0,
@@ -51,6 +50,7 @@ function CartItems() {
                     width: "60px",
                     height: "60px",
                     objectFit: "cover",
+                    border: "1px solid #331D2C",
                   }}
                 />
               </Col>
@@ -99,11 +99,13 @@ function CartItems() {
       </ul>
 
       {/* Totalprice for cart items. (Shippingcost adds in the checkout from Stripe. Dont't show totalprice if shoppingcart is empty */}
-      <Row className="mt-5 mb-3" style={{ borderTop: "2px solid #EFE1D1" }}>
-        <h5 className="mt-2 d-flex justify-content-end">
-          TOTALPRICE --- {totalPrice} kr
-        </h5>
-      </Row>
+      {cartItems.length > 0 && (
+        <Row className="mt-5 mb-3" style={{ borderTop: "2px solid #EFE1D1" }}>
+          <h5 className="mt-2 d-flex justify-content-end">
+            TOTALPRICE --- {totalPrice} kr
+          </h5>
+        </Row>
+      )}
 
       {/* Dont't show Checkout-button if shoppingcart is empty */}
       {cartItems.length > 0 && (
