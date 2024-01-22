@@ -33,8 +33,8 @@ interface IUserContext {
   isLoggedIn: boolean;
   authorization: () => void;
   handleRegistrationNewUser: (newUser: newUserType) => Promise<void>;
-  handleLogin: (user: UserType) => Promise<void>;
-  handleLogout: () => {};
+  login: (user: UserType) => Promise<void>;
+  logout: () => {};
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
@@ -53,8 +53,8 @@ const defaultValues = {
   isLoggedIn: false,
   authorization: () => {},
   handleRegistrationNewUser: async () => {},
-  handleLogin: async () => {},
-  handleLogout: async () => {},
+  login: async () => {},
+  logout: async () => {},
   email: "",
   setEmail: () => {},
   password: "",
@@ -119,7 +119,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
           setSuccessInfo(
-            "Namaste! You are now a registered customer. You are welcome to log in."
+            "Namaste! You are now registered. You are welcome to log in."
           );
         }
 
@@ -133,7 +133,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   // Function to handle login. A user use their email and password for login.
-  const handleLogin = async (user: UserType) => {
+  const login = async (user: UserType) => {
     if (user) {
       try {
         const response = await fetch("api/users/login", {
@@ -159,9 +159,9 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   // Function to handle logout
-  const handleLogout = async () => {
+  const logout = async () => {
     try {
-      const response = await fetch("api/customers/logout", {
+      const response = await fetch("api/users/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -185,8 +185,8 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         authorization,
         isLoggedIn,
         handleRegistrationNewUser,
-        handleLogin,
-        handleLogout,
+        login,
+        logout,
         email,
         setEmail,
         password,
