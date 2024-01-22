@@ -1,13 +1,16 @@
 import { Button, Col } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { Person, PersonCheckFill } from "react-bootstrap-icons";
 import { useState } from "react";
 import LogInForm from "../LogInForm/LogInForm";
+import { Link } from "react-router-dom";
 
-// Component with Log In vs. Log Out button, and offcanvas for the Log In - content
+// Component to handle log in
+// Click on the Person/user icon and an offcanvas to login will appear
 function LogInBtn() {
   const [show, setShow] = useState(false);
-  const { loggedInUser, logout } = useUserContext();
+  const { loggedInUser } = useUserContext();
 
   // Open vs. close the log in offcanvas
   const handleClose = () => setShow(false);
@@ -16,38 +19,50 @@ function LogInBtn() {
   return (
     <>
       <Col>
-        {/* Show text Log In and connect button-click to handleShow if no one are logged in.
-      Other wise show Log Out button and connect button-click to logout-function */}
+        {/* Show Person icon without checkmark if not logged in and connect button-click to handleShow to it.
+      When logged in - show filled Person icon with checkmark and the name of the user. */}
+
         {!loggedInUser ? (
           <Button
-            size="lg"
-            style={{
-              backgroundColor: "#85586f",
-              border: "none",
-              borderRadius: 0,
-              color: "#EFE1D1",
-              fontWeight: 500,
-            }}
-            className="shadow"
             onClick={handleShow}
+            style={{ background: "none", border: "none" }}
           >
-            Log In
+            <Person
+              style={{
+                border: "none",
+                borderRadius: 0,
+                color: "#EFE1D1",
+                fontSize: "2rem",
+              }}
+            ></Person>
           </Button>
         ) : (
-          <Button
-            size="lg"
-            style={{
-              backgroundColor: "#85586f",
-              border: "none",
-              borderRadius: 0,
-              color: "#EFE1D1",
-              fontWeight: 500,
-            }}
-            className="shadow"
-            onClick={logout}
-          >
-            Log Out
-          </Button>
+          <>
+            <span>
+              <Link
+                to="/mypage"
+                className="menu-link"
+                style={{
+                  color: "#EFE1D1",
+                }}
+              >
+                {loggedInUser.firstName}
+              </Link>
+            </span>
+            <Button
+              onClick={handleShow}
+              style={{ background: "none", border: "none" }}
+            >
+              <PersonCheckFill
+                style={{
+                  border: "none",
+                  borderRadius: 0,
+                  color: "#EFE1D1",
+                  fontSize: "2rem",
+                }}
+              ></PersonCheckFill>
+            </Button>
+          </>
         )}
       </Col>
 
