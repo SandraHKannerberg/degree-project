@@ -24,7 +24,7 @@ function LogInForm() {
 
     // Check for required fields
     if (email === "" || password === "") {
-      setErrorLogin("*Required Field! Can't be empty");
+      setErrorLogin("*Required Fields! Can't be empty");
       setEmailError(email === "");
       setPasswordError(password === "");
       return; // Do not proceed with login if required fields are empty
@@ -46,7 +46,7 @@ function LogInForm() {
     <>
       {loggedInUser ? (
         <>
-          <p>Welcome {loggedInUser.firstName}!!</p>
+          <p className="mt-3">Welcome {loggedInUser.firstName}!!</p>
           <Button
             size="lg"
             style={{
@@ -64,9 +64,16 @@ function LogInForm() {
         </>
       ) : (
         <>
-          <h6>Enter e-mail and password to log in</h6>
+          <h6 className="my-3">Enter e-mail and password to log in</h6>
           <InputGroup className="mt-2 mb-3">
-            <InputGroup.Text id="basic-addon1">
+            <InputGroup.Text
+              id="basic-addon1"
+              style={{
+                backgroundColor: "#3F2E3E",
+                color: "#EFE1D1",
+                border: "none",
+              }}
+            >
               <Envelope />
             </InputGroup.Text>
             <Form.Control
@@ -80,7 +87,14 @@ function LogInForm() {
             />
           </InputGroup>
           <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">
+            <InputGroup.Text
+              id="basic-addon1"
+              style={{
+                backgroundColor: "#3F2E3E",
+                color: "#EFE1D1",
+                border: "none",
+              }}
+            >
               <Key />
             </InputGroup.Text>
             <Form.Control
@@ -96,10 +110,10 @@ function LogInForm() {
           </InputGroup>
           {/* If error occurred, write the error message here */}
           <span>{errorLogin}</span>
-          <Row>
+          <Row className="mx-1">
             <Button
               style={{
-                backgroundColor: "#85586f",
+                backgroundColor: "#3F2E3E",
                 border: "none",
                 borderRadius: 0,
                 color: "#EFE1D1",

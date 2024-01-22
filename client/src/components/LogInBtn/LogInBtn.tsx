@@ -1,10 +1,12 @@
-import { Button, Col } from "react-bootstrap";
+import { Button, Col, Tab, Tabs } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Person, PersonCheckFill } from "react-bootstrap-icons";
 import { useState } from "react";
 import LogInForm from "../LogInForm/LogInForm";
 import { Link } from "react-router-dom";
+import NewUserForm from "../NewUserForm/NewUserForm";
+import "./LogInBtn.css";
 
 // Component to handle log in
 // Click on the Person/user icon and an offcanvas to login will appear
@@ -66,13 +68,32 @@ function LogInBtn() {
         )}
       </Col>
 
-      <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas
+        show={show}
+        onHide={handleClose}
+        style={{
+          backgroundColor: "#85586f",
+          color: "#EFE1D1",
+        }}
+      >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Club Lotus Harmony</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {/* Import the LogInForm */}
-          <LogInForm />
+          <Tabs
+            defaultActiveKey="login"
+            id="myTabs"
+            style={{ borderBottom: "1px solid #a78295" }}
+          >
+            <Tab eventKey="signup" title="Sign Up" className="bg-custom-tab">
+              {/* Import the NewUserForm to be able to register a new user */}
+              <NewUserForm />
+            </Tab>
+            <Tab eventKey="login" title="Log In" className="bg-custom-tab">
+              {/* Import the LogInForm to be able to log in */}
+              <LogInForm />
+            </Tab>
+          </Tabs>
         </Offcanvas.Body>
       </Offcanvas>
     </>

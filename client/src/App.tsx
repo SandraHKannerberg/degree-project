@@ -10,6 +10,7 @@ import Confirmation from "./pages/Confirmation/Confirmation";
 import ProductDetails from "./pages/Shop/ProductDetails";
 import ProductsCategory from "./pages/Shop/ProductsCategory";
 import UserProvider from "./context/UserContext";
+import User from "./pages/LoggedIn/User";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/confirmation" element={<Confirmation />} />
                 <Route path="/categories/:id" element={<ProductsCategory />} />
                 <Route path="/:id" element={<ProductDetails />} />
+                <Route path="/mypage" element={<User />} />
               </Routes>
             </OrderProvider>
           </ProductProvider>
