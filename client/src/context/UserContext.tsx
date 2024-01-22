@@ -149,7 +149,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
           setLoggedInUser(userData);
         }
 
-        if (response.status === 404 || response.status === 401) {
+        if (response.status === 401) {
           setErrorLogin("Ooops! Wrong email or password. Please try again");
         }
       } catch (err) {

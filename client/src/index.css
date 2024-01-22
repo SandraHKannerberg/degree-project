@@ -27,3 +27,7 @@ body {
   text-decoration: none;
   color: #331d2c;
 }
+
+.error-border {
+  border: 1px solid red !important;
+}
