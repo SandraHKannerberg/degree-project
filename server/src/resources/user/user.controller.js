@@ -20,15 +20,15 @@ async function registerNewUser(req, res) {
     // Save new user to MongoDB
     await user.save();
 
-    // Create a customer in Stripe
-    const stripeCustomer = await stripe.customers.create({
-      email: user.email,
-      name: user.firstName + " " + user.lastName,
-    });
+    // // Create a customer in Stripe
+    // const stripeCustomer = await stripe.customers.create({
+    //   email: user.email,
+    //   name: user.firstName + " " + user.lastName,
+    // });
 
-    // Attach the Stripe customer ID to the user in MongoDB
-    user.stripeCustomerId = stripeCustomer.id;
-    await user.save();
+    // // Attach the Stripe customer ID to the user in MongoDB
+    // user.stripeCustomerId = stripeCustomer.id;
+    // await user.save();
 
     // Delete the password before user info are send as 201 status
     const jsonUser = user.toJSON();

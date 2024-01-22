@@ -32,7 +32,7 @@ interface IUserContext {
   loggedInUser?: User | null;
   isLoggedIn: boolean;
   authorization: () => void;
-  handleRegistrationNewUser: (newUser: newUserType) => Promise<void>;
+  registrationNewUser: (newUser: newUserType) => Promise<void>;
   login: (user: UserType) => Promise<void>;
   logout: () => {};
   email: string;
@@ -52,7 +52,7 @@ const defaultValues = {
   loggedInUser: null,
   isLoggedIn: false,
   authorization: () => {},
-  handleRegistrationNewUser: async () => {},
+  registrationNewUser: async () => {},
   login: async () => {},
   logout: async () => {},
   email: "",
@@ -105,10 +105,10 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   // Function to register a new user
-  const handleRegistrationNewUser = async (newUser: newUserType) => {
+  const registrationNewUser = async (newUser: newUserType) => {
     if (newUser) {
       try {
-        const response = await fetch("api/users/register", {
+        const response = await fetch("/api/users/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         });
         await response.json();
 
-        if (response.status === 200) {
+        if (response.status === 201) {
           setSuccessInfo(
             "Namaste! You are now registered. You are welcome to log in."
           );
@@ -171,7 +171,6 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
       if (response.status === 204) {
         setIsLoggedIn(false);
         setLoggedInUser(null);
-        // setFirstname("");
       }
     } catch (err) {
       console.log(err);
@@ -184,7 +183,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         loggedInUser,
         authorization,
         isLoggedIn,
-        handleRegistrationNewUser,
+        registrationNewUser,
         login,
         logout,
         email,
