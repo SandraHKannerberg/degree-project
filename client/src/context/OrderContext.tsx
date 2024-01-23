@@ -1,3 +1,4 @@
+import { format } from "date-fns"; // date formatters
 import {
   createContext,
   useContext,
@@ -13,30 +14,30 @@ export interface OrderItem {
   price: number;
 }
 
-export interface Address {
+export interface deliveryAddress {
   street: string;
-  postalCode: string;
+  postal_code: string;
   city: string;
   country: string;
 }
 
 export interface ShippingMethod {
-  amount: number;
+  amount_total: number;
   id: string; //Id from Stripe
 }
 
 export interface Order {
-  created: string;
+  createdAt: string;
   orderNumber: number;
   customer: string; // Name
   email: string;
-  products: OrderItem[];
+  orderItems: OrderItem[];
   totalOrderItemsAmount: number; // Excluding shipping
   totalAmount: number; // Including shipping
-  deliveryAddress: Address;
+  deliveryAddress: deliveryAddress;
   shipped: boolean;
   shippingMethod: ShippingMethod;
-  stripePaymentIntentId: string;
+  stripePaymentIntentId?: string;
 }
 
 export interface IOrderContext {
@@ -66,51 +67,57 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to get orderhistory
   const getOrders = async () => {
     try {
-      const response = await fetch("api/orders");
+      const response = await fetch("/api/orders");
       const orderData = await response.json();
 
+      // If a user has no order - show this message
       if (response.status === 203) {
         setMessage("No orders to show");
         setOrders([]);
       }
 
+      // If OK and there are orders to show create the orderlist
       if (response.status === 200) {
         setMessage("");
 
         //Create orderlist
-        const orderList = orderData.map((order: Order) => ({
-          created: order.created,
-          orderNumber: order.orderNumber,
-          customer: order.customer,
-          email: order.email,
+        const orderList = orderData.map((order: Order) => {
+          // Formatte the date from database
+          const formattedDate = format(new Date(order.createdAt), "yyyy-MM-dd");
 
-          products: order.products.map((product) => ({
-            product: product.product,
-            price: product.price,
-            quantity: product.quantity,
-          })),
+          return {
+            createdAt: formattedDate,
+            orderNumber: order.orderNumber,
+            customer: order.customer,
+            email: order.email,
+            orderItems: order.orderItems.map((item) => ({
+              product: item.product,
+              price: item.price,
+              quantity: item.quantity,
+            })),
+            totalOrderItemsAmount: order.totalOrderItemsAmount,
+            totalAmount: order.totalAmount,
+            deliveryAddress: {
+              street: order.deliveryAddress.street,
+              postal_code: order.deliveryAddress.postal_code,
+              city: order.deliveryAddress.city,
+              country: order.deliveryAddress.country,
+            },
+            shipped: order.shipped,
+            shippingMethod: {
+              amount_total: order.shippingMethod.amount_total,
+            },
+            shippingStripeId: order.shippingMethod.id,
+            stripePaymentIntentId: order.stripePaymentIntentId,
+          };
+        });
 
-          totalOrderItemsAmount: order.totalOrderItemsAmount,
-          totalAmount: order.totalAmount,
-
-          street: order.deliveryAddress.street,
-          postal_code: order.deliveryAddress.postalCode,
-          city: order.deliveryAddress.city,
-          country: order.deliveryAddress.country,
-
-          shipped: order.shipped,
-          shippingAmount: order.shippingMethod.amount,
-          shippingStripeId: order.shippingMethod.id,
-
-          stripePaymentIntentId: order.stripePaymentIntentId,
-        }));
-
+        // Sort the orderlist - newest to oldest order by date
         const sortedOrderList = orderList.slice().sort((a: Order, b: Order) => {
           //Convert the 'created' string to Date object
-          const dateA = new Date(a.created).getTime();
-          const dateB = new Date(b.created).getTime();
+          const dateA = new Date(a.createdAt).getTime();
+          const dateB = new Date(b.createdAt).getTime();
 
-          //Sort the list - newest order first
           return dateB - dateA;
         });
 
