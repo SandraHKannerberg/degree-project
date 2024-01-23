@@ -1,4 +1,4 @@
-import LogInBtn from "../LogInBtn/LogInBtn";
+import LogInOffcanvas from "../LogInOffcanvas/LogInOffcanvas";
 import Logotype from "../Logotype/Logotype";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import Container from "react-bootstrap/Container";
@@ -36,7 +36,7 @@ function Header() {
           style={{ padding: 0 }}
         >
           <div className="d-flex gap-2">
-            <LogInBtn />
+            <LogInOffcanvas />
             <ShoppingCart />
           </div>
         </Col>

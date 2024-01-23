@@ -1,0 +1,37 @@
+/* Stylesheet for the forms, logIn or sigUp, in the LogInOffcanvas. */
+
+/* Style the inputfields */
+.customize-input {
+  border: 1px solid #85586f;
+  background: rgba(67, 21, 21, 0.1);
+  color: #efe1d1;
+}
+
+.customize-input::placeholder {
+  color: #efe1d1;
+}
+
+.customize-input:focus::placeholder {
+  color: #3f2e3e;
+}
+
+/* Style the menu / tabs */
+.nav-item {
+  background: #85586f;
+  border: none;
+}
+
+.nav-item:visited {
+  color: #efe1d1;
+}
+
+.bg-custom-tab {
+  color: #efe1d1;
+}
+
+.nav-item .active {
+  background: #a78295 !important;
+  color: #efe1d1 !important;
+  font-weight: bold;
+  border: none;
+}
