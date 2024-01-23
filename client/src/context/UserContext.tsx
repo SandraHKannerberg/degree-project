@@ -15,7 +15,7 @@ export interface User {
   isAdmin?: boolean;
 }
 
-export type newUserType = {
+export type NewUserType = {
   firstName: string;
   lastName: string;
   email: string;
@@ -32,9 +32,13 @@ interface IUserContext {
   loggedInUser?: User | null;
   isLoggedIn: boolean;
   authorization: () => void;
-  registrationNewUser: (newUser: newUserType) => Promise<void>;
+  registrationNewUser: (newUser: NewUserType) => Promise<void>;
   login: (user: UserType) => Promise<void>;
   logout: () => {};
+  firstName: string;
+  setFirstName: React.Dispatch<React.SetStateAction<string>>;
+  lastName: string;
+  setLastName: React.Dispatch<React.SetStateAction<string>>;
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
@@ -55,6 +59,10 @@ const defaultValues = {
   registrationNewUser: async () => {},
   login: async () => {},
   logout: async () => {},
+  firstName: "",
+  setFirstName: () => {},
+  lastName: "",
+  setLastName: () => {},
   email: "",
   setEmail: () => {},
   password: "",
@@ -75,6 +83,8 @@ export const useUserContext = () => useContext(UserContext);
 export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [successInfo, setSuccessInfo] = useState("");
@@ -105,7 +115,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   };
 
   // Function to register a new user
-  const registrationNewUser = async (newUser: newUserType) => {
+  const registrationNewUser = async (newUser: NewUserType) => {
     if (newUser) {
       try {
         const response = await fetch("/api/users/register", {
@@ -186,6 +196,10 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         registrationNewUser,
         login,
         logout,
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
         email,
         setEmail,
         password,

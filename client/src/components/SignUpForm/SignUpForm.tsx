@@ -1,15 +1,26 @@
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext, NewUserType } from "../../context/UserContext";
 import { Person, Envelope, Key } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
-import { Button, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import Logotype from "../Logotype/Logotype";
 
-function NewUserForm() {
-  const { registrationNewUser, errorInfo, setErrorInfo, successInfo } =
-    useUserContext();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+//Component with the form to sign up as a new user
+
+function SignUpForm() {
+  const {
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    registrationNewUser,
+    errorInfo,
+    setErrorInfo,
+    successInfo,
+  } = useUserContext();
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -21,11 +32,11 @@ function NewUserForm() {
     setPasswordError(false);
 
     // Collect user data from the log in form (inputs)
-    const newUserData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
+    const newUserData: NewUserType = {
+      firstName,
+      lastName,
+      email,
+      password,
     };
 
     // Check for required fields
@@ -46,6 +57,7 @@ function NewUserForm() {
     await registrationNewUser(newUserData);
   };
 
+  // Timeout for error message to be shown
   useEffect(() => {
     if (errorInfo !== "") {
       setTimeout(() => {
@@ -55,15 +67,33 @@ function NewUserForm() {
   }, [errorInfo]);
 
   return (
-    <>
+    <Container className="h-100 mt-0 p-3">
       {successInfo ? (
-        <h5 className="mt-3">{successInfo}</h5>
+        <h5 className="mt-3" style={{ color: "#74cb88" }}>
+          {successInfo}
+        </h5>
       ) : (
         <>
-          <h6 className="mt-3">Not a member yet?</h6>
-          <span>
-            Sign Up to Club Lotus Harmony and take advantage of our offers.
-          </span>
+          <Row>
+            <Col className="d-flex justify-content-center mt-3">
+              <Logotype />
+            </Col>
+            <h2
+              style={{
+                color: "#EFE1D1",
+                fontFamily: "Julius Sans One",
+                textShadow: "1px 1px 2px pink",
+              }}
+              className="text-center"
+            >
+              Club Lotus Harmony
+            </h2>
+
+            <span className="text-center my-3">
+              Sign Up today and take advantage of our amazing offers.
+            </span>
+          </Row>
+
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
               id="basic-addon1"
@@ -82,7 +112,7 @@ function NewUserForm() {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
-              className={nameError ? "error-border" : ""} // Apply red border if nameError is true
+              className={`customize-input ${nameError ? "error-border" : ""}`}
             />
           </InputGroup>
           <InputGroup className="mt-2 mb-3">
@@ -103,7 +133,7 @@ function NewUserForm() {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
-              className={nameError ? "error-border" : ""} // Apply red border if nameError is true
+              className={`customize-input ${nameError ? "error-border" : ""}`}
             />
           </InputGroup>
           <InputGroup className="mt-2 mb-3">
@@ -124,7 +154,9 @@ function NewUserForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={emailError || errorInfo ? "error-border" : ""} // Apply red border if emailError is true
+              className={`customize-input ${
+                emailError || errorInfo ? "error-border" : ""
+              }`}
             />
           </InputGroup>
           <InputGroup className="mb-3">
@@ -146,11 +178,28 @@ function NewUserForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className={passwordError ? "error-border" : ""} // Apply red border if passwordError is true
+              className={`customize-input ${
+                passwordError || errorInfo ? "error-border" : ""
+              }`}
             />
           </InputGroup>
 
-          <span>{errorInfo}</span>
+          {/* Error message if fields are empty */}
+          {errorInfo !== "" && (
+            <span
+              style={{
+                color: "#dc3545",
+                fontWeight: "bold",
+                backgroundColor: "#EFE1D1",
+                borderRadius: "15px 15px 15px 0",
+                height: "25px",
+              }}
+              className="mx-1 my-1 p-3 d-flex align-items-center"
+            >
+              {errorInfo}
+            </span>
+          )}
+
           <Row className="mx-1">
             <Button
               style={{
@@ -168,8 +217,8 @@ function NewUserForm() {
           </Row>
         </>
       )}
-    </>
+    </Container>
   );
 }
 
-export default NewUserForm;
+export default SignUpForm;
