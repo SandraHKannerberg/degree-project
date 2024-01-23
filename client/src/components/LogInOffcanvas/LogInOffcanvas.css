@@ -15,6 +15,10 @@
   color: #3f2e3e;
 }
 
+.customize-input:hover {
+  cursor: pointer;
+}
+
 /* Style the menu / tabs */
 .nav-item {
   background: #85586f;

@@ -30,6 +30,7 @@ function SignUpForm() {
     setNameError(false);
     setEmailError(false);
     setPasswordError(false);
+    setErrorInfo("");
 
     // Collect user data from the log in form (inputs)
     const newUserData: NewUserType = {

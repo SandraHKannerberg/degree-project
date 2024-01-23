@@ -159,7 +159,7 @@ function LogInForm() {
                 fontWeight: "bold",
                 backgroundColor: "#EFE1D1",
                 borderRadius: "15px 15px 15px 0",
-                height: "25px",
+                minHeight: "25px",
               }}
               className="mx-1 my-1 p-3 d-flex align-items-center"
             >
