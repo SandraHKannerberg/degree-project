@@ -1,13 +1,22 @@
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext, UserType } from "../../context/UserContext";
 import { Envelope, Key } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
-import { Button, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import Logotype from "../Logotype/Logotype";
 
 function LogInForm() {
-  const { loggedInUser, login, logout, errorLogin, setErrorLogin } =
-    useUserContext();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    loggedInUser,
+    login,
+    logout,
+    errorLogin,
+    setErrorLogin,
+    isAdmin,
+  } = useUserContext();
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -17,9 +26,9 @@ function LogInForm() {
     setPasswordError(false);
 
     // Collect user data from the log in form (inputs)
-    const userData = {
-      email: email,
-      password: password,
+    const user: UserType = {
+      email,
+      password,
     };
 
     // Check for required fields
@@ -30,8 +39,15 @@ function LogInForm() {
       return; // Do not proceed with login if required fields are empty
     }
 
+    // Check if the who log in has admin auth
+    isAdmin(user);
+
     // Call login with the user data
-    await login(userData);
+    await login(user);
+
+    // Reset the fields after login
+    setEmail("");
+    setPassword("");
   };
 
   useEffect(() => {
@@ -44,6 +60,9 @@ function LogInForm() {
 
   return (
     <>
+      {/* If already log in - show the name of the user and some info if the user has admin auth */}
+      {loggedInUser?.isAdmin === true ? <p>You are admin</p> : null}
+
       {loggedInUser ? (
         <>
           <p className="mt-3">Welcome {loggedInUser.firstName}!!</p>
@@ -63,8 +82,27 @@ function LogInForm() {
           </Button>
         </>
       ) : (
-        <>
-          <h6 className="my-3">Enter e-mail and password to log in</h6>
+        // If not already logged in - show log in form. Yog log in with e-mail and password
+        <Container className="h-100 mt-0 p-3">
+          <Row>
+            <Col className="d-flex justify-content-center mt-3">
+              <Logotype />
+            </Col>
+            <h2
+              style={{
+                color: "#EFE1D1",
+                fontFamily: "Julius Sans One",
+                textShadow: "1px 1px 2px pink",
+              }}
+              className="text-center"
+            >
+              Club Lotus Harmony
+            </h2>
+          </Row>
+
+          <h6 className="text-center my-3">
+            Enter e-mail and password to log in
+          </h6>
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
               id="basic-addon1"
@@ -83,7 +121,9 @@ function LogInForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={emailError || errorLogin ? "error-border" : ""} // Apply red border if emailError is true
+              className={`customize-input ${
+                emailError || errorLogin ? "error-border" : ""
+              }`}
             />
           </InputGroup>
           <InputGroup className="mb-3">
@@ -105,11 +145,28 @@ function LogInForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className={passwordError || errorLogin ? "error-border" : ""} // Apply red border if passwordError is true
+              className={`customize-input ${
+                passwordError || errorLogin ? "error-border" : ""
+              }`}
             />
           </InputGroup>
+
           {/* If error occurred, write the error message here */}
-          <span>{errorLogin}</span>
+          {errorLogin !== "" && (
+            <span
+              style={{
+                color: "#dc3545",
+                fontWeight: "bold",
+                backgroundColor: "#EFE1D1",
+                borderRadius: "15px 15px 15px 0",
+                height: "25px",
+              }}
+              className="mx-1 my-1 p-3 d-flex align-items-center"
+            >
+              {errorLogin}
+            </span>
+          )}
+
           <Row className="mx-1">
             <Button
               style={{
@@ -125,7 +182,7 @@ function LogInForm() {
               Log In
             </Button>
           </Row>
-        </>
+        </Container>
       )}
     </>
   );
