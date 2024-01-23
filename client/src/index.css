@@ -27,3 +27,8 @@ body {
   text-decoration: none;
   color: #331d2c;
 }
+
+/**CSS Style for red border around inputs if something went wrong*/
+.error-border {
+  border: 2px solid #dc3545 !important;
+}
