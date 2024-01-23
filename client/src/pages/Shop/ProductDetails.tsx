@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Product } from "../../context/ProductContext";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Header from "../../components/Header/Header";
-import Menu from "../../components/Menu/Menu";
 import Footer from "../../components/Footer/Footer";
 import { HeartFill } from "react-bootstrap-icons";
 
@@ -49,7 +48,6 @@ function ProductDetails() {
   return product ? (
     <>
       <Header />
-      <Menu />
       <Container>
         <Row className="d-flex justify-content-center my-5">
           {/* Column 1 with product image */}

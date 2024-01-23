@@ -12,8 +12,8 @@ function ProductList() {
   }, []);
 
   return (
-    <Container fluid style={{ padding: 0 }}>
-      <h1 style={{ textAlign: "center", marginTop: "2rem" }}>Lotus Harmony</h1>
+    <Container fluid style={{ padding: 0, marginTop: "10rem" }}>
+      <h1 style={{ textAlign: "center" }}>Lotus Harmony</h1>
       <Row>
         <p style={{ textAlign: "center", fontStyle: "italic" }}>
           Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga

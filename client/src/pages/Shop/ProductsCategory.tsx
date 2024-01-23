@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Category, useProductContext } from "../../context/ProductContext";
 import { Col, Container, Row } from "react-bootstrap";
 import Header from "../../components/Header/Header";
-import Menu from "../../components/Menu/Menu";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
@@ -57,11 +56,8 @@ function ProductsCategory() {
   return category ? (
     <>
       <Header></Header>
-      <Menu></Menu>
-      <Container fluid style={{ padding: 0 }}>
-        <h1 style={{ textAlign: "center", marginTop: "2rem" }}>
-          {category.title}
-        </h1>
+      <Container fluid style={{ padding: 0, marginTop: "10rem" }}>
+        <h1 style={{ textAlign: "center" }}>{category.title}</h1>
         <Row>
           <p style={{ textAlign: "center", fontStyle: "italic" }}>
             {category.description}
