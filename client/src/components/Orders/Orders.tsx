@@ -3,9 +3,8 @@ import { useOrderContext } from "../../context/OrderContext";
 import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-// Component to show orderhistory.
-// Regular users can see their own orders
-// Admin can see all orders
+// Component to show orderhistory.You need to be logged in to have access to the orderhistory
+// Regular users can see their own orders, not others
 function Orders() {
   const { orders, getOrders, message } = useOrderContext();
   const { loggedInUser } = useUserContext();

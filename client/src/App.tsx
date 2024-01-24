@@ -11,6 +11,7 @@ import ProductDetails from "./pages/Shop/ProductDetails";
 import ProductsCategory from "./pages/Shop/ProductsCategory";
 import UserProvider from "./context/UserContext";
 import User from "./pages/LoggedIn/User";
+import Admin from "./pages/LoggedIn/Admin";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/categories/:id" element={<ProductsCategory />} />
                 <Route path="/:id" element={<ProductDetails />} />
                 <Route path="/mypage" element={<User />} />
+                <Route path="/admin" element={<Admin />} />
               </Routes>
             </OrderProvider>
           </ProductProvider>
