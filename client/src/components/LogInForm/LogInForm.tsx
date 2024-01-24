@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import Logotype from "../Logotype/Logotype";
 
+//Component with the log in form to be able to log in.
 function LogInForm() {
   const {
     email,
@@ -12,7 +13,6 @@ function LogInForm() {
     setPassword,
     loggedInUser,
     login,
-    logout,
     errorLogin,
     setErrorLogin,
     isAdmin,
@@ -66,20 +66,6 @@ function LogInForm() {
       {loggedInUser ? (
         <>
           <p className="mt-3">Welcome {loggedInUser.firstName}!!</p>
-          <Button
-            size="lg"
-            style={{
-              backgroundColor: "#85586f",
-              border: "none",
-              borderRadius: 0,
-              color: "#EFE1D1",
-              fontWeight: 500,
-            }}
-            className="shadow"
-            onClick={logout}
-          >
-            Log Out
-          </Button>
         </>
       ) : (
         // If not already logged in - show log in form. Yog log in with e-mail and password

@@ -1,12 +1,13 @@
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { useUserContext } from "../../context/UserContext";
 import Orders from "../../components/Orders/Orders";
 import { useState } from "react";
+import LogOut from "../../components/LogOut/LogOut";
 
 function User() {
-  const { loggedInUser, logout } = useUserContext();
+  const { loggedInUser } = useUserContext();
   const [showOrders, setShowOrders] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
 
@@ -23,65 +24,59 @@ function User() {
   return (
     <>
       <Header />
-      {loggedInUser ? (
-        <Row
-          className="d-flex mx-3"
-          style={{ marginTop: "10rem", minHeight: "50vh" }}
-        >
-          <Col
-            lg={3}
-            className="p-3"
-            style={{ borderRight: "1px solid #DFD3C3" }}
-          >
-            <Row
-              className="mx-1 zoom-effect"
-              onClick={handleNameClick}
-              style={{ cursor: "pointer" }}
+      <Container
+        className="h-100"
+        style={{ marginTop: "10rem", minHeight: "50vh" }}
+      >
+        {loggedInUser ? (
+          <Row className="d-flex mx-3">
+            <Col
+              lg={3}
+              className="p-3"
+              style={{ borderRight: "1px solid #DFD3C3" }}
             >
-              <h5>{loggedInUser.firstName}</h5>
-            </Row>
-            <Row className="mx-1">
-              <p>{loggedInUser.email}</p>
-            </Row>
-            <Row className="mb-2 mx-1">
-              <Button
-                style={{
-                  backgroundColor: "#A78295",
-                  border: "none",
-                  borderRadius: 0,
-                  color: "#EFE1D1",
-                  fontWeight: 500,
-                }}
-                className="shadow zoom-effect"
-                onClick={handleOrdersButtonClick}
+              <Row
+                className="mx-1 zoom-effect"
+                onClick={handleNameClick}
+                style={{ cursor: "pointer" }}
               >
-                My Orders
-              </Button>
-            </Row>
-            <Row className="mt-2 mx-1">
-              <Button
-                style={{
-                  backgroundColor: "#A78295",
-                  border: "none",
-                  borderRadius: 0,
-                  color: "#EFE1D1",
-                  fontWeight: 500,
-                }}
-                className="shadow zoom-effect"
-                onClick={logout}
-              >
-                Log Out
-              </Button>
-            </Row>
-          </Col>
-          <Col>
-            {showOrders && <Orders />}
-            {showWelcome && <p>Welcome</p>}
-          </Col>
-        </Row>
-      ) : (
-        <p>You need to log in for this page</p>
-      )}
+                <h5>{loggedInUser.firstName}</h5>
+              </Row>
+              <Row className="mx-1">
+                <p>{loggedInUser.email}</p>
+              </Row>
+              <Row className="mb-2 mx-1">
+                <Button
+                  style={{
+                    backgroundColor: "#A78295",
+                    border: "none",
+                    borderRadius: 0,
+                    color: "#EFE1D1",
+                    fontWeight: 500,
+                  }}
+                  className="shadow zoom-effect"
+                  onClick={handleOrdersButtonClick}
+                >
+                  My Orders
+                </Button>
+              </Row>
+              <Row className="mt-2 mx-1">
+                <LogOut></LogOut>
+              </Row>
+            </Col>
+            <Col>
+              {showOrders && <Orders />}
+              {showWelcome && <p>Welcome</p>}
+            </Col>
+          </Row>
+        ) : (
+          <Row>
+            <p className="text-center">
+              Oops sorry, no access! You need to log in
+            </p>
+          </Row>
+        )}
+      </Container>
       <Footer />
     </>
   );
