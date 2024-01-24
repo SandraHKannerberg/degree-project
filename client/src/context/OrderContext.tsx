@@ -27,7 +27,8 @@ export interface ShippingMethod {
 }
 
 export interface Order {
-  createdAt: string;
+  _id: string; // MongoDB id
+  createdAt: string; // Date
   orderNumber: number;
   customer: string; // Name
   email: string;
@@ -46,6 +47,7 @@ export interface IOrderContext {
   message: string;
   setMessage: Dispatch<SetStateAction<string>>;
   getOrders: () => void;
+  markAsShipped: (id: string) => void;
 }
 
 const defaultValues = {
@@ -54,6 +56,7 @@ const defaultValues = {
   message: "",
   setMessage: () => {},
   getOrders: () => {},
+  markAsShipped: () => {},
 };
 
 export const OrderContext = createContext<IOrderContext>(defaultValues);
@@ -86,6 +89,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
           const formattedDate = format(new Date(order.createdAt), "yyyy-MM-dd");
 
           return {
+            _id: order._id,
             createdAt: formattedDate,
             orderNumber: order.orderNumber,
             customer: order.customer,
@@ -128,6 +132,37 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
+  // Function to handle an order as shipped.
+  const markAsShipped = async (id: string) => {
+    try {
+      const response = await fetch(`/api/orders/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          shipped: true,
+        }),
+      });
+
+      // Respond from server is OK (200) Update shipped boolean to true for the specific order
+      if (response.status === 200) {
+        //Map through orders to find specific order by id
+        const updatedOrders = orders.map((order) =>
+          order._id === id ? { ...order, shipped: true } : order
+        );
+
+        // Update orders with the new information
+        setOrders(updatedOrders);
+      } else {
+        // Hantera fel - SKRIV UT EN ALERT PÅ SIDAN !!!!!!!
+        console.error("Failed to mark as shipped:", response.status);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -136,6 +171,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
         message,
         setMessage,
         getOrders,
+        markAsShipped,
       }}
     >
       {children}
