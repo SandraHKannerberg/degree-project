@@ -50,6 +50,10 @@ interface IUserContext {
   setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
   errorLogin: string;
   setErrorLogin: React.Dispatch<React.SetStateAction<string>>;
+  errorEmailInfo: string;
+  setErrorEmailInfo: React.Dispatch<React.SetStateAction<string>>;
+  errorPswInfo: string;
+  setErrorPswInfo: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultValues = {
@@ -74,6 +78,10 @@ const defaultValues = {
   setErrorInfo: () => {},
   errorLogin: "",
   setErrorLogin: () => {},
+  errorEmailInfo: "",
+  setErrorEmailInfo: () => {},
+  errorPswInfo: "",
+  setErrorPswInfo: () => {},
 };
 
 export const UserContext = createContext<IUserContext>(defaultValues);
@@ -90,6 +98,8 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const [successInfo, setSuccessInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
+  const [errorEmailInfo, setErrorEmailInfo] = useState("");
+  const [errorPswInfo, setErrorPswInfo] = useState("");
 
   // Function to check if someone is logged in
   const authorization = async () => {
@@ -134,7 +144,14 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         }
 
         if (response.status === 409) {
-          setErrorInfo("*This email is already registered.");
+          setErrorEmailInfo("*This email is already registered.");
+          setEmail("");
+        }
+
+        if (response.status === 400) {
+          setErrorPswInfo(
+            "*Password require min 6 characters of which at least one letter and at least one number"
+          );
         }
       } catch (err) {
         console.log("ERROR-MESSAGE:", err);
@@ -211,6 +228,10 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         setErrorInfo,
         errorLogin,
         setErrorLogin,
+        errorEmailInfo,
+        setErrorEmailInfo,
+        errorPswInfo,
+        setErrorPswInfo,
       }}
     >
       {children}

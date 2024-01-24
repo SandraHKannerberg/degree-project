@@ -20,17 +20,27 @@ function SignUpForm() {
     errorInfo,
     setErrorInfo,
     successInfo,
+    setSuccessInfo,
+    errorEmailInfo,
+    setErrorEmailInfo,
+    errorPswInfo,
+    setErrorPswInfo,
   } = useUserContext();
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const handleRegistrationNewUser = async () => {
     // Reset error states
     setNameError(false);
     setEmailError(false);
     setPasswordError(false);
+    setConfirmPasswordError(false);
     setErrorInfo("");
+    setErrorEmailInfo("");
+    setErrorPswInfo("");
 
     // Collect user data from the log in form (inputs)
     const newUserData: NewUserType = {
@@ -40,7 +50,7 @@ function SignUpForm() {
       password,
     };
 
-    // Check for required fields
+    // Check if required fields are empty
     if (
       firstName === "" ||
       lastName === "" ||
@@ -50,25 +60,69 @@ function SignUpForm() {
       setNameError(firstName === "" || lastName === "");
       setEmailError(email === "");
       setPasswordError(password === "");
+      setConfirmPasswordError(confirmPassword === "");
       setErrorInfo("*Required Fields! Can't be empty");
       return; // Do not proceed registration if required fields are empty
     }
 
-    // Call login with the user data
+    // Check if passwords inputs match
+    if (password !== confirmPassword) {
+      setErrorPswInfo("Password do not match");
+      setPassword("");
+      setConfirmPassword("");
+      return; // Do not proceed registration if password and confirm password do not match
+    }
+
+    // Call registrationNewUser with the new user data
     await registrationNewUser(newUserData);
+
+    // Reset fields after registration
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
   };
 
-  // Timeout for error message to be shown
+  // Timeout for error message to be shown if inputs are empty
   useEffect(() => {
     if (errorInfo !== "") {
       setTimeout(() => {
         setErrorInfo("");
-      }, 5000);
+      }, 5000); // 5sec
     }
   }, [errorInfo]);
 
+  // Timeout for error message to be shown if email are wrong or taken
+  useEffect(() => {
+    if (errorEmailInfo !== "") {
+      setTimeout(() => {
+        setErrorEmailInfo("");
+      }, 5000); // 5sec
+    }
+  }, [errorEmailInfo]);
+
+  // Timeout for error message to be shown if password are wrong or do not match
+  useEffect(() => {
+    if (errorPswInfo !== "") {
+      setTimeout(() => {
+        setErrorPswInfo("");
+      }, 5000); // 5sec
+    }
+  }, [errorPswInfo]);
+
+  // Timeout for success message to be shown
+  useEffect(() => {
+    if (successInfo !== "") {
+      setTimeout(() => {
+        setSuccessInfo("");
+      }, 8000); // 8sec
+    }
+  }, [successInfo]);
+
   return (
     <Container className="h-100 mt-0 p-3">
+      {/* If registration success show Welcome text here */}
       {successInfo ? (
         <h5 className="mt-3" style={{ color: "#74cb88" }}>
           {successInfo}
@@ -95,6 +149,7 @@ function SignUpForm() {
             </span>
           </Row>
 
+          {/* Input to enter firstname */}
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
               id="basic-addon1"
@@ -116,6 +171,8 @@ function SignUpForm() {
               className={`customize-input ${nameError ? "error-border" : ""}`}
             />
           </InputGroup>
+
+          {/* Input to enter lastname */}
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
               id="basic-addon1"
@@ -137,6 +194,8 @@ function SignUpForm() {
               className={`customize-input ${nameError ? "error-border" : ""}`}
             />
           </InputGroup>
+
+          {/* Input to enter email */}
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
               id="basic-addon1"
@@ -156,10 +215,12 @@ function SignUpForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className={`customize-input ${
-                emailError || errorInfo ? "error-border" : ""
+                emailError || errorEmailInfo ? "error-border" : ""
               }`}
             />
           </InputGroup>
+
+          {/* Input to choose password */}
           <InputGroup className="mb-3">
             <InputGroup.Text
               id="basic-addon1"
@@ -180,9 +241,39 @@ function SignUpForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               className={`customize-input ${
-                passwordError || errorInfo ? "error-border" : ""
+                passwordError || errorPswInfo ? "error-border" : ""
               }`}
             />
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <InputGroup.Text
+              id="basic-addon1"
+              style={{
+                backgroundColor: "#3F2E3E",
+                color: "#EFE1D1",
+                border: "none",
+              }}
+            >
+              <Key />
+            </InputGroup.Text>
+
+            {/* Input to confirm choosen password */}
+            <Form.Control
+              placeholder="Confirm Password"
+              aria-label="Confirm Password"
+              aria-describedby="basic-addon1"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className={`customize-input ${
+                confirmPasswordError || errorPswInfo ? "error-border" : ""
+              }`}
+            />
+            <p style={{ fontSize: "12px" }}>
+              Password require min 6 characters of which at least one letter and
+              at least one number
+            </p>
           </InputGroup>
 
           {/* Error message if fields are empty */}
@@ -191,9 +282,10 @@ function SignUpForm() {
               style={{
                 color: "#dc3545",
                 fontWeight: "bold",
+                fontSize: "14px",
                 backgroundColor: "#EFE1D1",
                 borderRadius: "15px 15px 15px 0",
-                height: "25px",
+                minHeight: "25px",
               }}
               className="mx-1 my-1 p-3 d-flex align-items-center"
             >
@@ -201,6 +293,41 @@ function SignUpForm() {
             </span>
           )}
 
+          {/* Message if email error occured */}
+          {errorEmailInfo !== "" && (
+            <span
+              style={{
+                color: "#dc3545",
+                fontWeight: "bold",
+                fontSize: "14px",
+                backgroundColor: "#EFE1D1",
+                borderRadius: "15px 15px 15px 0",
+                minHeight: "25px",
+              }}
+              className="mx-1 my-1 p-3 d-flex align-items-center"
+            >
+              {errorEmailInfo}
+            </span>
+          )}
+
+          {/* Message if password error occured */}
+          {errorPswInfo !== "" && (
+            <span
+              style={{
+                color: "#dc3545",
+                fontWeight: "bold",
+                fontSize: "14px",
+                backgroundColor: "#EFE1D1",
+                borderRadius: "15px 15px 15px 0",
+                minHeight: "25px",
+              }}
+              className="mx-1 my-1 p-3 d-flex align-items-center"
+            >
+              {errorPswInfo}
+            </span>
+          )}
+
+          {/* Button to Submit the registration */}
           <Row className="mx-1">
             <Button
               style={{
