@@ -3,9 +3,23 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { useUserContext } from "../../context/UserContext";
 import Orders from "../../components/Orders/Orders";
+import { useState } from "react";
 
 function User() {
   const { loggedInUser, logout } = useUserContext();
+  const [showOrders, setShowOrders] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  const handleOrdersButtonClick = () => {
+    setShowOrders(true);
+    setShowWelcome(false);
+  };
+
+  const handleNameClick = () => {
+    setShowOrders(false);
+    setShowWelcome(true);
+  };
+
   return (
     <>
       <Header />
@@ -19,8 +33,14 @@ function User() {
             className="p-3"
             style={{ borderRight: "1px solid #DFD3C3" }}
           >
-            <Row className="mx-1">
+            <Row
+              className="mx-1 zoom-effect"
+              onClick={handleNameClick}
+              style={{ cursor: "pointer" }}
+            >
               <h5>{loggedInUser.firstName}</h5>
+            </Row>
+            <Row className="mx-1">
               <p>{loggedInUser.email}</p>
             </Row>
             <Row className="mb-2 mx-1">
@@ -32,8 +52,8 @@ function User() {
                   color: "#EFE1D1",
                   fontWeight: 500,
                 }}
-                className="shadow"
-                onClick={logout}
+                className="shadow zoom-effect"
+                onClick={handleOrdersButtonClick}
               >
                 My Orders
               </Button>
@@ -47,7 +67,7 @@ function User() {
                   color: "#EFE1D1",
                   fontWeight: 500,
                 }}
-                className="shadow"
+                className="shadow zoom-effect"
                 onClick={logout}
               >
                 Log Out
@@ -55,7 +75,8 @@ function User() {
             </Row>
           </Col>
           <Col>
-            <Orders />
+            {showOrders && <Orders />}
+            {showWelcome && <p>Welcome</p>}
           </Col>
         </Row>
       ) : (
