@@ -148,7 +148,7 @@ const verifySession = async (req, res) => {
       shipped: false,
       shippingMethod: {
         shipping: session.shipping_cost.display_name,
-        amount_total: session.shipping_cost.amount_total,
+        amount_total: Math.floor(session.shipping_cost.amount_total),
         stripeShippingId: session.shipping_cost.shipping_rate,
       },
       stripePaymentIntentId: session.payment_intent,

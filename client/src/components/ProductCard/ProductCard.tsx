@@ -1,15 +1,13 @@
 import { Product } from "../../context/ProductContext";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useCartContext } from "../../context/CartContext";
+import AddToCartBtn from "../AddToCartBtn/AddToCartBtn";
 
 type ProductProps = {
   product: Product;
 };
 
 function ProductCard({ product }: ProductProps) {
-  const { addToCart } = useCartContext();
-
   // Check in stock status
   function inStockStatus(inStock: number) {
     let status: string;
@@ -31,7 +29,7 @@ function ProductCard({ product }: ProductProps) {
 
   return (
     <Card className="h-100 shadow">
-      <Link to={`/${product._id}`} key={product._id}>
+      <Link to={`/product/${product._id}`} key={product._id}>
         <Card.Img variant="top" src={product.image} />
       </Link>
       <Card.Body className="d-flex flex-column">
@@ -44,25 +42,19 @@ function ProductCard({ product }: ProductProps) {
         </Card.Text>
         <Row className="justify-content-between">
           <Col xs={6}>
-            <Card.Text>{inStockStatus(product.inStock)}</Card.Text>
+            <Card.Text style={{ fontSize: "12px" }}>
+              {inStockStatus(product.inStock)}
+            </Card.Text>
           </Col>
-          <Col xs={6} className="d-flex justify-content-end">
-            <Button
-              size="sm"
-              style={{
-                backgroundColor: "#85586f",
-                border: "none",
-                borderRadius: 0,
-                color: "#EFE1D1",
-                fontWeight: 500,
-              }}
-              onClick={() =>
-                addToCart(product._id, product.title, product.price)
-              }
-            >
-              Add to cart
-            </Button>
-          </Col>
+
+          {/* Don't show AddToCart-button if inStock status are red. Then show a infotext */}
+          {product.inStock > 3 ? (
+            <Col xs={6} className="d-flex justify-content-end">
+              <AddToCartBtn product={product}></AddToCartBtn>
+            </Col>
+          ) : (
+            <span>Available soon</span>
+          )}
         </Row>
       </Card.Body>
     </Card>

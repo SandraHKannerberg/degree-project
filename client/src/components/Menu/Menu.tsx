@@ -3,7 +3,7 @@ import { useProductContext } from "../../context/ProductContext";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-//Menu with categories and link to each category
+//Menu with categories and link to each category. The menu are imported in Header
 function Menu() {
   const { categories, getAllCategories } = useProductContext();
 
@@ -17,7 +17,10 @@ function Menu() {
         <Navbar
           expand={expand}
           className="mb-3"
-          style={{ backgroundColor: "#DFD3C3" }}
+          style={{
+            backgroundColor: "#DFD3C3",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
           key={index}
         >
           <Container fluid>

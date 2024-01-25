@@ -1,7 +1,5 @@
-const { UserModel } = require("../user/user.model");
+const { UserModel, UserCreateValidationSchema } = require("../user/user.model");
 const bcrypt = require("bcrypt");
-const { initStripe } = require("../../stripe");
-const stripe = initStripe();
 
 // Register a new user
 async function registerNewUser(req, res) {
@@ -9,6 +7,13 @@ async function registerNewUser(req, res) {
   const existingUser = await UserModel.findOne({ email: req.body.email });
   if (existingUser) {
     return res.status(409).json("Email already registred");
+  }
+
+  // Validate the choosen password against the defined schema
+  const { error } = UserCreateValidationSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json(error.details.map((detail) => detail.message));
   }
 
   const user = new UserModel(req.body);
@@ -19,16 +24,6 @@ async function registerNewUser(req, res) {
 
     // Save new user to MongoDB
     await user.save();
-
-    // // Create a customer in Stripe
-    // const stripeCustomer = await stripe.customers.create({
-    //   email: user.email,
-    //   name: user.firstName + " " + user.lastName,
-    // });
-
-    // // Attach the Stripe customer ID to the user in MongoDB
-    // user.stripeCustomerId = stripeCustomer.id;
-    // await user.save();
 
     // Delete the password before user info are send as 201 status
     const jsonUser = user.toJSON();

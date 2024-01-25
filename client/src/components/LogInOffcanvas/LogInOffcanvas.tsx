@@ -12,9 +12,9 @@ import "./LogInOffcanvas.css";
 // Click on the Person/user icon and an offcanvas to login will appear
 function LogInOffcanvas() {
   const [show, setShow] = useState(false);
-  const { loggedInUser } = useUserContext();
+  const { loggedInUser, logout } = useUserContext();
 
-  // Open vs. close the log in offcanvas
+  // Open vs. close the offcanvas
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -26,36 +26,50 @@ function LogInOffcanvas() {
         {loggedInUser ? (
           loggedInUser.isAdmin ? (
             <>
-              {/* Logged in -  admin auth */}
-              <span>
+              {/*Show this when logged in as admin */}
+              <Button
+                onClick={logout}
+                style={{ background: "none", border: "none" }}
+                className="zoom-effect"
+              >
+                Log out
+              </Button>
+
+              {/* A button with a gear. This is now a link to the adminpanel */}
+              <Button
+                className="zoom-effect"
+                style={{ background: "none", border: "none" }}
+              >
                 <Link
-                  to="/mypage"
+                  to="/admin"
                   className="menu-link"
                   style={{
                     color: "#EFE1D1",
                   }}
                 >
-                  {loggedInUser.firstName}
+                  <PersonFillGear
+                    style={{
+                      border: "none",
+                      borderRadius: 0,
+                      color: "#EFE1D1",
+                      fontSize: "2rem",
+                    }}
+                  />
                 </Link>
-              </span>
-              <Button
-                onClick={handleShow}
-                style={{ background: "none", border: "none" }}
-              >
-                <PersonFillGear
-                  style={{
-                    border: "none",
-                    borderRadius: 0,
-                    color: "#EFE1D1",
-                    fontSize: "2rem",
-                  }}
-                />
               </Button>
             </>
           ) : (
             <>
-              {/* Logged in - regular user */}
-              <span>
+              {/* Show this when logged in as a regular user */}
+              <Button
+                onClick={logout}
+                style={{ background: "none", border: "none" }}
+              >
+                Log out
+              </Button>
+
+              {/* The button is now filled with a checkmark and is a link to the memberpage */}
+              <Button style={{ background: "none", border: "none" }}>
                 <Link
                   to="/mypage"
                   className="menu-link"
@@ -63,27 +77,21 @@ function LogInOffcanvas() {
                     color: "#EFE1D1",
                   }}
                 >
-                  {loggedInUser.firstName}
+                  <PersonFillCheck
+                    style={{
+                      border: "none",
+                      borderRadius: 0,
+                      color: "#EFE1D1",
+                      fontSize: "2rem",
+                    }}
+                  />
                 </Link>
-              </span>
-              <Button
-                onClick={handleShow}
-                style={{ background: "none", border: "none" }}
-              >
-                <PersonFillCheck
-                  style={{
-                    border: "none",
-                    borderRadius: 0,
-                    color: "#EFE1D1",
-                    fontSize: "2rem",
-                  }}
-                />
               </Button>
             </>
           )
         ) : (
           <>
-            {/* Not logged in */}
+            {/* Show this when not logged in. Click on the button and the offcanvas to login or sigup shows */}
             <Button
               onClick={handleShow}
               style={{ background: "none", border: "none" }}
@@ -101,7 +109,7 @@ function LogInOffcanvas() {
         )}
       </Col>
 
-      {/* Offcanvas with login-form or register new user-form depending if you want to log in or sign up */}
+      {/* Offcanvas with login-form or signup-form to register new user depending if you want to log in or sign up */}
       <Offcanvas
         show={show}
         onHide={handleClose}

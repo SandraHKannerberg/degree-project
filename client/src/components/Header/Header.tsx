@@ -4,7 +4,9 @@ import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Menu from "../Menu/Menu";
 
+// Header component with Logotype, User-icon, Shoppingcart and menu of categories
 function Header() {
   return (
     <Container
@@ -12,9 +14,8 @@ function Header() {
       style={{
         backgroundColor: "#A78295",
         height: "5rem",
-        padding: 0,
-        margin: 0,
       }}
+      className="p-0 mb-5 fixed-top"
     >
       <Row
         style={{
@@ -41,6 +42,7 @@ function Header() {
           </div>
         </Col>
       </Row>
+      <Menu />
     </Container>
   );
 }

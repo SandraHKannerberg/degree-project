@@ -32,3 +32,12 @@ body {
 .error-border {
   border: 2px solid #dc3545 !important;
 }
+
+/**CSS Style for zoom-effect when hover*/
+.zoom-effect {
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom-effect:hover {
+  transform: scale(1.1);
+}
