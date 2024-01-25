@@ -21,9 +21,15 @@ function WelcomeUser() {
             }}
           >
             <Row className="p-3">
-              <h1 className="text-center mt-4">
-                Namaste <Heart /> {loggedInUser.firstName}{" "}
-                {loggedInUser.lastName}
+              <h1
+                className="text-center mt-4"
+                style={{ textShadow: "pink 1px 0 10px" }}
+              >
+                Namaste{" "}
+                <span style={{ filter: "drop-shadow(0 0 0.75rem crimson)" }}>
+                  <Heart />
+                </span>{" "}
+                {loggedInUser.firstName} {loggedInUser.lastName}
               </h1>
             </Row>
           </Container>

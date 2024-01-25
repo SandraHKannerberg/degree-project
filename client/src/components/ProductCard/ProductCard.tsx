@@ -42,11 +42,19 @@ function ProductCard({ product }: ProductProps) {
         </Card.Text>
         <Row className="justify-content-between">
           <Col xs={6}>
-            <Card.Text>{inStockStatus(product.inStock)}</Card.Text>
+            <Card.Text style={{ fontSize: "12px" }}>
+              {inStockStatus(product.inStock)}
+            </Card.Text>
           </Col>
-          <Col xs={6} className="d-flex justify-content-end">
-            <AddToCartBtn product={product}></AddToCartBtn>
-          </Col>
+
+          {/* Don't show AddToCart-button if inStock status are red. Then show a infotext */}
+          {product.inStock > 3 ? (
+            <Col xs={6} className="d-flex justify-content-end">
+              <AddToCartBtn product={product}></AddToCartBtn>
+            </Col>
+          ) : (
+            <span>Available soon</span>
+          )}
         </Row>
       </Card.Body>
     </Card>
