@@ -10,8 +10,9 @@ import Confirmation from "./pages/Confirmation/Confirmation";
 import ProductDetails from "./pages/Shop/ProductDetails";
 import ProductsCategory from "./pages/Shop/ProductsCategory";
 import UserProvider from "./context/UserContext";
-import User from "./pages/LoggedIn/User";
-import Admin from "./pages/LoggedIn/Admin";
+import User from "./pages/User/User";
+import Admin from "./pages/Admin/Admin";
+import Orders from "./components/Orders/Orders";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/categories/:id" element={<ProductsCategory />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/mypage" element={<User />} />
+                <Route path="/mypage/orders" element={<Orders />} />
                 <Route path="/admin" element={<Admin />} />
               </Routes>
             </OrderProvider>
