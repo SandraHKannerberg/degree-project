@@ -3,6 +3,7 @@ import { useUserContext } from "../../context/UserContext";
 import LogOut from "../LogOut/LogOut";
 import { Link } from "react-router-dom";
 
+// Sidebar as a menu when logged in
 function Sidebar() {
   const { loggedInUser } = useUserContext();
   return (
@@ -21,24 +22,64 @@ function Sidebar() {
             </Link>
           </Row>
           <Row className="mx-1">
-            <p>{loggedInUser.email}</p>
+            {loggedInUser.isAdmin ? (
+              <p>You are admin</p>
+            ) : (
+              <p>{loggedInUser.email}</p>
+            )}
           </Row>
           <Row className="mb-2 mx-1">
-            <Link to={"/mypage/orders"} style={{ padding: 0 }}>
-              <Button
-                style={{
-                  backgroundColor: "#A78295",
-                  border: "none",
-                  borderRadius: 0,
-                  color: "#EFE1D1",
-                  fontWeight: 500,
-                  width: "100%",
-                }}
-                className="shadow zoom-effect"
-              >
-                My Orders
-              </Button>
-            </Link>
+            {loggedInUser.isAdmin ? (
+              <>
+                <Link to={"/admin/orders"} style={{ padding: 0 }}>
+                  <Button
+                    style={{
+                      backgroundColor: "#A78295",
+                      border: "none",
+                      borderRadius: 0,
+                      color: "#EFE1D1",
+                      fontWeight: 500,
+                      width: "100%",
+                    }}
+                    className="shadow zoom-effect"
+                  >
+                    Managing Orders
+                  </Button>
+                </Link>
+                <Link to={"/admin/products"} style={{ padding: 0 }}>
+                  <Button
+                    style={{
+                      backgroundColor: "#A78295",
+                      border: "none",
+                      borderRadius: 0,
+                      color: "#EFE1D1",
+                      fontWeight: 500,
+                      width: "100%",
+                      marginTop: "10px",
+                    }}
+                    className="shadow zoom-effect"
+                  >
+                    Managing Products
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <Link to={"/mypage/orders"} style={{ padding: 0 }}>
+                <Button
+                  style={{
+                    backgroundColor: "#A78295",
+                    border: "none",
+                    borderRadius: 0,
+                    color: "#EFE1D1",
+                    fontWeight: 500,
+                    width: "100%",
+                  }}
+                  className="shadow zoom-effect"
+                >
+                  My Orders
+                </Button>
+              </Link>
+            )}
           </Row>
           <Row className="mt-2 mx-1">
             <LogOut></LogOut>
