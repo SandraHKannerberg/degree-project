@@ -1,57 +1,69 @@
-import { useUserContext } from "../../context/UserContext";
-import { useProductContext } from "../../context/ProductContext";
-import { useEffect, useState } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import {
+  Container,
+  Col,
+  Table,
+  Accordion,
+  Button,
+  Form,
+  Modal,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
-import AddProductForm from "../AddProductForm/AddProductForm";
+import { useUserContext } from "../../context/UserContext";
+import { useProductContext } from "../../context/ProductContext";
 
-// Component for managing products
-// You need to be logged in with admin auth to be able to access this productlist
-// As an admin you can add anew product, edit existing product and delete existing product
 function ManagingProducts() {
   const { loggedInUser } = useUserContext();
-
   const {
     products,
     getAllProducts,
-    // updateProductInDatabase,
+    updateProductInDatabase,
     deleteProductFromDatabase,
-    // title,
-    // setTitle,
-    // image,
-    // setImage,
-    // brand,
-    // setBrand,
-    // description,
-    // setDescription,
-    // price,
-    // setPrice,
-    // inStock,
-    // setInStock,
-    // careAdvice,
-    // setCareAdvice,
-    // features,
-    // setFeatures,
-    // categories,
-    // setCategories,
   } = useProductContext();
 
-  // States for modal in the context of delete
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [showComplete, setShowComplete] = useState(false);
+  const [editProduct, setEditProduct] = useState({
+    _id: "",
+    title: "",
+    brand: "",
+    description: "",
+    price: 0,
+    image: "",
+    inStock: 0,
+    careAdvice: "",
+    features: [],
+  });
 
-  // Handle the first modal that requires confirm before delete
-  const handleCloseConfirm = () => setShowConfirm(false);
-  const handleShowConfirm = () => setShowConfirm(true);
-
-  // Handle the second modal to show confirm after delete
-  const handleCloseComplete = () => setShowComplete(false);
-  const handleShowComplete = () => setShowComplete(true);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [deleteProductId, setDeleteProductId] = useState("");
+  // const [showConfirmEdit, setShowConfirmEdit] = useState(false);
 
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  // Handle close of the confirm modal
+  const handleCloseConfirmDelete = () => {
+    setShowConfirmDelete(false);
+    setDeleteProductId("");
+  };
+
+  // Handle show of the confirm modal before delete
+  const handleShowConfirmDelete = (id: string) => {
+    setShowConfirmDelete(true);
+    setDeleteProductId(id);
+  };
+
+  // const handleCloseConfirmEdit = () => setShowConfirmEdit(false);
+  // const handleShowConfirmEdit = () => setShowConfirmEdit(true);
+
+  // const handleEdit = async (
+  //   event: React.MouseEvent<HTMLElement>,
+  //   id: string
+  // ) => {
+  //   // Implementera logiken för att hantera redigeringen av produkten med det angivna ID:et
+  //   console.log("Edit product with ID:", id, "New values:", editProduct);
+  // };
 
   //Eventlistener on delete button
   const handleDelete = async (
@@ -59,104 +71,180 @@ function ManagingProducts() {
     id: string
   ) => {
     event.preventDefault();
+
+    if (id) {
+      deleteProductFromDatabase(id);
+      handleCloseConfirmDelete();
+    }
+
     deleteProductFromDatabase(id);
 
-    // Close the first modal and show the next one to confirm the delete
-    handleCloseConfirm();
-    handleShowComplete();
+    // Close the confirm modal after delete
+    handleCloseConfirmDelete();
+  };
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setEditProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+    }));
   };
 
   return (
-    <>
+    <Container className="d-flex justify-content-center">
       {loggedInUser?.isAdmin && (
         <Container fluid className="mx-1">
-          <h1>Products</h1>
-          <Link to={"/admin"} style={{ padding: 0 }}>
-            Go back
+          <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
+            <Col className="mt-3 mx-3">
+              <h5>Go back</h5>
+            </Col>
           </Link>
 
-          <Row>
-            <AddProductForm></AddProductForm>
-          </Row>
-
-          <Row>
-            {products.map((product, index) => (
-              <Row key={index} className="mb-3">
-                <Col>
-                  {" "}
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    style={{ maxWidth: "50px", maxHeight: "50px" }}
-                  />
-                </Col>
-                <Col>{product.title}</Col>
-                <Col>{product.brand}</Col>
-                <Col>{product.description}</Col>
-                <Col>{product.price} SEK</Col>
-                <Col>{product.inStock}</Col>
-                <Col>{product.careAdvice}</Col>
-                <Col>{product.features}</Col>
-                <Col>{product.categories}</Col>
-                <Col>
-                  <Button variant="dark">
-                    <Pen></Pen>
-                  </Button>
-                  <Button variant="danger" onClick={handleShowConfirm}>
-                    <Trash></Trash>
-                  </Button>
-                </Col>
-
-                {/* Modal to require confirm before delete */}
-                <Modal
-                  show={showConfirm}
-                  onHide={handleCloseConfirm}
-                  backdrop="static"
-                  keyboard={false}
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Confirm delete</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    Are you sure you want to delete this product? The action is
-                    permanent and can't be undone.
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseConfirm}>
-                      Close
+          <Accordion>
+            {products.map((product) => (
+              <Accordion.Item key={product._id} eventKey={product._id}>
+                <Accordion.Header>
+                  <Col className="d-flex align-items-center gap-2">
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      style={{ maxWidth: "70px", maxHeight: "70px" }}
+                    />
+                    <Col className="d-flex flex-column">
+                      <span>{product.title}</span>
+                      <span style={{ fontSize: "14px" }}>
+                        Id: {product._id}
+                      </span>
+                    </Col>
+                  </Col>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <Table striped bordered hover>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            name="image-url"
+                            placeholder={"Image URL..." || product.image}
+                            value={editProduct.image || product.image}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            name="title"
+                            placeholder={"Title..." || product.title}
+                            value={editProduct.title || product.title}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            name="brand"
+                            placeholder={"Brand..." || product.brand}
+                            value={editProduct.brand || product.brand}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            name="description"
+                            placeholder={
+                              "Description..." || product.description
+                            }
+                            value={
+                              editProduct.description || product.description
+                            }
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="number"
+                            name="price"
+                            placeholder={"Price..." || product.price}
+                            value={editProduct.price || product.price}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="number"
+                            name="inStock"
+                            placeholder={"InStock..." || product.inStock}
+                            value={editProduct.inStock || product.inStock}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            name="careadvide"
+                            value={editProduct.careAdvice || product.careAdvice}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            type="text"
+                            name="features"
+                            placeholder={"Features..." || product.features}
+                            value={editProduct.features || product.features}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                  <Col className="d-flex justify-content-end gap-2">
+                    <Button
+                      variant="dark"
+                      // onClick={(e) => handleEdit(e, product._id)}
+                    >
+                      <Pen />
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={(e) => handleDelete(e, product._id)}
+                      onClick={() => handleShowConfirmDelete(product._id)}
                     >
-                      Yes, delete
+                      <Trash />
                     </Button>
-                  </Modal.Footer>
-                </Modal>
-
-                {/* Modal to confirm that the delete was successfull */}
-                <Modal
-                  show={showComplete}
-                  onHide={handleCloseComplete}
-                  backdrop="static"
-                  keyboard={false}
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Deleted</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>The product are now deleted</Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseComplete}>
-                      OK
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              </Row>
+                  </Col>
+                </Accordion.Body>
+              </Accordion.Item>
             ))}
-          </Row>
+          </Accordion>
+
+          {/* Conform delete modal */}
+          <Modal show={showConfirmDelete} onHide={handleCloseConfirmDelete}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this product with id{" "}
+              {deleteProductId}?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseConfirmDelete}>
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => handleDelete(e, deleteProductId)}
+              >
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Container>
       )}
-    </>
+    </Container>
   );
 }
 
