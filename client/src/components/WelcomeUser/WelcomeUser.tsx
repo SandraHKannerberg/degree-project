@@ -17,8 +17,10 @@ function WelcomeUser() {
               backgroundImage: `url(${youryogaspace})`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
               minHeight: "80vh",
             }}
+            className="d-flex justify-content-center"
           >
             <Row className="p-3">
               <h1

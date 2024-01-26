@@ -9,7 +9,7 @@ function WelcomeAdmin() {
         fluid
         style={{
           backgroundImage: `url(${admingear})`,
-          backgroundSize: "cover",
+          backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           minHeight: "80vh",
         }}
