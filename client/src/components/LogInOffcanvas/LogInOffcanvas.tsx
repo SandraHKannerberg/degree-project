@@ -75,13 +75,6 @@ function LogInOffcanvas() {
       {/* When logged in as admin - show filled Person icon with a gear. */}
       {loggedInUser?.isAdmin ? (
         <Col>
-          <Button
-            onClick={logout}
-            style={{ background: "none", border: "none" }}
-          >
-            Log out
-          </Button>
-
           <Button style={{ background: "none", border: "none" }}>
             <Link
               to="/admin"
