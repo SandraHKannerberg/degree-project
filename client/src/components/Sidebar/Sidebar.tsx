@@ -1,6 +1,5 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
-import LogOut from "../LogOut/LogOut";
 import { Link } from "react-router-dom";
 
 // Sidebar as a menu when logged in
@@ -23,7 +22,7 @@ function Sidebar() {
           </Row>
           <Row className="mx-1">
             {loggedInUser.isAdmin ? (
-              <p>You are admin</p>
+              <p>Welcome to adminpanel</p>
             ) : (
               <p>{loggedInUser.email}</p>
             )}
@@ -62,6 +61,22 @@ function Sidebar() {
                     Managing Products
                   </Button>
                 </Link>
+                <Link to={"/admin/addproduct"} style={{ padding: 0 }}>
+                  <Button
+                    style={{
+                      backgroundColor: "#A78295",
+                      border: "none",
+                      borderRadius: 0,
+                      color: "#EFE1D1",
+                      fontWeight: 500,
+                      width: "100%",
+                      marginTop: "10px",
+                    }}
+                    className="shadow zoom-effect"
+                  >
+                    Add new product
+                  </Button>
+                </Link>
               </>
             ) : (
               <Link to={"/mypage/orders"} style={{ padding: 0 }}>
@@ -80,9 +95,6 @@ function Sidebar() {
                 </Button>
               </Link>
             )}
-          </Row>
-          <Row className="mt-2 mx-1">
-            <LogOut></LogOut>
           </Row>
         </Col>
       ) : null}

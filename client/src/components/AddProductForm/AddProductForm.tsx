@@ -1,6 +1,7 @@
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { NewProduct, useProductContext } from "../../context/ProductContext";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Form to add new product
 function AddProductForm() {
@@ -104,8 +105,19 @@ function AddProductForm() {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
-      <Row className="p-3 mb-5 shadow" style={{ width: "35%" }}>
+    <Container
+      fluid
+      className="d-flex flex-column justify-content-center align-items-center"
+    >
+      <Row className="w-100">
+        <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
+          <Col className="mt-3 mx-3">
+            <h5>Go back</h5>
+          </Col>
+        </Link>
+      </Row>
+
+      <Row className="p-3 mb-5 shadow">
         <Form onSubmit={handleSubmit}>
           <h3>Add a new product</h3>
           <Row>
@@ -203,7 +215,7 @@ function AddProductForm() {
 
           <Col className="d-flex justify-content-end">
             <Button
-              className="mt-3"
+              className="mt-3 shadow"
               type="submit"
               style={{
                 backgroundColor: "#3F2E3E",
