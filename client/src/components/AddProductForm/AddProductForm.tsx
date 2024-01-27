@@ -3,6 +3,7 @@ import { NewProduct, useProductContext } from "../../context/ProductContext";
 import { useUserContext } from "../../context/UserContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import NoAdminAccess from "../Errors/NoAdminAccess";
 
 // Form to add new product
 function AddProductForm() {
@@ -266,7 +267,7 @@ function AddProductForm() {
           </Modal>
         </Container>
       ) : (
-        "No access"
+        <NoAdminAccess></NoAdminAccess>
       )}
     </>
   );

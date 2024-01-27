@@ -11,6 +11,7 @@ function WelcomeAdmin() {
           backgroundImage: `url(${admingear})`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
           minHeight: "80vh",
         }}
         className="d-flex flex-column align-items-center justify-content-center"

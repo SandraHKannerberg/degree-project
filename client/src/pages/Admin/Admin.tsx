@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import { useUserContext } from "../../context/UserContext";
 import WelcomeAdmin from "../../components/WelcomeAdmin/WelcomeAdmin";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import NoAdminAccess from "../../components/Errors/NoAdminAccess";
 
 // Page for admin - managing orders and products
 function Admin() {
@@ -32,11 +33,7 @@ function Admin() {
             </Col>
           </Row>
         ) : (
-          <Row>
-            <p className="text-center">
-              Oops sorry, you have no access to this page!
-            </p>
-          </Row>
+          <NoAdminAccess></NoAdminAccess>
         )}
       </Container>
     </>

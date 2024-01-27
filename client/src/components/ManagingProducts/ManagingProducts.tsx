@@ -7,19 +7,38 @@ import {
   Button,
   Form,
   Modal,
+  InputGroup,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
+import NoAdminAccess from "../Errors/NoAdminAccess";
 
 function ManagingProducts() {
   const { loggedInUser } = useUserContext();
+
   const {
     products,
     getAllProducts,
     updateProductInDatabase,
     deleteProductFromDatabase,
+    title,
+    setTitle,
+    image,
+    setImage,
+    brand,
+    setBrand,
+    description,
+    setDescription,
+    price,
+    setPrice,
+    inStock,
+    setInStock,
+    careAdvice,
+    setCareAdvice,
+    features,
+    setFeatures,
   } = useProductContext();
 
   const [editProduct, setEditProduct] = useState({
@@ -31,12 +50,13 @@ function ManagingProducts() {
     image: "",
     inStock: 0,
     careAdvice: "",
-    features: [],
+    features: [] as string[],
   });
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
-  // const [showConfirmEdit, setShowConfirmEdit] = useState(false);
+  const [showConfirmEdit, setShowConfirmEdit] = useState(false);
+  const [editProductId, setEditProductId] = useState("");
 
   useEffect(() => {
     getAllProducts();
@@ -54,16 +74,47 @@ function ManagingProducts() {
     setDeleteProductId(id);
   };
 
-  // const handleCloseConfirmEdit = () => setShowConfirmEdit(false);
-  // const handleShowConfirmEdit = () => setShowConfirmEdit(true);
+  const handleCloseConfirmEdit = () => {
+    setShowConfirmEdit(false);
+    setEditProductId("");
+  };
 
-  // const handleEdit = async (
-  //   event: React.MouseEvent<HTMLElement>,
-  //   id: string
-  // ) => {
-  //   // Implementera logiken för att hantera redigeringen av produkten med det angivna ID:et
-  //   console.log("Edit product with ID:", id, "New values:", editProduct);
-  // };
+  const handleShowConfirmEdit = (id: string) => {
+    setShowConfirmEdit(true);
+    setEditProductId(id);
+  };
+
+  const handleEdit = async (
+    event: React.MouseEvent<HTMLElement>,
+    id: string
+  ) => {
+    event.preventDefault();
+
+    // Search after product by id in productlist to catch the id of the product that you want to update
+    const selectedProduct = products.find((product) => product._id === id);
+
+    console.log(selectedProduct);
+
+    if (selectedProduct) {
+      setImage(selectedProduct.image ?? "");
+      setTitle(selectedProduct.title ?? "");
+      setBrand(selectedProduct.brand ?? "");
+      setDescription(selectedProduct.description ?? "");
+      setPrice(selectedProduct.price ?? 0);
+      setInStock(selectedProduct.inStock ?? 0);
+      setCareAdvice(selectedProduct.careAdvice ?? "");
+      setFeatures(selectedProduct.features ?? []);
+      // I have chosen not to update categories here.
+    }
+
+    await updateProductInDatabase(id);
+    console.log(id);
+  };
+
+  // Call the function to update product in database
+  // await updateProductInDatabase(id);
+
+  // CONFIRM HERE
 
   //Eventlistener on delete button
   const handleDelete = async (
@@ -73,22 +124,12 @@ function ManagingProducts() {
     event.preventDefault();
 
     if (id) {
-      deleteProductFromDatabase(id);
+      await deleteProductFromDatabase(id);
       handleCloseConfirmDelete();
     }
 
-    deleteProductFromDatabase(id);
-
     // Close the confirm modal after delete
     handleCloseConfirmDelete();
-  };
-
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setEditProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: value,
-    }));
   };
 
   return (
@@ -100,6 +141,8 @@ function ManagingProducts() {
               <h5>Go back</h5>
             </Col>
           </Link>
+
+          <h3 className="text-center mb-4">Edit or delete products</h3>
 
           <Accordion>
             {products.map((product) => (
@@ -119,85 +162,119 @@ function ManagingProducts() {
                     </Col>
                   </Col>
                 </Accordion.Header>
-                <Accordion.Body>
-                  <Table striped bordered hover>
-                    <tbody>
-                      <tr>
+                <Accordion.Body className="d-flex flex-column">
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    className="d-flex flex-row flex-sm-column"
+                  >
+                    <tbody className="d-flex flex-column w-100">
+                      <tr className="d-flex flex-column w-100">
                         <td>
-                          <Form.Control
-                            type="text"
-                            name="image-url"
-                            placeholder={"Image URL..." || product.image}
-                            value={editProduct.image || product.image}
-                            onChange={handleInputChange}
-                          />
+                          <p>Image URL</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="image-url"
+                              placeholder={"Image URL..." || product.image}
+                              defaultValue={product.image}
+                              onChange={(e) => setImage(e.target.value)}
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          <Form.Control
-                            type="text"
-                            name="title"
-                            placeholder={"Title..." || product.title}
-                            value={editProduct.title || product.title}
-                            onChange={handleInputChange}
-                          />
+                          <p>Titel</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="title"
+                              placeholder={"Title..." || product.title}
+                              defaultValue={product.title}
+                              onChange={(e) => setTitle(e.target.value)}
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          <Form.Control
-                            type="text"
-                            name="brand"
-                            placeholder={"Brand..." || product.brand}
-                            value={editProduct.brand || product.brand}
-                            onChange={handleInputChange}
-                          />
+                          <p>Brand</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="brand"
+                              placeholder={"Brand..." || product.brand}
+                              defaultValue={product.brand}
+                              onChange={(e) => setBrand(e.target.value)}
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          <Form.Control
-                            type="text"
-                            name="description"
-                            placeholder={
-                              "Description..." || product.description
-                            }
-                            value={
-                              editProduct.description || product.description
-                            }
-                            onChange={handleInputChange}
-                          />
+                          <p>Description</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="description"
+                              placeholder={
+                                "Description..." || product.description
+                              }
+                              defaultValue={product.description}
+                              onChange={(e) => setDescription(e.target.value)}
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          <Form.Control
-                            type="number"
-                            name="price"
-                            placeholder={"Price..." || product.price}
-                            value={editProduct.price || product.price}
-                            onChange={handleInputChange}
-                          />
+                          <p>Price</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="number"
+                              name="price"
+                              placeholder={"Price..." || product.price}
+                              defaultValue={product.price}
+                              onChange={(e) => setPrice(Number(e.target.value))}
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          <Form.Control
-                            type="number"
-                            name="inStock"
-                            placeholder={"InStock..." || product.inStock}
-                            value={editProduct.inStock || product.inStock}
-                            onChange={handleInputChange}
-                          />
+                          <p>InStock</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="number"
+                              name="inStock"
+                              placeholder={"InStock..." || product.inStock}
+                              defaultValue={product.inStock}
+                              onChange={(e) =>
+                                setInStock(Number(e.target.value))
+                              }
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          <Form.Control
-                            type="text"
-                            name="careadvide"
-                            value={editProduct.careAdvice || product.careAdvice}
-                            onChange={handleInputChange}
-                          />
+                          <p>Care advice</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="careadvide"
+                              defaultValue={product.careAdvice}
+                              onChange={(e) => setCareAdvice(e.target.value)}
+                            />
+                          </InputGroup>
                         </td>
                         <td>
-                          {" "}
-                          <Form.Control
-                            type="text"
-                            name="features"
-                            placeholder={"Features..." || product.features}
-                            value={editProduct.features || product.features}
-                            onChange={handleInputChange}
-                          />
+                          <p>Features</p>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="features"
+                              placeholder={"Features..." || product.features}
+                              defaultValue={product.features}
+                              onChange={(e) =>
+                                setFeatures(
+                                  e.target.value
+                                    .split(",")
+                                    .map((item) => item.trim())
+                                )
+                              }
+                            />
+                          </InputGroup>
                         </td>
                       </tr>
                     </tbody>
@@ -205,7 +282,7 @@ function ManagingProducts() {
                   <Col className="d-flex justify-content-end gap-2">
                     <Button
                       variant="dark"
-                      // onClick={(e) => handleEdit(e, product._id)}
+                      onClick={() => handleShowConfirmEdit(product._id)}
                     >
                       <Pen />
                     </Button>
@@ -242,8 +319,30 @@ function ManagingProducts() {
               </Button>
             </Modal.Footer>
           </Modal>
+
+          {/* Conform edit modal */}
+          <Modal show={showConfirmEdit} onHide={handleCloseConfirmEdit}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Update</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to update this product?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseConfirmEdit}>
+                No
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(e) => handleEdit(e, editProductId)}
+              >
+                Yes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Container>
       )}
+      {!loggedInUser?.isAdmin ? <NoAdminAccess></NoAdminAccess> : null}
     </Container>
   );
 }

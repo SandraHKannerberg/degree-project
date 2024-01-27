@@ -6,11 +6,11 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { HeartFill } from "react-bootstrap-icons";
 import AddToCartBtn from "../../components/AddToCartBtn/AddToCartBtn";
+import Error404 from "../../components/Errors/404";
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product>();
-  const [error, setError] = useState<string | null>(null);
 
   // Fetch details for selected product
   useEffect(() => {
@@ -28,7 +28,6 @@ function ProductDetails() {
         setProduct(data);
       } catch (error) {
         console.error(error);
-        setError("Oops something went wrong. Can't find the product.");
       }
     };
 
@@ -59,9 +58,7 @@ function ProductDetails() {
       <Header />
       <>
         {!product ? (
-          <Row style={{ marginTop: "10rem", minHeight: "40vh" }}>
-            <p className="text-center">{error}</p>
-          </Row>
+          <Error404></Error404>
         ) : (
           <Container style={{ marginTop: "10rem" }}>
             <Row className="d-flex justify-content-center my-5">
