@@ -169,55 +169,53 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   // -----------------------------------Admin functions ----------------------------------------//
 
   //Update existing product in database
-  const updateProductInDatabase = (id: string) => {
-    const url = "/api/products/" + id;
+  const updateProductInDatabase = async (id: string) => {
+    const url = `/api/products/${id}`;
 
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: id,
-        title: title,
-        brand: brand,
-        description: description,
-        price: price,
-        image: image,
-        inStock: inStock,
-        careAdvice: careAdvice,
-        features: features,
-        categories: categories,
-        deleted: false,
-      }),
-    })
-      .then((response) => {
-        if (!response || response.status === 400) {
-          setSuccess(false);
-          throw new Error(
-            "ERROR - Something went wrong, the product with " +
-              id +
-              " is not updated"
-          );
-        }
-        if (
-          title ||
-          description ||
-          price ||
-          image ||
-          inStock ||
-          careAdvice ||
-          features ||
-          categories
-        ) {
-          setSuccess(true);
-          getAllProducts();
-        }
-      })
-
-      .catch((e) => {
-        console.log(e);
+    try {
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: id,
+          title: title,
+          brand: brand,
+          description: description,
+          price: price,
+          image: image,
+          inStock: inStock,
+          careAdvice: careAdvice,
+          features: features,
+          deleted: false,
+        }),
       });
+
+      if (!response || response.status === 400) {
+        setSuccess(false);
+        throw new Error(
+          `ERROR - Something went wrong, the product with ID ${id} is not updated`
+        );
+      }
+
+      if (
+        image ||
+        title ||
+        brand ||
+        description ||
+        price ||
+        inStock ||
+        careAdvice ||
+        features
+      ) {
+        setSuccess(true);
+        getAllProducts();
+      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      throw error;
+    }
   };
 
   // Function to delete a product in the database from the Admin panel
