@@ -19,8 +19,6 @@ export interface Product {
   image: string;
   inStock: number;
   categories?: string[];
-  stripeProductId: string;
-  stripePriceId: string;
 }
 
 //New product
@@ -33,7 +31,7 @@ export interface NewProduct {
   price: number;
   image: string;
   inStock: number;
-  categories: Category[];
+  categories?: string[];
 }
 
 //Category
@@ -50,6 +48,26 @@ export interface IProductContext {
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
   getAllCategories: () => void;
+  updateProductInDatabase: (id: string) => void;
+  deleteProductFromDatabase: (id: string) => void;
+  title: string;
+  setTitle: Dispatch<SetStateAction<string>>;
+  brand: string;
+  setBrand: Dispatch<SetStateAction<string>>;
+  description: string;
+  setDescription: Dispatch<SetStateAction<string>>;
+  price: number;
+  setPrice: Dispatch<SetStateAction<number>>;
+  image: string;
+  setImage: Dispatch<SetStateAction<string>>;
+  inStock: number;
+  setInStock: Dispatch<SetStateAction<number>>;
+  careAdvice: string;
+  setCareAdvice: Dispatch<SetStateAction<string>>;
+  features: string[];
+  setFeatures: Dispatch<SetStateAction<string[]>>;
+  success: boolean;
+  setSuccess: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultValues = {
@@ -59,6 +77,26 @@ const defaultValues = {
   categories: [],
   setCategories: () => {},
   getAllCategories: () => {},
+  updateProductInDatabase: () => {},
+  deleteProductFromDatabase: () => {},
+  title: "",
+  setTitle: () => {},
+  brand: "",
+  setBrand: () => {},
+  description: "",
+  setDescription: () => {},
+  price: 0,
+  setPrice: () => {},
+  image: "",
+  setImage: () => {},
+  inStock: 0,
+  setInStock: () => {},
+  careAdvice: "",
+  setCareAdvice: () => {},
+  features: [],
+  setFeatures: () => {},
+  success: false,
+  setSuccess: () => {},
 };
 
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -68,11 +106,20 @@ export const useProductContext = () => useContext(ProductContext);
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [title, setTitle] = useState("");
+  const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [image, setImage] = useState("");
+  const [inStock, setInStock] = useState(0);
+  const [careAdvice, setCareAdvice] = useState("");
+  const [features, setFeatures] = useState<string[]>([]);
+  const [success, setSuccess] = useState(false);
 
   //Get all products
   const getAllProducts = async () => {
     try {
-      const responseFetchProducts = await fetch("api/products");
+      const responseFetchProducts = await fetch("/api/products");
 
       // Check response status
       if (!responseFetchProducts.ok) {
@@ -119,6 +166,78 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
+  // -----------------------------------Admin functions ----------------------------------------//
+
+  //Update existing product in database
+  const updateProductInDatabase = async (id: string) => {
+    const url = `/api/products/${id}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: id,
+          title: title,
+          brand: brand,
+          description: description,
+          price: price,
+          image: image,
+          inStock: inStock,
+          careAdvice: careAdvice,
+          features: features,
+          deleted: false,
+        }),
+      });
+
+      if (!response || response.status === 400) {
+        setSuccess(false);
+        throw new Error(
+          `ERROR - Something went wrong, the product with ID ${id} is not updated`
+        );
+      }
+
+      if (
+        image ||
+        title ||
+        brand ||
+        description ||
+        price ||
+        inStock ||
+        careAdvice ||
+        features
+      ) {
+        setSuccess(true);
+        getAllProducts();
+      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      throw error;
+    }
+  };
+
+  // Function to delete a product in the database from the Admin panel
+  const deleteProductFromDatabase = (id: string) => {
+    const url = "/api/products/" + id;
+    fetch(url, { method: "DELETE" })
+      .then((response) => {
+        if (!response) {
+          throw new Error(
+            "ERROR - Something went wrong, the product with " +
+              id +
+              " is not deleted"
+          );
+        }
+
+        getAllProducts();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -128,6 +247,26 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         categories,
         setCategories,
         getAllCategories,
+        title,
+        setTitle,
+        brand,
+        setBrand,
+        description,
+        setDescription,
+        price,
+        setPrice,
+        image,
+        setImage,
+        inStock,
+        setInStock,
+        careAdvice,
+        setCareAdvice,
+        features,
+        setFeatures,
+        updateProductInDatabase,
+        deleteProductFromDatabase,
+        success,
+        setSuccess,
       }}
     >
       {children}

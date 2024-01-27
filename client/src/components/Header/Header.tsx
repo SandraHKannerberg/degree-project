@@ -33,10 +33,10 @@ function Header() {
         </Col>
         <Col
           xs={6}
-          className="d-flex justify-content-end"
+          className="d-flex justify-content-end align-items-center"
           style={{ padding: 0 }}
         >
-          <div className="d-flex gap-2">
+          <div className="d-flex gap-2 align-items-center">
             <LogInOffcanvas />
             <ShoppingCart />
           </div>

@@ -23,7 +23,7 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "ADD TO TEST DELETE",
+  "title": "ADD TO TEST FOR FRONTEND 5",
   "brand": "Test",
   "description": "Testar adding price-id",
   "features": ["Test"],
@@ -36,14 +36,14 @@ Content-Type: application/json
 ###
 
 // Request to update a product
-PUT http://localhost:3000/api/products/65a66b8f9d436decffc506db
+PUT http://localhost:3000/api/products/65b3b473cb0186639629942a
 Content-Type: application/json
 
 {
-  "_id": "65a66b8f9d436decffc506db",
-  "title": "TEST PRODUCT update",
-  "brand": "Test Update Price",
-  "description": "Update price.",
+  "_id": "65b3b473cb0186639629942a",
+  "title": "UPDATE ON A FRIDAY",
+  "brand": "Test",
+  "description": "Happy Friday",
   "price": 199,
   "image": "https://www.yogagrossisten.se/images/2.191459/doftljus-soothing-lavender-yogiraj.jpeg",
   "inStock": 10,

@@ -4,6 +4,7 @@ import Header from "../../components/Header/Header";
 import { useUserContext } from "../../context/UserContext";
 import WelcomeUser from "../../components/WelcomeUser/WelcomeUser";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import NoUserAccess from "../../components/Errors/NoUserAccess";
 
 function User() {
   const { loggedInUser } = useUserContext();
@@ -32,11 +33,7 @@ function User() {
             </Col>
           </Row>
         ) : (
-          <Row>
-            <p className="text-center">
-              Oops sorry, no access! You need to log in
-            </p>
-          </Row>
+          <NoUserAccess></NoUserAccess>
         )}
       </Container>
       <Footer />

@@ -13,6 +13,9 @@ import UserProvider from "./context/UserContext";
 import User from "./pages/User/User";
 import Admin from "./pages/Admin/Admin";
 import Orders from "./components/Orders/Orders";
+import ManagingOrders from "./components/ManagingOrders/ManagingOrders";
+import ManagingProducts from "./components/ManagingProducts/ManagingProducts";
+import AddProductForm from "./components/AddProductForm/AddProductForm";
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
                 <Route path="/mypage" element={<User />} />
                 <Route path="/mypage/orders" element={<Orders />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/admin/orders" element={<ManagingOrders />} />
+                <Route path="/admin/products" element={<ManagingProducts />} />
+                <Route path="/admin/addproduct" element={<AddProductForm />} />
               </Routes>
             </OrderProvider>
           </ProductProvider>

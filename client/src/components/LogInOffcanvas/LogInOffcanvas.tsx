@@ -1,8 +1,8 @@
-import { Button, Col, Tab, Tabs } from "react-bootstrap";
+import { Button, Col, Tab, Tabs, Toast, ToastContainer } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Person, PersonFillCheck, PersonFillGear } from "react-bootstrap-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogInForm from "../LogInForm/LogInForm";
 import { Link } from "react-router-dom";
 import SignUpForm from "../SignUpForm/SignUpForm";
@@ -11,92 +11,55 @@ import "./LogInOffcanvas.css";
 // Component to handle log in
 // Click on the Person/user icon and an offcanvas to login will appear
 function LogInOffcanvas() {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false); // State for Offcanvas
   const { loggedInUser, logout } = useUserContext();
+  const [showConfirm, setShowConfirm] = useState(false); // State for toast (confirm message)
 
   // Open vs. close the offcanvas
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleLogout = async () => {
+    await logout();
+    setShowConfirm(true);
+  };
+
+  // Timeout for logged out confirm toast
+  useEffect(() => {
+    if (showConfirm === true) {
+      setTimeout(() => {
+        setShowConfirm(false);
+      }, 5000); // 5sec
+    }
+  }, [showConfirm]);
+
   return (
     <>
-      <Col>
-        {/* Show Person icon without checkmark if not logged in and connect button-click to handleShow to it.
-      When logged in - show filled Person icon with checkmark and the name of the user. */}
-        {loggedInUser ? (
-          loggedInUser.isAdmin ? (
-            <>
-              {/*Show this when logged in as admin */}
-              <Button
-                onClick={logout}
-                style={{ background: "none", border: "none" }}
-                className="zoom-effect"
-              >
-                Log out
-              </Button>
+      {/* Info without a toast to confirm successfully log out */}
+      {showConfirm && (
+        <ToastContainer
+          position="top-end"
+          className="p-3"
+          style={{ zIndex: 1 }}
+        >
+          <Toast className="text-center">
+            <Toast.Body> You have been successfully logged out.</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      )}
 
-              {/* A button with a gear. This is now a link to the adminpanel */}
-              <Button
-                className="zoom-effect"
-                style={{ background: "none", border: "none" }}
-              >
-                <Link
-                  to="/admin"
-                  className="menu-link"
-                  style={{
-                    color: "#EFE1D1",
-                  }}
-                >
-                  <PersonFillGear
-                    style={{
-                      border: "none",
-                      borderRadius: 0,
-                      color: "#EFE1D1",
-                      fontSize: "2rem",
-                    }}
-                  />
-                </Link>
-              </Button>
-            </>
-          ) : (
-            <>
-              {/* Show this when logged in as a regular user */}
-              <Button
-                onClick={logout}
-                style={{ background: "none", border: "none" }}
-              >
-                Log out
-              </Button>
-
-              {/* The button is now filled with a checkmark and is a link to the memberpage */}
-              <Button style={{ background: "none", border: "none" }}>
-                <Link
-                  to="/mypage"
-                  className="menu-link"
-                  style={{
-                    color: "#EFE1D1",
-                  }}
-                >
-                  <PersonFillCheck
-                    style={{
-                      border: "none",
-                      borderRadius: 0,
-                      color: "#EFE1D1",
-                      fontSize: "2rem",
-                    }}
-                  />
-                </Link>
-              </Button>
-            </>
-          )
-        ) : (
-          <>
-            {/* Show this when not logged in. Click on the button and the offcanvas to login or sigup shows */}
-            <Button
-              onClick={handleShow}
-              style={{ background: "none", border: "none" }}
+      {/* When logged in as a user - show filled Person icon with checkmark. */}
+      {loggedInUser && !loggedInUser?.isAdmin ? (
+        <Col>
+          <Button style={{ background: "none", border: "none" }}>
+            <Link
+              to="/mypage"
+              className="menu-link"
+              style={{
+                color: "#EFE1D1",
+              }}
             >
-              <Person
+              <PersonFillCheck
                 style={{
                   border: "none",
                   borderRadius: 0,
@@ -104,10 +67,65 @@ function LogInOffcanvas() {
                   fontSize: "2rem",
                 }}
               />
-            </Button>
-          </>
-        )}
-      </Col>
+            </Link>
+          </Button>
+        </Col>
+      ) : null}
+
+      {/* When logged in as admin - show filled Person icon with a gear. */}
+      {loggedInUser?.isAdmin ? (
+        <Col>
+          <Button style={{ background: "none", border: "none" }}>
+            <Link
+              to="/admin"
+              className="menu-link"
+              style={{
+                color: "#EFE1D1",
+              }}
+            >
+              <PersonFillGear
+                style={{
+                  border: "none",
+                  borderRadius: 0,
+                  color: "#EFE1D1",
+                  fontSize: "2rem",
+                }}
+              />
+            </Link>
+          </Button>
+        </Col>
+      ) : null}
+
+      {/* Not logged in - show a person outlined icon. This icon handle open OffCanvas for login / signup */}
+      {!loggedInUser ? (
+        <Button
+          style={{ background: "none", border: "none" }}
+          onClick={handleShow}
+        >
+          <Person
+            style={{
+              border: "none",
+              borderRadius: 0,
+              color: "#EFE1D1",
+              fontSize: "2rem",
+            }}
+          />
+        </Button>
+      ) : (
+        <Button
+          style={{
+            backgroundColor: "#A78295",
+            border: "none",
+            borderRadius: 0,
+            color: "#EFE1D1",
+            fontWeight: 500,
+          }}
+          className="shadow zoom-effect"
+          onClick={handleLogout}
+        >
+          Log Out
+        </Button>
+      )}
 
       {/* Offcanvas with login-form or signup-form to register new user depending if you want to log in or sign up */}
       <Offcanvas
