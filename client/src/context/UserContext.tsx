@@ -105,9 +105,12 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const authorization = async () => {
     try {
       const response = await fetch("/api/users/authorize");
-      const authData = await response.json();
-      if (response.status === 200 || response.status === 304) {
+      if (response.status === 200) {
+        const authData = await response.json();
         setLoggedInUser(authData);
+      } else if (response.status === 401) {
+        // Clear authData when not logged in
+        setLoggedInUser(null);
       }
     } catch (err) {
       console.log("ERROR-MESSAGE:", err);
@@ -163,7 +166,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const login = async (user: UserType) => {
     if (user) {
       try {
-        const response = await fetch("api/users/login", {
+        const response = await fetch("/api/users/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -188,7 +191,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle logout
   const logout = async () => {
     try {
-      const response = await fetch("api/users/logout", {
+      const response = await fetch("/api/users/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
