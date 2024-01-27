@@ -3,6 +3,7 @@ import { Envelope, Key } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import Logotype from "../Logotype/Logotype";
+import { useNavigate } from "react-router-dom";
 
 //Component with the log in form to be able to log in.
 function LogInForm() {
@@ -19,6 +20,19 @@ function LogInForm() {
   } = useUserContext();
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to correct page depending on auth status
+    if (loggedInUser) {
+      if (loggedInUser.isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/mypage");
+      }
+    }
+  }, [loggedInUser, navigate]);
 
   const handleLogin = async () => {
     // Reset error states
@@ -39,7 +53,7 @@ function LogInForm() {
       return; // Do not proceed with login if required fields are empty
     }
 
-    // Check if the who log in has admin auth
+    // Check if the one who log in has admin auth
     isAdmin(user);
 
     // Call login with the user data
@@ -60,9 +74,7 @@ function LogInForm() {
 
   return (
     <>
-      {/* If already log in - show the name of the user and some info if the user has admin auth */}
-      {loggedInUser?.isAdmin === true ? <p>You are admin</p> : null}
-
+      {/* If already log in - show the name of the user */}
       {loggedInUser ? (
         <>
           <p className="mt-3">Welcome {loggedInUser.firstName}!!</p>

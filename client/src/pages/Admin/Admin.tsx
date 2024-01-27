@@ -20,7 +20,7 @@ function Admin() {
           minHeight: "60vh",
         }}
       >
-        {loggedInUser ? (
+        {loggedInUser?.isAdmin ? (
           <Row
             className="d-flex mx-3"
             style={{

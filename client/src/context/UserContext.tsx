@@ -43,7 +43,7 @@ interface IUserContext {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
-  isAdmin: (user: UserType) => void;
+  isAdmin: (user: UserType) => boolean;
   successInfo: string;
   setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
   errorInfo: string;
@@ -71,7 +71,7 @@ const defaultValues = {
   setEmail: () => {},
   password: "",
   setPassword: () => {},
-  isAdmin: () => {},
+  isAdmin: () => false,
   successInfo: "",
   setSuccessInfo: () => {},
   errorInfo: "",
@@ -121,10 +121,16 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
     authorization();
   }, []);
 
-  // Function to check if logged in user = admin
-  const isAdmin = (user: UserType) => {
-    if (user.isAdmin == false) {
-    }
+  // // Function to check if logged in user = admin
+  // const isAdmin = (user: UserType) => {
+  //   if (user.isAdmin == false) {
+  //   }
+  // };
+
+  // Function to check if logged in user is admin
+  const isAdmin = (user: UserType): boolean => {
+    // Assuming user object has a property isAdmin which is a boolean
+    return user.isAdmin === true;
   };
 
   // Function to register a new user
