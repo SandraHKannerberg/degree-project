@@ -80,7 +80,11 @@ function Confirmation() {
     <>
       <Header />
       <Menu />
-      <Container fluid className="my-5" style={{ minHeight: "35vh" }}>
+      <Container
+        fluid
+        className="my-5"
+        style={{ minHeight: "35vh", marginTop: "10rem" }}
+      >
         {isLoading ? (
           // Display loader while verifying payment
           <div className="text-center">
@@ -90,7 +94,10 @@ function Confirmation() {
           </div>
         ) : isPaymentVerified ? (
           // If payment = success - show this content
-          <Row className="d-flex justify-content-center flex-column align-items-center">
+          <Row
+            className="d-flex justify-content-center flex-column align-items-center"
+            style={{ marginTop: "10rem" }}
+          >
             <Col lg={5} className="d-flex justify-content-center mb-3">
               <Card className="h-100 shadow">
                 <Card.Body
@@ -169,7 +176,10 @@ function Confirmation() {
           </Row>
         ) : (
           // If payment failed - show this content
-          <Row className="d-flex justify-content-center">
+          <Row
+            className="d-flex justify-content-center"
+            style={{ marginTop: "10rem" }}
+          >
             <Col className="d-flex flex-column justify-content-center align-items-center my-4">
               <img
                 src={sad}

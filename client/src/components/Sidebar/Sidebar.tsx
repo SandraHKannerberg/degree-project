@@ -29,55 +29,61 @@ function Sidebar() {
           </Row>
           <Row className="mb-2 mx-1">
             {loggedInUser.isAdmin ? (
-              <>
-                <Link to={"/admin/orders"} style={{ padding: 0 }}>
-                  <Button
-                    style={{
-                      backgroundColor: "#A78295",
-                      border: "none",
-                      borderRadius: 0,
-                      color: "#EFE1D1",
-                      fontWeight: 500,
-                      width: "100%",
-                    }}
-                    className="shadow zoom-effect"
-                  >
-                    Managing Orders
-                  </Button>
-                </Link>
-                <Link to={"/admin/products"} style={{ padding: 0 }}>
-                  <Button
-                    style={{
-                      backgroundColor: "#A78295",
-                      border: "none",
-                      borderRadius: 0,
-                      color: "#EFE1D1",
-                      fontWeight: 500,
-                      width: "100%",
-                      marginTop: "10px",
-                    }}
-                    className="shadow zoom-effect"
-                  >
-                    Managing Products
-                  </Button>
-                </Link>
-                <Link to={"/admin/addproduct"} style={{ padding: 0 }}>
-                  <Button
-                    style={{
-                      backgroundColor: "#A78295",
-                      border: "none",
-                      borderRadius: 0,
-                      color: "#EFE1D1",
-                      fontWeight: 500,
-                      width: "100%",
-                      marginTop: "10px",
-                    }}
-                    className="shadow zoom-effect"
-                  >
-                    Add new product
-                  </Button>
-                </Link>
-              </>
+              <Row className="d-flex align-items-center justify-content-center gap-2">
+                <Col sm={3} lg={12}>
+                  <Link to={"/admin/orders"} style={{ padding: 0 }}>
+                    <Button
+                      style={{
+                        backgroundColor: "#A78295",
+                        border: "none",
+                        borderRadius: 0,
+                        color: "#EFE1D1",
+                        fontWeight: 500,
+                        width: "100%",
+                      }}
+                      className="shadow zoom-effect"
+                    >
+                      Managing Orders
+                    </Button>
+                  </Link>
+                </Col>
+
+                <Col sm={4} md={4} lg={12}>
+                  <Link to={"/admin/products"} style={{ padding: 0 }}>
+                    <Button
+                      style={{
+                        backgroundColor: "#A78295",
+                        border: "none",
+                        borderRadius: 0,
+                        color: "#EFE1D1",
+                        fontWeight: 500,
+                        width: "100%",
+                      }}
+                      className="shadow zoom-effect"
+                    >
+                      Managing Products
+                    </Button>
+                  </Link>
+                </Col>
+
+                <Col sm={4} md={4} lg={12}>
+                  <Link to={"/admin/addproduct"} style={{ padding: 0 }}>
+                    <Button
+                      style={{
+                        backgroundColor: "#A78295",
+                        border: "none",
+                        borderRadius: 0,
+                        color: "#EFE1D1",
+                        fontWeight: 500,
+                        width: "100%",
+                      }}
+                      className="shadow zoom-effect"
+                    >
+                      Add new product
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
             ) : (
               <Link to={"/mypage/orders"} style={{ padding: 0 }}>
                 <Button
