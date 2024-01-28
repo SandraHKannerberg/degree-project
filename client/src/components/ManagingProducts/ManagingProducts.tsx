@@ -20,8 +20,9 @@ function ManagingProducts() {
 
   const {
     products,
+    success,
+    setSuccess,
     getAllProducts,
-    updateProductInDatabase,
     deleteProductFromDatabase,
     title,
     setTitle,
@@ -41,28 +42,14 @@ function ManagingProducts() {
     setFeatures,
   } = useProductContext();
 
-  const [editProduct, setEditProduct] = useState({
-    _id: "",
-    title: "",
-    brand: "",
-    description: "",
-    price: 0,
-    image: "",
-    inStock: 0,
-    careAdvice: "",
-    features: [] as string[],
-  });
-
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
-  const [showConfirmEdit, setShowConfirmEdit] = useState(false);
-  const [editProductId, setEditProductId] = useState("");
 
   useEffect(() => {
     getAllProducts();
   }, []);
 
-  // Handle close of the confirm modal
+  // Handle close of the confirm delete modal
   const handleCloseConfirmDelete = () => {
     setShowConfirmDelete(false);
     setDeleteProductId("");
@@ -74,47 +61,88 @@ function ManagingProducts() {
     setDeleteProductId(id);
   };
 
-  const handleCloseConfirmEdit = () => {
-    setShowConfirmEdit(false);
-    setEditProductId("");
+  // Handle close of the edit-modal
+  const handleClose = () => {
+    setSuccess(false);
   };
 
-  const handleShowConfirmEdit = (id: string) => {
-    setShowConfirmEdit(true);
-    setEditProductId(id);
+  // Function to handle updateProduct, with fetch to backend and save info to database
+  const updateProduct = (id: string) => {
+    const url = "/api/products/" + id;
+
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+        image: image,
+        title: title,
+        brand: brand,
+        description: description,
+        price: price,
+        inStock: inStock,
+        careAdvice: careAdvice,
+        features: features,
+        deleted: false,
+      }),
+    })
+      .then((response) => {
+        if (!response || response.status === 400) {
+          setSuccess(false);
+          throw new Error(
+            "ERROR - Something went wrong, the product with " +
+              id +
+              " is not updated"
+          );
+        }
+        if (
+          image ||
+          brand ||
+          title ||
+          description ||
+          price ||
+          inStock ||
+          careAdvice ||
+          features
+        ) {
+          setSuccess(true);
+          getAllProducts();
+        }
+      })
+
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
-  const handleEdit = async (
+  // Handle click on edit (pen). Open the edit-form. The current product data is pre-entered and the fields are editable.
+  const handleOpenEdit = (event: React.MouseEvent<HTMLElement>, id: string) => {
+    event.preventDefault();
+    const selectedProduct = products.find((product) => product._id === id);
+
+    if (selectedProduct) {
+      setImage(selectedProduct.image);
+      setTitle(selectedProduct.title);
+      setBrand(selectedProduct.brand);
+      setDescription(selectedProduct.description);
+      setPrice(selectedProduct.price);
+      setInStock(selectedProduct.inStock);
+      setCareAdvice(selectedProduct?.careAdvice ?? "");
+      setFeatures(selectedProduct?.features ?? []);
+    }
+  };
+
+  // Save the updates
+  const handleSaveUpdate = async (
     event: React.MouseEvent<HTMLElement>,
     id: string
   ) => {
     event.preventDefault();
 
-    // Search after product by id in productlist to catch the id of the product that you want to update
-    const selectedProduct = products.find((product) => product._id === id);
-
-    console.log(selectedProduct);
-
-    if (selectedProduct) {
-      setImage(selectedProduct.image ?? "");
-      setTitle(selectedProduct.title ?? "");
-      setBrand(selectedProduct.brand ?? "");
-      setDescription(selectedProduct.description ?? "");
-      setPrice(selectedProduct.price ?? 0);
-      setInStock(selectedProduct.inStock ?? 0);
-      setCareAdvice(selectedProduct.careAdvice ?? "");
-      setFeatures(selectedProduct.features ?? []);
-      // I have chosen not to update categories here.
-    }
-
-    await updateProductInDatabase(id);
-    console.log(id);
+    await updateProduct(id);
   };
-
-  // Call the function to update product in database
-  // await updateProductInDatabase(id);
-
-  // CONFIRM HERE
 
   //Eventlistener on delete button
   const handleDelete = async (
@@ -147,7 +175,9 @@ function ManagingProducts() {
           <Accordion>
             {products.map((product) => (
               <Accordion.Item key={product._id} eventKey={product._id}>
-                <Accordion.Header>
+                <Accordion.Header
+                  onClick={(e) => handleOpenEdit(e, product._id)}
+                >
                   <Col className="d-flex align-items-center gap-2">
                     <img
                       src={product.image}
@@ -160,6 +190,21 @@ function ManagingProducts() {
                         Id: {product._id}
                       </span>
                     </Col>
+                    <div className="d-flex justify-content-end gap-3 mx-3">
+                      <Col
+                        variant="dark"
+                        onClick={(e) => handleOpenEdit(e, product._id)}
+                      >
+                        <Pen />
+                      </Col>
+
+                      <Col
+                        variant="danger"
+                        onClick={() => handleShowConfirmDelete(product._id)}
+                      >
+                        <Trash />
+                      </Col>
+                    </div>
                   </Col>
                 </Accordion.Header>
                 <Accordion.Body className="d-flex flex-column">
@@ -267,32 +312,23 @@ function ManagingProducts() {
                               placeholder={"Features..." || product.features}
                               defaultValue={product.features}
                               onChange={(e) =>
-                                setFeatures(
-                                  e.target.value
-                                    .split(",")
-                                    .map((item) => item.trim())
-                                )
+                                setFeatures(e.target.value.split(","))
                               }
                             />
                           </InputGroup>
                         </td>
+                        <td>
+                          {" "}
+                          <Button
+                            variant="dark"
+                            onClick={(e) => handleSaveUpdate(e, product._id)}
+                          >
+                            Save
+                          </Button>
+                        </td>
                       </tr>
                     </tbody>
                   </Table>
-                  <Col className="d-flex justify-content-end gap-2">
-                    <Button
-                      variant="dark"
-                      onClick={() => handleShowConfirmEdit(product._id)}
-                    >
-                      <Pen />
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleShowConfirmDelete(product._id)}
-                    >
-                      <Trash />
-                    </Button>
-                  </Col>
                 </Accordion.Body>
               </Accordion.Item>
             ))}
@@ -320,23 +356,15 @@ function ManagingProducts() {
             </Modal.Footer>
           </Modal>
 
-          {/* Conform edit modal */}
-          <Modal show={showConfirmEdit} onHide={handleCloseConfirmEdit}>
+          {/* Info modal to confirm when update is done */}
+          <Modal show={success} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Confirm Update</Modal.Title>
+              <Modal.Title>Update Success</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Are you sure you want to update this product?
-            </Modal.Body>
+            <Modal.Body>Update done for product</Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseConfirmEdit}>
-                No
-              </Button>
-              <Button
-                variant="danger"
-                onClick={(e) => handleEdit(e, editProductId)}
-              >
-                Yes
+              <Button variant="secondary" onClick={handleClose}>
+                OK
               </Button>
             </Modal.Footer>
           </Modal>
