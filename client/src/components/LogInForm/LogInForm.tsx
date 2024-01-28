@@ -29,7 +29,7 @@ function LogInForm() {
       if (loggedInUser.isAdmin) {
         navigate("/admin");
       } else {
-        navigate("/mypage");
+        navigate("/loggedin");
       }
     }
   }, [loggedInUser, navigate]);

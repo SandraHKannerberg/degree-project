@@ -16,7 +16,7 @@ function Sidebar() {
           }}
         >
           <Row className="mx-1" style={{ cursor: "pointer" }}>
-            <Link to={"/mypage"} className="menu-link">
+            <Link to={"/loggedin"} className="menu-link">
               <h5>{loggedInUser.firstName}</h5>
             </Link>
           </Row>
@@ -85,7 +85,7 @@ function Sidebar() {
                 </Col>
               </Row>
             ) : (
-              <Link to={"/mypage/orders"} style={{ padding: 0 }}>
+              <Link to={"/loggedin/orders"} style={{ padding: 0 }}>
                 <Button
                   style={{
                     backgroundColor: "#A78295",

@@ -56,7 +56,7 @@ function LogInOffcanvas() {
             style={{ background: "none", border: "none" }}
           >
             <Link
-              to="/mypage"
+              to="/loggedin"
               className="menu-link"
               style={{
                 color: "#EFE1D1",

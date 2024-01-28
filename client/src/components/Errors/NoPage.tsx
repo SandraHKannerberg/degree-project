@@ -1,0 +1,36 @@
+import { Col, Container, Row } from "react-bootstrap";
+import error404 from "../../assets/404.png";
+import LazyLoad from "react-lazy-load";
+
+function NoPage() {
+  return (
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "50vh", marginTop: "10rem" }}
+    >
+      <Row className="d-flex justify-content-center align-items-center">
+        <Col className="d-flex flex-column justify-content-center align-items-center">
+          <h1 className="text-center">
+            Sorry, we have a problem - can't find the page
+          </h1>
+          <Col className="d-flex justify-content-center">
+            <LazyLoad height={300} width={300}>
+              <img
+                src={error404}
+                alt="Error-page not found"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </LazyLoad>
+          </Col>
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+export default NoPage;

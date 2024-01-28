@@ -5,6 +5,7 @@ import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 import { UserProvider } from "./context/UserContext";
+import NoPage from "./components/Errors/NoPage";
 
 //LazyLoaing
 const Home = React.lazy(() => import("./pages/Home/Home"));
@@ -96,7 +97,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/mypage"
+                  path="/loggedin"
                   element={
                     <React.Suspense fallback={<div>Loading...</div>}>
                       <User />
@@ -104,7 +105,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/mypage/orders"
+                  path="/loggedin/orders"
                   element={
                     <React.Suspense fallback={<div>Loading...</div>}>
                       <Orders />
@@ -135,7 +136,6 @@ function App() {
                     </React.Suspense>
                   }
                 />
-
                 <Route
                   path="/admin/addproduct"
                   element={
@@ -144,6 +144,8 @@ function App() {
                     </React.Suspense>
                   }
                 />
+                {/* Fallback */}
+                <Route path="*" element={<NoPage />} />
               </Routes>
             </OrderProvider>
           </ProductProvider>

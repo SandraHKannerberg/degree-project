@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import { useCartContext } from "../../context/CartContext";
 import { PatchCheckFill, Stars } from "react-bootstrap-icons";
-import sad from "../../assets/sad.png";
+import errorpayment from "../../assets/error-payment.png";
 
 // Confirmation page --- Different content depending on payment status
 function Confirmation() {
@@ -182,7 +182,7 @@ function Confirmation() {
           >
             <Col className="d-flex flex-column justify-content-center align-items-center my-4">
               <img
-                src={sad}
+                src={errorpayment}
                 alt="Error"
                 style={{ width: "100px" }}
                 className="mb-3"
