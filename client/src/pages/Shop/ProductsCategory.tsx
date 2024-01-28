@@ -57,12 +57,20 @@ function ProductsCategory() {
     <>
       <Header></Header>
       <Container fluid style={{ padding: 0, marginTop: "10rem" }}>
-        <h1 style={{ textAlign: "center" }}>{category.title}</h1>
-        <Row>
-          <p style={{ textAlign: "center", fontStyle: "italic" }}>
-            {category.description}
-          </p>
+        <Row className="d-flex flex-column align-items-center justify-content-center p-3">
+          <h1
+            className="mt-3"
+            style={{ textAlign: "center", fontFamily: "Julius Sans One" }}
+          >
+            {category.title}
+          </h1>
+          <Col lg={8} md={8}>
+            <p style={{ textAlign: "center", fontStyle: "italic" }}>
+              {category.description}
+            </p>
+          </Col>
         </Row>
+
         <Row
           xs={1}
           sm={2}
