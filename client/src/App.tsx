@@ -6,6 +6,7 @@ import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 import { UserProvider } from "./context/UserContext";
 import NoPage from "./components/Errors/NoPage";
+import Loader from "./components/Loader/Loader";
 
 //LazyLoaing
 const Home = React.lazy(() => import("./pages/Home/Home"));
@@ -43,7 +44,7 @@ function App() {
                 <Route
                   path="/"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <Home />
                     </React.Suspense>
                   }
@@ -51,7 +52,7 @@ function App() {
                 <Route
                   path="/shop"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <Shop />
                     </React.Suspense>
                   }
@@ -59,7 +60,7 @@ function App() {
                 <Route
                   path="/about"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <About />
                     </React.Suspense>
                   }
@@ -67,7 +68,7 @@ function App() {
                 <Route
                   path="/contact"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <ContactUs />
                     </React.Suspense>
                   }
@@ -75,7 +76,7 @@ function App() {
                 <Route
                   path="/confirmation"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <Confirmation />
                     </React.Suspense>
                   }
@@ -83,7 +84,7 @@ function App() {
                 <Route
                   path="/categories/:id"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <ProductsCategory />
                     </React.Suspense>
                   }
@@ -91,7 +92,7 @@ function App() {
                 <Route
                   path="/product/:id"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <ProductDetails />
                     </React.Suspense>
                   }
@@ -99,7 +100,7 @@ function App() {
                 <Route
                   path="/loggedin"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <User />
                     </React.Suspense>
                   }
@@ -107,7 +108,7 @@ function App() {
                 <Route
                   path="/loggedin/orders"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <Orders />
                     </React.Suspense>
                   }
@@ -115,7 +116,7 @@ function App() {
                 <Route
                   path="/admin"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <Admin />
                     </React.Suspense>
                   }
@@ -123,7 +124,7 @@ function App() {
                 <Route
                   path="/admin/orders"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <ManagingOrders />
                     </React.Suspense>
                   }
@@ -131,7 +132,7 @@ function App() {
                 <Route
                   path="/admin/products"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <ManagingProducts />
                     </React.Suspense>
                   }
@@ -139,7 +140,7 @@ function App() {
                 <Route
                   path="/admin/addproduct"
                   element={
-                    <React.Suspense fallback={<div>Loading...</div>}>
+                    <React.Suspense fallback={<Loader />}>
                       <AddProductForm />
                     </React.Suspense>
                   }

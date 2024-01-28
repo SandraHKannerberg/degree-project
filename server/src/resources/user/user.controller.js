@@ -85,6 +85,9 @@ async function authorize(req, res) {
   if (!req.session._id) {
     return res.status(401).json("You are not logged in");
   }
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.setHeader("Pragma", "no-chache");
+  console.log("autentic", req.session);
   res.status(200).json(req.session);
 }
 

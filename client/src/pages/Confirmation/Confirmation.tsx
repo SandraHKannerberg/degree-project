@@ -87,10 +87,12 @@ function Confirmation() {
       >
         {isLoading ? (
           // Display loader while verifying payment
-          <div className="text-center">
+          <div
+            className="text-center"
+            style={{ minHeight: "35vh", marginTop: "10rem" }}
+          >
             <Spinner animation="border" /> <br />
             <p>Please wait while processing your payment...</p>
-            {/* You can add a spinner or any loading indicator here */}
           </div>
         ) : isPaymentVerified ? (
           // If payment = success - show this content

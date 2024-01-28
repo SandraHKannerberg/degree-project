@@ -16,10 +16,7 @@ const userRouter = express
     registerNewUser
   )
   .post("/users/login", login)
-  .post("/users/logout", (req, res) => {
-    res.setHeader("Cache-Control", "no-store");
-    logout(req, res);
-  })
+  .post("/users/logout", logout)
   .get("/users/authorize", authorize);
 
 module.exports = { userRouter };
