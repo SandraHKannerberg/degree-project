@@ -7,6 +7,7 @@ import { OrderProvider } from "./context/OrderContext";
 import { UserProvider } from "./context/UserContext";
 import NoPage from "./components/Errors/NoPage";
 import Loader from "./components/Loader/Loader";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 //LazyLoaing
 const Home = React.lazy(() => import("./pages/Home/Home"));
@@ -40,6 +41,7 @@ function App() {
         <UserProvider>
           <ProductProvider>
             <OrderProvider>
+              <ScrollToTop />
               <Routes>
                 <Route
                   path="/"

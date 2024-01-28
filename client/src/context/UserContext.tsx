@@ -119,13 +119,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     authorization();
-  }, []);
-
-  // // Function to check if logged in user = admin
-  // const isAdmin = (user: UserType) => {
-  //   if (user.isAdmin == false) {
-  //   }
-  // };
+  }, [isLoggedIn]); //Check if loggedIn status change
 
   // Function to check if logged in user is admin
   const isAdmin = (user: UserType): boolean => {
@@ -183,6 +177,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
           setLoggedInUser(userData);
+          setIsLoggedIn(true);
         }
 
         if (response.status === 401) {

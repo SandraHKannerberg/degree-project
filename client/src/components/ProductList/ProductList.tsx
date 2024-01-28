@@ -14,7 +14,7 @@ function ProductList() {
 
   return (
     <Container fluid style={{ padding: 0, marginTop: "7.5rem" }}>
-      <Banner></Banner>
+      {/* <Banner></Banner> */}
       <Row
         xs={1}
         sm={2}
