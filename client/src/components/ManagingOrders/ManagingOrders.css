@@ -4,7 +4,8 @@ input[type="checkbox"]:checked {
   color: #efe1d1;
 }
 
-.custom-thead {
-  background-color: #a78295 !important;
-  color: #efe1d1 !important;
+@media screen and (max-width: 450px) {
+  .order-fontsize {
+    font-size: 12px !important;
+  }
 }

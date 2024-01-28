@@ -23,12 +23,12 @@ function ManagingOrders() {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
+    <Container className="d-flex justify-content-center m-0 p-0">
       {/* Show all orders */}
       {loggedInUser?.isAdmin && orders && (
         <>
           {/* Wrapped container around orderhistory */}
-          <Container fluid className="mx-1 mt-4">
+          <Col xs={12} className="mt-4">
             {/* Message if no orders exists */}
             {message}
 
@@ -37,38 +37,73 @@ function ManagingOrders() {
                 <h5>Go back</h5>
               </Col>
             </Link>
-            <h3 className="text-center mb-4">Orders</h3>
-            <Table className="table table-striped align-middle shadow-sm rounded">
-              <thead className="custom-thead">
-                <tr>
-                  <th>Date</th>
-                  <th>Ordernumber</th>
-                  <th>Customer</th>
-                  <th>Total</th>
-                  <th className="text-center">Shipped?</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order, index) => (
-                  <tr key={index}>
-                    <td>{order.createdAt}</td>
-                    <td>{order.orderNumber}</td>
-                    <td>{order.customer}</td>
-                    <td>{order.totalAmount} SEK</td>
-                    <td className="text-center">
-                      <input
-                        type="checkbox"
-                        className="form-check-input custom-checkbox"
-                        checked={order.shipped}
-                        onChange={() => handleShippedChange(order._id)}
-                        id={`checkbox-${order._id}`}
-                      />
-                    </td>
+            <Col
+              lg={12}
+              className="d-flex flex-column align-items-center"
+              style={{ width: "100vw" }}
+            >
+              <h3 className="text-center mb-4">Orders</h3>
+            </Col>
+
+            <Col
+              lg={12}
+              className="d-flex flex-column align-items-center"
+              style={{ width: "100vw" }}
+            >
+              <Table className="table table-striped align-middle shadow-sm rounded">
+                <thead>
+                  <tr>
+                    <th style={{ fontSize: "14px" }}>Date</th>
+                    <th style={{ fontSize: "14px" }}>Ordernumber</th>
+                    <th style={{ fontSize: "14px" }}>Customer</th>
+                    <th style={{ fontSize: "14px" }}>Total</th>
+                    <th className="text-center" style={{ fontSize: "14px" }}>
+                      Shipped?
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Container>
+                </thead>
+                <tbody>
+                  {orders.map((order, index) => (
+                    <tr key={index}>
+                      <td
+                        className="order-fontsize"
+                        style={{ fontSize: "14px" }}
+                      >
+                        {order.createdAt}
+                      </td>
+                      <td
+                        className="order-fontsize"
+                        style={{ fontSize: "14px" }}
+                      >
+                        {order.orderNumber}
+                      </td>
+                      <td
+                        className="order-fontsize"
+                        style={{ fontSize: "14px" }}
+                      >
+                        {order.customer}
+                      </td>
+                      <td
+                        className="order-fontsize"
+                        style={{ fontSize: "14px" }}
+                      >
+                        {order.totalAmount} SEK
+                      </td>
+                      <td className="text-center">
+                        <input
+                          type="checkbox"
+                          className="form-check-input custom-checkbox"
+                          checked={order.shipped}
+                          onChange={() => handleShippedChange(order._id)}
+                          id={`checkbox-${order._id}`}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+          </Col>
         </>
       )}
 
