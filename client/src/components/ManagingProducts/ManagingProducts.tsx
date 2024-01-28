@@ -172,7 +172,7 @@ function ManagingProducts() {
 
           <h3 className="text-center mb-4">Edit or delete products</h3>
 
-          <Accordion>
+          <Accordion className="shadow mb-4">
             {products.map((product) => (
               <Accordion.Item key={product._id} eventKey={product._id}>
                 <Accordion.Header
@@ -192,14 +192,28 @@ function ManagingProducts() {
                     </Col>
                     <div className="d-flex justify-content-end gap-3 mx-3">
                       <Col
-                        variant="dark"
+                        className="d-flex align-items-center justify-content-center p-3 shadow zoom-effect"
+                        style={{
+                          height: "50px",
+                          width: "50px",
+                          backgroundColor: "#331D2C",
+                          color: "#FFF",
+                          borderRadius: "50%",
+                        }}
                         onClick={(e) => handleOpenEdit(e, product._id)}
                       >
                         <Pen />
                       </Col>
 
                       <Col
-                        variant="danger"
+                        className="d-flex align-items-center justify-content-center p-3 shadow zoom-effect"
+                        style={{
+                          height: "50px",
+                          width: "50px",
+                          backgroundColor: "#dc3545",
+                          color: "#FFF",
+                          borderRadius: "50%",
+                        }}
                         onClick={() => handleShowConfirmDelete(product._id)}
                       >
                         <Trash />
@@ -317,10 +331,15 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
-                          {" "}
+                        <td className="d-flex justify-content-end">
                           <Button
-                            variant="dark"
+                            className="shadow zoom-effect"
+                            style={{
+                              backgroundColor: "#3F2E3E",
+                              color: "#EFE1D1",
+                              borderRadius: 0,
+                              border: "none",
+                            }}
                             onClick={(e) => handleSaveUpdate(e, product._id)}
                           >
                             Save
