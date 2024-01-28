@@ -9,6 +9,7 @@ const CheckoutButton = () => {
     <>
       <Button
         type="submit"
+        className="shadow zoom-effect"
         onClick={handlePayment}
         size="lg"
         style={{

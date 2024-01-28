@@ -221,7 +221,7 @@ function AddProductForm() {
 
               <Col className="d-flex justify-content-end">
                 <Button
-                  className="mt-3 shadow"
+                  className="mt-3 shadow zoom-effect"
                   type="submit"
                   style={{
                     backgroundColor: "#3F2E3E",
