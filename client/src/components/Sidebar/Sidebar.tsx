@@ -1,6 +1,7 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import "./Sidebar.css";
 
 // Sidebar as a menu when logged in
 function Sidebar() {
@@ -9,8 +10,8 @@ function Sidebar() {
     <>
       {loggedInUser ? (
         <Col
-          lg={2}
-          className="p-3"
+          lg={3}
+          className="p-2"
           style={{
             borderRight: "1px solid #DFD3C3",
           }}
@@ -30,57 +31,71 @@ function Sidebar() {
           <Row className="mb-2 mx-1">
             {loggedInUser.isAdmin ? (
               <Row className="d-flex align-items-center justify-content-center gap-2">
-                <Col sm={3} lg={12}>
-                  <Link to={"/admin/orders"} style={{ padding: 0 }}>
-                    <Button
-                      style={{
-                        backgroundColor: "#A78295",
-                        border: "none",
-                        borderRadius: 0,
-                        color: "#EFE1D1",
-                        fontWeight: 500,
-                        width: "100%",
-                      }}
-                      className="shadow zoom-effect"
-                    >
-                      Managing Orders
-                    </Button>
+                <Col lg={12}>
+                  <Link
+                    to={"/admin/orders"}
+                    style={{ padding: 0, textDecoration: "none" }}
+                  >
+                    <Row>
+                      <Button
+                        style={{
+                          backgroundColor: "#A78295",
+                          border: "none",
+                          borderRadius: 0,
+                          color: "#EFE1D1",
+                          fontWeight: 500,
+                          width: "100%",
+                        }}
+                        className="shadow zoom-effect"
+                      >
+                        Managing Orders
+                      </Button>
+                    </Row>
                   </Link>
                 </Col>
 
-                <Col sm={4} md={4} lg={12}>
-                  <Link to={"/admin/products"} style={{ padding: 0 }}>
-                    <Button
-                      style={{
-                        backgroundColor: "#A78295",
-                        border: "none",
-                        borderRadius: 0,
-                        color: "#EFE1D1",
-                        fontWeight: 500,
-                        width: "100%",
-                      }}
-                      className="shadow zoom-effect"
-                    >
-                      Managing Products
-                    </Button>
+                <Col lg={12}>
+                  <Link
+                    to={"/admin/products"}
+                    style={{ padding: 0, textDecoration: "none" }}
+                  >
+                    <Row>
+                      <Button
+                        style={{
+                          backgroundColor: "#A78295",
+                          border: "none",
+                          borderRadius: 0,
+                          color: "#EFE1D1",
+                          fontWeight: 500,
+                        }}
+                        className="shadow zoom-effect"
+                      >
+                        Managing Products
+                      </Button>
+                    </Row>
                   </Link>
                 </Col>
 
-                <Col sm={4} md={4} lg={12}>
-                  <Link to={"/admin/addproduct"} style={{ padding: 0 }}>
-                    <Button
-                      style={{
-                        backgroundColor: "#A78295",
-                        border: "none",
-                        borderRadius: 0,
-                        color: "#EFE1D1",
-                        fontWeight: 500,
-                        width: "100%",
-                      }}
-                      className="shadow zoom-effect"
-                    >
-                      Add new product
-                    </Button>
+                <Col lg={12}>
+                  <Link
+                    to={"/admin/addproduct"}
+                    style={{ padding: 0, textDecoration: "none" }}
+                  >
+                    <Row>
+                      <Button
+                        style={{
+                          backgroundColor: "#A78295",
+                          border: "none",
+                          borderRadius: 0,
+                          color: "#EFE1D1",
+                          fontWeight: 500,
+                          width: "100%",
+                        }}
+                        className="shadow zoom-effect"
+                      >
+                        Add new product
+                      </Button>
+                    </Row>
                   </Link>
                 </Col>
               </Row>
