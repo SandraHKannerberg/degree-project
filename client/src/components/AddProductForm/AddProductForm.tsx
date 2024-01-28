@@ -1,11 +1,10 @@
 import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { NewProduct, useProductContext } from "../../context/ProductContext";
 import { useUserContext } from "../../context/UserContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NoAdminAccess from "../Errors/NoAdminAccess";
 
-// Form to add new product
 function AddProductForm() {
   const {
     title,
@@ -24,11 +23,18 @@ function AddProductForm() {
     setCareAdvice,
     features,
     setFeatures,
+    categories,
+    getAllCategories,
   } = useProductContext();
 
   const { loggedInUser } = useUserContext();
 
-  // Reset fields after Save
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   const resetForm = () => {
     setTitle("");
     setBrand("");
@@ -45,7 +51,6 @@ function AddProductForm() {
   const handleCloseSuccess = () => setSuccess(false);
   const handleCloseError = () => setError(false);
 
-  // Function to add new product
   const sendNewProductToDataBase = async (productData: NewProduct) => {
     const {
       title,
@@ -90,7 +95,6 @@ function AddProductForm() {
     }
   };
 
-  // Handle button-click submit (Add product)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -103,9 +107,15 @@ function AddProductForm() {
       image,
       careAdvice,
       features,
+      categories: [selectedCategory],
     };
 
     sendNewProductToDataBase(newProduct);
+  };
+
+  // Select categories in a select input
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
   };
 
   return (
@@ -218,6 +228,22 @@ function AddProductForm() {
                   required
                 />
               </Form.Group>
+              <Form.Group controlId="formCategories" className="mb-3">
+                <Form.Label>Select category</Form.Label>
+                <select
+                  className="form-select"
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                  required
+                >
+                  <option value="">Select...</option>
+                  {categories.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.title}
+                    </option>
+                  ))}
+                </select>
+              </Form.Group>
 
               <Col className="d-flex justify-content-end">
                 <Button
@@ -236,7 +262,6 @@ function AddProductForm() {
             </Form>
           </Row>
 
-          {/* Modal to confirm when a product is succesfully added to the database */}
           <Modal show={success} onHide={handleCloseSuccess} backdrop="static">
             <Modal.Header closeButton>
               <Modal.Title>Complete</Modal.Title>
@@ -251,7 +276,6 @@ function AddProductForm() {
             </Modal.Footer>
           </Modal>
 
-          {/* Modal to show if error occurs when try add new product */}
           <Modal show={error} onHide={handleCloseError} backdrop="static">
             <Modal.Header closeButton>
               <Modal.Title>Error</Modal.Title>
