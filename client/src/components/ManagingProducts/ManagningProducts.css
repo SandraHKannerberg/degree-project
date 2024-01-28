@@ -1,0 +1,24 @@
+.customize-accordion-btn .accordion-button {
+  background-color: #f8ede3;
+}
+
+@media screen and (max-width: 470px) {
+  .accordion-header {
+    flex-wrap: wrap !important;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .accordion-header .d-flex.flex-column {
+    width: 100%;
+    text-align: center;
+  }
+
+  .accordion-header .d-flex.justify-content-end {
+    justify-content: center;
+  }
+
+  .accordion-header img {
+    margin-bottom: 0.5rem;
+  }
+}

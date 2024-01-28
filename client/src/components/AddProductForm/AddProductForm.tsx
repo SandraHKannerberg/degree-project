@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NoAdminAccess from "../Errors/NoAdminAccess";
 
+// As admin you can add a new product
 function AddProductForm() {
   const {
     title,
@@ -32,6 +33,7 @@ function AddProductForm() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
+    resetForm();
     getAllCategories();
   }, []);
 

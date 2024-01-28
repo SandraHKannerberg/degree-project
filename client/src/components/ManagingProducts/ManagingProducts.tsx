@@ -8,13 +8,17 @@ import {
   Form,
   Modal,
   InputGroup,
+  Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
 import NoAdminAccess from "../Errors/NoAdminAccess";
+import "./ManagningProducts.css";
 
+// As admin you can managing existing products here
+// Update or delete
 function ManagingProducts() {
   const { loggedInUser } = useUserContext();
 
@@ -61,10 +65,14 @@ function ManagingProducts() {
     setDeleteProductId(id);
   };
 
-  // Handle close of the edit-modal
-  const handleClose = () => {
-    setSuccess(false);
-  };
+  // Timeout for info alert after successfull update
+  useEffect(() => {
+    if (success === true) {
+      setTimeout(() => {
+        setSuccess(false);
+      }, 5000); // 5sec
+    }
+  }, [success]);
 
   // Function to handle updateProduct, with fetch to backend and save info to database
   const updateProduct = (id: string) => {
@@ -161,9 +169,21 @@ function ManagingProducts() {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-content"
+      style={{ padding: 0 }}
+    >
       {loggedInUser?.isAdmin && (
-        <Container fluid className="mx-1">
+        <Container
+          fluid
+          className="d-flex flex-column"
+          style={{
+            width: "95vw",
+            margin: 0,
+            padding: 0,
+          }}
+        >
           <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
             <Col className="mt-3 mx-3">
               <h5>Go back</h5>
@@ -172,13 +192,22 @@ function ManagingProducts() {
 
           <h3 className="text-center mb-4">Edit or delete products</h3>
 
-          <Accordion className="shadow mb-4">
+          <Accordion className="shadow mb-4 d-flex flex-column justify-content-center align-items-center">
             {products.map((product) => (
-              <Accordion.Item key={product._id} eventKey={product._id}>
+              <Accordion.Item
+                key={product._id}
+                eventKey={product._id}
+                style={{ backgroundColor: "#f8ede3", width: "100%" }}
+              >
                 <Accordion.Header
                   onClick={(e) => handleOpenEdit(e, product._id)}
+                  className="d-flex flex-wrap flex-column p-3 customize-accordion-btn"
+                  style={{ backgroundColor: "#f8ede3" }}
                 >
-                  <Col className="d-flex align-items-center gap-3">
+                  <Col
+                    className="d-flex align-items-center gap-3"
+                    style={{ backgroundColor: "#f8ede3" }}
+                  >
                     <img
                       className="shadow"
                       src={product.image}
@@ -195,7 +224,7 @@ function ManagingProducts() {
                         Id: {product._id}
                       </span>
                     </Col>
-                    <div className="d-flex justify-content-end gap-3 mx-3">
+                    <div className="d-flex justify-content-end gap-2 mx-3">
                       <Col
                         className="d-flex align-items-center justify-content-center p-3 shadow zoom-effect"
                         style={{
@@ -234,7 +263,7 @@ function ManagingProducts() {
                   >
                     <tbody className="d-flex flex-column w-100">
                       <tr className="d-flex flex-column w-100">
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Image URL</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -246,7 +275,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Titel</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -258,7 +287,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Brand</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -270,7 +299,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Description</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -284,7 +313,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Price</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -296,7 +325,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>InStock</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -310,7 +339,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Care advice</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -321,7 +350,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Features</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -335,9 +364,12 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td className="d-flex justify-content-end">
+                        <td
+                          style={{ backgroundColor: "#f8ede3" }}
+                          className="d-flex justify-content-end"
+                        >
                           <Button
-                            className="shadow zoom-effect"
+                            className="zoom-effect"
                             style={{
                               backgroundColor: "#3F2E3E",
                               color: "#EFE1D1",
@@ -348,6 +380,21 @@ function ManagingProducts() {
                           >
                             Save
                           </Button>
+                        </td>
+                        <td
+                          style={{ backgroundColor: "#f8ede3" }}
+                          className="d-flex justify-content-center align-items-center"
+                        >
+                          {/* Info alert to confirm when update is done */}
+                          <Alert
+                            variant="success"
+                            show={success}
+                            className="d-flex justify-content-center align-items-center w-50"
+                          >
+                            <p className="m-0">
+                              Saved! The product was successfully updated.
+                            </p>
+                          </Alert>
                         </td>
                       </tr>
                     </tbody>
@@ -375,19 +422,6 @@ function ManagingProducts() {
                 onClick={(e) => handleDelete(e, deleteProductId)}
               >
                 Delete
-              </Button>
-            </Modal.Footer>
-          </Modal>
-
-          {/* Info modal to confirm when update is done */}
-          <Modal show={success} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Update Success</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Update done for product</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                OK
               </Button>
             </Modal.Footer>
           </Modal>
