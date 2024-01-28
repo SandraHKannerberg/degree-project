@@ -38,6 +38,7 @@ function Banner() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              objectPosition: "0 95%",
               borderRadius: "50%",
             }}
           />
@@ -51,6 +52,7 @@ function Banner() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              objectPosition: "0 90%",
               borderRadius: "50%",
             }}
           />
