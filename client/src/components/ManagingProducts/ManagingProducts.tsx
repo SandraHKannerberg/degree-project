@@ -178,11 +178,16 @@ function ManagingProducts() {
                 <Accordion.Header
                   onClick={(e) => handleOpenEdit(e, product._id)}
                 >
-                  <Col className="d-flex align-items-center gap-2">
+                  <Col className="d-flex align-items-center gap-3">
                     <img
+                      className="shadow"
                       src={product.image}
                       alt={product.title}
-                      style={{ maxWidth: "70px", maxHeight: "70px" }}
+                      style={{
+                        maxWidth: "70px",
+                        maxHeight: "70px",
+                        border: "1px solid #D0B8AB",
+                      }}
                     />
                     <Col className="d-flex flex-column">
                       <span>{product.title}</span>
@@ -225,7 +230,6 @@ function ManagingProducts() {
                   <Table
                     striped
                     bordered
-                    hover
                     className="d-flex flex-row flex-sm-column"
                   >
                     <tbody className="d-flex flex-column w-100">

@@ -1,9 +1,10 @@
 import { useUserContext } from "../../context/UserContext";
 import { useOrderContext } from "../../context/OrderContext";
 import { useEffect } from "react";
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NoAdminAccess from "../Errors/NoAdminAccess";
+import "./ManagingOrders.css";
 
 // Component for managing orders
 // You need to be logged in with admin auth to be able to access this ordercontent
@@ -22,23 +23,23 @@ function ManagingOrders() {
   };
 
   return (
-    <>
+    <Container className="d-flex justify-content-center">
       {/* Show all orders */}
       {loggedInUser?.isAdmin && orders && (
         <>
           {/* Wrapped container around orderhistory */}
-          <Container fluid className="mx-1">
+          <Container fluid className="mx-1 mt-4">
             {/* Message if no orders exists */}
             {message}
 
-            <h1>Orders</h1>
             <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
               <Col className="mt-3 mx-3">
                 <h5>Go back</h5>
               </Col>
             </Link>
-            <table className="table table-striped align-middle shadow-sm rounded">
-              <thead>
+            <h3 className="text-center mb-4">Orders</h3>
+            <Table className="table table-striped align-middle shadow-sm rounded">
+              <thead className="custom-thead">
                 <tr>
                   <th>Date</th>
                   <th>Ordernumber</th>
@@ -57,20 +58,22 @@ function ManagingOrders() {
                     <td className="text-center">
                       <input
                         type="checkbox"
+                        className="form-check-input custom-checkbox"
                         checked={order.shipped}
                         onChange={() => handleShippedChange(order._id)}
+                        id={`checkbox-${order._id}`}
                       />
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </Container>
         </>
       )}
 
       {!loggedInUser?.isAdmin ? <NoAdminAccess></NoAdminAccess> : null}
-    </>
+    </Container>
   );
 }
 
