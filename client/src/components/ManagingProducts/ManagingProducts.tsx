@@ -46,6 +46,7 @@ function ManagingProducts() {
     setFeatures,
   } = useProductContext();
 
+  // States for the delete modal
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
 
@@ -130,6 +131,7 @@ function ManagingProducts() {
     event.preventDefault();
     const selectedProduct = products.find((product) => product._id === id);
 
+    // If selected product set the values / states
     if (selectedProduct) {
       setImage(selectedProduct.image);
       setTitle(selectedProduct.title);
@@ -209,7 +211,7 @@ function ManagingProducts() {
                     style={{ backgroundColor: "#f8ede3" }}
                   >
                     <img
-                      className="shadow"
+                      className="shadow product-xs-img"
                       src={product.image}
                       alt={product.title}
                       style={{
@@ -224,34 +226,29 @@ function ManagingProducts() {
                         Id: {product._id}
                       </span>
                     </Col>
-                    <div className="d-flex justify-content-end gap-2 mx-3">
-                      <Col
-                        className="d-flex align-items-center justify-content-center p-3 shadow zoom-effect"
+
+                    {/* // Tool buttons */}
+                    <div className="d-flex justify-content-end gap-3 mx-3">
+                      <span
                         style={{
-                          height: "50px",
-                          width: "50px",
-                          backgroundColor: "#331D2C",
-                          color: "#FFF",
-                          borderRadius: "50%",
+                          fontSize: "25px",
+                          filter: "drop-shadow(0 0 0.75rem #3F2E3E)",
                         }}
                         onClick={(e) => handleOpenEdit(e, product._id)}
                       >
                         <Pen />
-                      </Col>
+                      </span>
 
-                      <Col
-                        className="d-flex align-items-center justify-content-center p-3 shadow zoom-effect"
+                      <span
                         style={{
-                          height: "50px",
-                          width: "50px",
-                          backgroundColor: "#dc3545",
-                          color: "#FFF",
-                          borderRadius: "50%",
+                          fontSize: "25px",
+                          color: "#dc3545",
+                          filter: "drop-shadow(0 0 0.75rem crimson)",
                         }}
                         onClick={() => handleShowConfirmDelete(product._id)}
                       >
                         <Trash />
-                      </Col>
+                      </span>
                     </div>
                   </Col>
                 </Accordion.Header>
