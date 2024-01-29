@@ -156,6 +156,10 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
             "*Password require min 6 characters of which at least one letter and at least one number"
           );
         }
+
+        if (response.status === 500) {
+          setErrorInfo("An error occurred. Cannot complete registration");
+        }
       } catch (err) {
         console.log("ERROR-MESSAGE:", err);
       }

@@ -24,18 +24,19 @@ async function registerNewUser(req, res) {
     // Hash the password
     user.password = await bcrypt.hash(user.password, 10);
 
-    // Save new user to MongoDB
-    await user.save();
-
     // Create a customer in Stripe
     const stripeCustomer = await stripe.customers.create({
       email: user.email,
       name: user.firstName + " " + user.lastName,
     });
 
-    // Attach the Stripe customer ID to the user in MongoDB
-    user.stripeCustomerId = stripeCustomer.id;
-    await user.save();
+    if (stripeCustomer) {
+      // Attach the Stripe customer ID to the user in MongoDB
+      user.stripeCustomerId = stripeCustomer.id;
+
+      //Save new user to MongoDB database
+      await user.save();
+    }
 
     // Delete the password before user info are send as 201 status
     const jsonUser = user.toJSON();
