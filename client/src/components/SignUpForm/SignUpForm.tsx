@@ -337,7 +337,7 @@ function SignUpForm() {
                 borderRadius: 0,
                 fontWeight: 500,
               }}
-              className="shadow"
+              className="shadow zoom-effect"
               onClick={handleRegistrationNewUser}
             >
               Submit

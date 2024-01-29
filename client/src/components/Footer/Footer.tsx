@@ -7,6 +7,7 @@ function Footer() {
     <Container
       fluid
       style={{ backgroundColor: "#DFD3C3", minHeight: "30vh", marginBottom: 0 }}
+      className="w-100"
     >
       <Row className="text-center mt-2 pt-3">
         <Col>
@@ -23,10 +24,10 @@ function Footer() {
       </Row>
       <Row className="d-flex flex-column justify-content-center align-items-center">
         <Col xs={6} className="text-center pb-3">
-          <h6>
+          <p style={{ fontSize: "14px", padding: 0, margin: 0 }}>
             Subscribe to receive our offers in preview and enjoy 10% off on your
             first order
-          </h6>
+          </p>
         </Col>
         <Col xs={10} sm={8} md={7} lg={5} className="pb-3">
           <InputGroup className="mb-3">
@@ -34,10 +35,18 @@ function Footer() {
               placeholder="Enter your e-mail"
               aria-label="E-mail"
               aria-describedby="basic-addon2"
+              style={{
+                backgroundColor: "#f8ede3",
+                border: "1px solid #331d2c",
+              }}
             />
             <InputGroup.Text
               id="basic-addon2"
-              style={{ backgroundColor: "#331d2c", color: "#EFE1D1" }}
+              style={{
+                backgroundColor: "#331d2c",
+                color: "#EFE1D1",
+                border: "1px solid #331d2c",
+              }}
             >
               Subscribe
             </InputGroup.Text>

@@ -6,7 +6,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { HeartFill } from "react-bootstrap-icons";
 import AddToCartBtn from "../../components/AddToCartBtn/AddToCartBtn";
-import Error404 from "../../components/Errors/404";
+import NoPage from "../../components/Errors/NoPage";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -58,7 +58,7 @@ function ProductDetails() {
       <Header />
       <>
         {!product ? (
-          <Error404></Error404>
+          <NoPage></NoPage>
         ) : (
           <Container style={{ marginTop: "10rem" }}>
             <Row className="d-flex justify-content-center my-5">

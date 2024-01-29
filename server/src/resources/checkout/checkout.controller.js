@@ -39,9 +39,6 @@ const createCheckOutSession = async (req, res) => {
       },
     }));
 
-    // Customer - use in create-session as the value of customer
-    const customer = req.body.email;
-
     // LineItems - use in create-session as the value of line_items
     const lineItems = req.body.items.map((item) => {
       return {
@@ -64,7 +61,8 @@ const createCheckOutSession = async (req, res) => {
       },
       shipping_options: shippingOptions, // Available Shipping-options
       line_items: lineItems, // With data from database
-      customer, // Customers e-mail
+      customer: req.session.stripeCustomerId,
+      customer_email: req.body.email,
       mode: "payment",
       payment_method_types: ["card"],
       allow_promotion_codes: true,
@@ -148,7 +146,7 @@ const verifySession = async (req, res) => {
       shipped: false,
       shippingMethod: {
         shipping: session.shipping_cost.display_name,
-        amount_total: Math.floor(session.shipping_cost.amount_total),
+        amount_total: session.shipping_cost.amount_total / 100,
         stripeShippingId: session.shipping_cost.shipping_rate,
       },
       stripePaymentIntentId: session.payment_intent,

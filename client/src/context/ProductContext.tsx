@@ -11,14 +11,14 @@ import {
 export interface Product {
   _id: string;
   title: string;
-  brand?: string;
+  brand: string;
   description: string;
-  careAdvice?: string;
-  features?: string[];
+  careAdvice?: string; // not required
+  features?: string[]; // not required
   price: number;
   image: string;
   inStock: number;
-  categories?: string[];
+  categories?: string[]; // not required
 }
 
 //New product
@@ -168,54 +168,55 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // -----------------------------------Admin functions ----------------------------------------//
 
-  //Update existing product in database
-  const updateProductInDatabase = async (id: string) => {
-    const url = `/api/products/${id}`;
+  // Function to handle updateProduct, with fetch to backend and save info to database
+  const updateProductInDatabase = (id: string) => {
+    const url = "/api/products/" + id;
 
-    try {
-      const response = await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: id,
-          title: title,
-          brand: brand,
-          description: description,
-          price: price,
-          image: image,
-          inStock: inStock,
-          careAdvice: careAdvice,
-          features: features,
-          deleted: false,
-        }),
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+        image: image,
+        title: title,
+        brand: brand,
+        description: description,
+        price: price,
+        inStock: inStock,
+        careAdvice: careAdvice,
+        features: features,
+        deleted: false,
+      }),
+    })
+      .then((response) => {
+        if (!response || response.status === 400) {
+          setSuccess(false);
+          throw new Error(
+            "ERROR - Something went wrong, the product with " +
+              id +
+              " is not updated"
+          );
+        }
+        if (
+          image ||
+          brand ||
+          title ||
+          description ||
+          price ||
+          inStock ||
+          careAdvice ||
+          features
+        ) {
+          setSuccess(true);
+          getAllProducts();
+        }
+      })
+
+      .catch((e) => {
+        console.log(e);
       });
-
-      if (!response || response.status === 400) {
-        setSuccess(false);
-        throw new Error(
-          `ERROR - Something went wrong, the product with ID ${id} is not updated`
-        );
-      }
-
-      if (
-        image ||
-        title ||
-        brand ||
-        description ||
-        price ||
-        inStock ||
-        careAdvice ||
-        features
-      ) {
-        setSuccess(true);
-        getAllProducts();
-      }
-    } catch (error) {
-      console.error("Update failed:", error);
-      throw error;
-    }
   };
 
   // Function to delete a product in the database from the Admin panel

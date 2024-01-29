@@ -12,7 +12,7 @@ function AddToCartBtn({ product }: ProductProps) {
 
   return (
     <Button
-      className="shadow"
+      className="shadow zoom-effect"
       style={{
         backgroundColor: "#85586f",
         border: "none",

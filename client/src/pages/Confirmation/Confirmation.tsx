@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import { useCartContext } from "../../context/CartContext";
 import { PatchCheckFill, Stars } from "react-bootstrap-icons";
-import sad from "../../assets/sad.png";
+import errorpayment from "../../assets/error-payment.png";
 
 // Confirmation page --- Different content depending on payment status
 function Confirmation() {
@@ -87,10 +87,12 @@ function Confirmation() {
       >
         {isLoading ? (
           // Display loader while verifying payment
-          <div className="text-center">
+          <div
+            className="text-center"
+            style={{ minHeight: "35vh", marginTop: "10rem" }}
+          >
             <Spinner animation="border" /> <br />
             <p>Please wait while processing your payment...</p>
-            {/* You can add a spinner or any loading indicator here */}
           </div>
         ) : isPaymentVerified ? (
           // If payment = success - show this content
@@ -182,7 +184,7 @@ function Confirmation() {
           >
             <Col className="d-flex flex-column justify-content-center align-items-center my-4">
               <img
-                src={sad}
+                src={errorpayment}
                 alt="Error"
                 style={{ width: "100px" }}
                 className="mb-3"

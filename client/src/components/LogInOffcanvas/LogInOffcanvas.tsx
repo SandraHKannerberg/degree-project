@@ -51,9 +51,12 @@ function LogInOffcanvas() {
       {/* When logged in as a user - show filled Person icon with checkmark. */}
       {loggedInUser && !loggedInUser?.isAdmin ? (
         <Col>
-          <Button style={{ background: "none", border: "none" }}>
+          <Button
+            className="zoom-effect"
+            style={{ background: "none", border: "none" }}
+          >
             <Link
-              to="/mypage"
+              to="/loggedin"
               className="menu-link"
               style={{
                 color: "#EFE1D1",
@@ -75,7 +78,10 @@ function LogInOffcanvas() {
       {/* When logged in as admin - show filled Person icon with a gear. */}
       {loggedInUser?.isAdmin ? (
         <Col>
-          <Button style={{ background: "none", border: "none" }}>
+          <Button
+            className="zoom-effect"
+            style={{ background: "none", border: "none" }}
+          >
             <Link
               to="/admin"
               className="menu-link"
@@ -99,6 +105,7 @@ function LogInOffcanvas() {
       {/* Not logged in - show a person outlined icon. This icon handle open OffCanvas for login / signup */}
       {!loggedInUser ? (
         <Button
+          className="zoom-effect"
           style={{ background: "none", border: "none" }}
           onClick={handleShow}
         >

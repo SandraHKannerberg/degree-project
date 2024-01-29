@@ -1,0 +1,10 @@
+.customize-accordion-btn .accordion-button {
+  background-color: #f8ede3;
+  padding: 0;
+}
+
+@media screen and (max-width: 495px) {
+  .product-xs-img {
+    display: none;
+  }
+}

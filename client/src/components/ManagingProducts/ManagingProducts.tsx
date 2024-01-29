@@ -8,20 +8,25 @@ import {
   Form,
   Modal,
   InputGroup,
+  Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
 import NoAdminAccess from "../Errors/NoAdminAccess";
+import "./ManagningProducts.css";
 
+// As admin you can managing existing products here
+// Update or delete
 function ManagingProducts() {
   const { loggedInUser } = useUserContext();
 
   const {
     products,
+    success,
+    setSuccess,
     getAllProducts,
-    updateProductInDatabase,
     deleteProductFromDatabase,
     title,
     setTitle,
@@ -41,28 +46,15 @@ function ManagingProducts() {
     setFeatures,
   } = useProductContext();
 
-  const [editProduct, setEditProduct] = useState({
-    _id: "",
-    title: "",
-    brand: "",
-    description: "",
-    price: 0,
-    image: "",
-    inStock: 0,
-    careAdvice: "",
-    features: [] as string[],
-  });
-
+  // States for the delete modal
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
-  const [showConfirmEdit, setShowConfirmEdit] = useState(false);
-  const [editProductId, setEditProductId] = useState("");
 
   useEffect(() => {
     getAllProducts();
   }, []);
 
-  // Handle close of the confirm modal
+  // Handle close of the confirm delete modal
   const handleCloseConfirmDelete = () => {
     setShowConfirmDelete(false);
     setDeleteProductId("");
@@ -74,47 +66,93 @@ function ManagingProducts() {
     setDeleteProductId(id);
   };
 
-  const handleCloseConfirmEdit = () => {
-    setShowConfirmEdit(false);
-    setEditProductId("");
+  // Timeout for info alert after successfull update
+  useEffect(() => {
+    if (success === true) {
+      setTimeout(() => {
+        setSuccess(false);
+      }, 5000); // 5sec
+    }
+  }, [success]);
+
+  // Function to handle updateProduct, with fetch to backend and save info to database
+  const updateProduct = (id: string) => {
+    const url = "/api/products/" + id;
+
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+        image: image,
+        title: title,
+        brand: brand,
+        description: description,
+        price: price,
+        inStock: inStock,
+        careAdvice: careAdvice,
+        features: features,
+        deleted: false,
+      }),
+    })
+      .then((response) => {
+        if (!response || response.status === 400) {
+          setSuccess(false);
+          throw new Error(
+            "ERROR - Something went wrong, the product with " +
+              id +
+              " is not updated"
+          );
+        }
+        if (
+          image ||
+          brand ||
+          title ||
+          description ||
+          price ||
+          inStock ||
+          careAdvice ||
+          features
+        ) {
+          setSuccess(true);
+          getAllProducts();
+        }
+      })
+
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
-  const handleShowConfirmEdit = (id: string) => {
-    setShowConfirmEdit(true);
-    setEditProductId(id);
+  // Handle click on edit (pen). Open the edit-form. The current product data is pre-entered and the fields are editable.
+  const handleOpenEdit = (event: React.MouseEvent<HTMLElement>, id: string) => {
+    event.preventDefault();
+    const selectedProduct = products.find((product) => product._id === id);
+
+    // If selected product set the values / states
+    if (selectedProduct) {
+      setImage(selectedProduct.image);
+      setTitle(selectedProduct.title);
+      setBrand(selectedProduct.brand);
+      setDescription(selectedProduct.description);
+      setPrice(selectedProduct.price);
+      setInStock(selectedProduct.inStock);
+      setCareAdvice(selectedProduct?.careAdvice ?? "");
+      setFeatures(selectedProduct?.features ?? []);
+    }
   };
 
-  const handleEdit = async (
+  // Save the updates
+  const handleSaveUpdate = async (
     event: React.MouseEvent<HTMLElement>,
     id: string
   ) => {
     event.preventDefault();
 
-    // Search after product by id in productlist to catch the id of the product that you want to update
-    const selectedProduct = products.find((product) => product._id === id);
-
-    console.log(selectedProduct);
-
-    if (selectedProduct) {
-      setImage(selectedProduct.image ?? "");
-      setTitle(selectedProduct.title ?? "");
-      setBrand(selectedProduct.brand ?? "");
-      setDescription(selectedProduct.description ?? "");
-      setPrice(selectedProduct.price ?? 0);
-      setInStock(selectedProduct.inStock ?? 0);
-      setCareAdvice(selectedProduct.careAdvice ?? "");
-      setFeatures(selectedProduct.features ?? []);
-      // I have chosen not to update categories here.
-    }
-
-    await updateProductInDatabase(id);
-    console.log(id);
+    await updateProduct(id);
   };
-
-  // Call the function to update product in database
-  // await updateProductInDatabase(id);
-
-  // CONFIRM HERE
 
   //Eventlistener on delete button
   const handleDelete = async (
@@ -133,9 +171,21 @@ function ManagingProducts() {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-content"
+      style={{ padding: 0 }}
+    >
       {loggedInUser?.isAdmin && (
-        <Container fluid className="mx-1">
+        <Container
+          fluid
+          className="d-flex flex-column"
+          style={{
+            width: "95vw",
+            margin: 0,
+            padding: 0,
+          }}
+        >
           <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
             <Col className="mt-3 mx-3">
               <h5>Go back</h5>
@@ -144,15 +194,31 @@ function ManagingProducts() {
 
           <h3 className="text-center mb-4">Edit or delete products</h3>
 
-          <Accordion>
+          <Accordion className="shadow mb-4 d-flex flex-column justify-content-center align-items-center">
             {products.map((product) => (
-              <Accordion.Item key={product._id} eventKey={product._id}>
-                <Accordion.Header>
-                  <Col className="d-flex align-items-center gap-2">
+              <Accordion.Item
+                key={product._id}
+                eventKey={product._id}
+                style={{ backgroundColor: "#f8ede3", width: "100%" }}
+              >
+                <Accordion.Header
+                  onClick={(e) => handleOpenEdit(e, product._id)}
+                  className="d-flex flex-wrap flex-column p-3 customize-accordion-btn"
+                  style={{ backgroundColor: "#f8ede3" }}
+                >
+                  <Col
+                    className="d-flex align-items-center gap-3"
+                    style={{ backgroundColor: "#f8ede3" }}
+                  >
                     <img
+                      className="shadow product-xs-img"
                       src={product.image}
                       alt={product.title}
-                      style={{ maxWidth: "70px", maxHeight: "70px" }}
+                      style={{
+                        maxWidth: "70px",
+                        maxHeight: "70px",
+                        border: "1px solid #D0B8AB",
+                      }}
                     />
                     <Col className="d-flex flex-column">
                       <span>{product.title}</span>
@@ -160,18 +226,41 @@ function ManagingProducts() {
                         Id: {product._id}
                       </span>
                     </Col>
+
+                    {/* // Tool buttons */}
+                    <div className="d-flex justify-content-end gap-3 mx-3">
+                      <span
+                        style={{
+                          fontSize: "25px",
+                          filter: "drop-shadow(0 0 0.75rem #3F2E3E)",
+                        }}
+                        onClick={(e) => handleOpenEdit(e, product._id)}
+                      >
+                        <Pen />
+                      </span>
+
+                      <span
+                        style={{
+                          fontSize: "25px",
+                          color: "#dc3545",
+                          filter: "drop-shadow(0 0 0.75rem crimson)",
+                        }}
+                        onClick={() => handleShowConfirmDelete(product._id)}
+                      >
+                        <Trash />
+                      </span>
+                    </div>
                   </Col>
                 </Accordion.Header>
                 <Accordion.Body className="d-flex flex-column">
                   <Table
                     striped
                     bordered
-                    hover
                     className="d-flex flex-row flex-sm-column"
                   >
                     <tbody className="d-flex flex-column w-100">
                       <tr className="d-flex flex-column w-100">
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Image URL</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -183,7 +272,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Titel</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -195,7 +284,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Brand</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -207,7 +296,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Description</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -221,7 +310,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Price</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -233,7 +322,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>InStock</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -247,7 +336,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Care advice</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -258,7 +347,7 @@ function ManagingProducts() {
                             />
                           </InputGroup>
                         </td>
-                        <td>
+                        <td style={{ backgroundColor: "#f8ede3" }}>
                           <p>Features</p>
                           <InputGroup className="mb-3">
                             <Form.Control
@@ -267,32 +356,46 @@ function ManagingProducts() {
                               placeholder={"Features..." || product.features}
                               defaultValue={product.features}
                               onChange={(e) =>
-                                setFeatures(
-                                  e.target.value
-                                    .split(",")
-                                    .map((item) => item.trim())
-                                )
+                                setFeatures(e.target.value.split(","))
                               }
                             />
                           </InputGroup>
                         </td>
+                        <td
+                          style={{ backgroundColor: "#f8ede3" }}
+                          className="d-flex justify-content-end"
+                        >
+                          <Button
+                            className="zoom-effect"
+                            style={{
+                              backgroundColor: "#3F2E3E",
+                              color: "#EFE1D1",
+                              borderRadius: 0,
+                              border: "none",
+                            }}
+                            onClick={(e) => handleSaveUpdate(e, product._id)}
+                          >
+                            Save
+                          </Button>
+                        </td>
+                        <td
+                          style={{ backgroundColor: "#f8ede3" }}
+                          className="d-flex justify-content-center align-items-center"
+                        >
+                          {/* Info alert to confirm when update is done */}
+                          <Alert
+                            variant="success"
+                            show={success}
+                            className="d-flex justify-content-center align-items-center w-50"
+                          >
+                            <p className="m-0">
+                              Saved! The product was successfully updated.
+                            </p>
+                          </Alert>
+                        </td>
                       </tr>
                     </tbody>
                   </Table>
-                  <Col className="d-flex justify-content-end gap-2">
-                    <Button
-                      variant="dark"
-                      onClick={() => handleShowConfirmEdit(product._id)}
-                    >
-                      <Pen />
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleShowConfirmDelete(product._id)}
-                    >
-                      <Trash />
-                    </Button>
-                  </Col>
                 </Accordion.Body>
               </Accordion.Item>
             ))}
@@ -316,27 +419,6 @@ function ManagingProducts() {
                 onClick={(e) => handleDelete(e, deleteProductId)}
               >
                 Delete
-              </Button>
-            </Modal.Footer>
-          </Modal>
-
-          {/* Conform edit modal */}
-          <Modal show={showConfirmEdit} onHide={handleCloseConfirmEdit}>
-            <Modal.Header closeButton>
-              <Modal.Title>Confirm Update</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Are you sure you want to update this product?
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseConfirmEdit}>
-                No
-              </Button>
-              <Button
-                variant="danger"
-                onClick={(e) => handleEdit(e, editProductId)}
-              >
-                Yes
               </Button>
             </Modal.Footer>
           </Modal>

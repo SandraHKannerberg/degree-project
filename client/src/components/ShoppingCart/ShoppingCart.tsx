@@ -20,6 +20,7 @@ function ShoppingCart() {
       <Button
         onClick={handleShow}
         style={{ background: "none", border: "none" }}
+        className="zoom-effect"
       >
         <Cart
           style={{
@@ -32,7 +33,7 @@ function ShoppingCart() {
         {/* Badge to show totalt items in cart */}
         <Badge
           bg="dark"
-          className="position-absolute top-0 end-0 d-flex justify-content-center align-items-center"
+          className="position-absolute top-0 end-0 d-flex justify-content-center align-items-center shadow"
           style={{
             borderRadius: "50%",
             height: "25px",

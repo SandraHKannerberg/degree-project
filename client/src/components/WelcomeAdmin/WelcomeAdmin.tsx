@@ -12,7 +12,7 @@ function WelcomeAdmin() {
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          minHeight: "80vh",
+          minHeight: "70vh",
         }}
         className="d-flex flex-column align-items-center justify-content-center"
       >
