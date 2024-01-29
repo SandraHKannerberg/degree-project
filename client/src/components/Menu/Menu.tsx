@@ -1,15 +1,20 @@
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { useProductContext } from "../../context/ProductContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-//Menu with categories and link to each category. The menu are imported in Header
+// Component for menu
 function Menu() {
   const { categories, getAllCategories } = useProductContext();
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   useEffect(() => {
     getAllCategories();
   }, []);
+
+  const handleCloseOffcanvas = () => {
+    setShowOffcanvas(false);
+  };
 
   return (
     <>
@@ -24,8 +29,13 @@ function Menu() {
           key={index}
         >
           <Container fluid>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <Navbar.Toggle
+              aria-controls={`offcanvasNavbar-expand-${expand}`}
+              onClick={() => setShowOffcanvas(!showOffcanvas)}
+            />
             <Navbar.Offcanvas
+              show={showOffcanvas}
+              onHide={handleCloseOffcanvas}
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
               placement="start"
@@ -37,10 +47,18 @@ function Menu() {
               </Offcanvas.Header>
               <Offcanvas.Body className="d-flex justify-content-center">
                 <Nav className="gap-md-3 gap-lg-4 gap-xl-5">
-                  <NavLink to="/" className="menu-link">
+                  <NavLink
+                    to="/"
+                    className="menu-link"
+                    onClick={handleCloseOffcanvas}
+                  >
                     Home
                   </NavLink>
-                  <NavLink to="/shop" className="menu-link">
+                  <NavLink
+                    to="/shop"
+                    className="menu-link"
+                    onClick={handleCloseOffcanvas}
+                  >
                     All
                   </NavLink>
                   {categories.map((category) => (
@@ -48,6 +66,7 @@ function Menu() {
                       key={category._id}
                       to={`/categories/${category._id}`}
                       className="menu-link"
+                      onClick={handleCloseOffcanvas}
                     >
                       {category.title}
                     </NavLink>
