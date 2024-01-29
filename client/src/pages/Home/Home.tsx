@@ -30,7 +30,7 @@ function Home() {
           {/* Title (company name) and go to shop button - section */}
           <Col
             className="d-flex align-items-end justify-content-end flex-column"
-            style={{ margin: "3rem" }}
+            style={{ margin: "3rem", marginBottom: "5rem" }}
           >
             <h1
               style={{
@@ -64,29 +64,6 @@ function Home() {
             </Button>
           </Col>
         </Row>
-        {/* <Row
-          style={{ backgroundColor: "red" }}
-          className="d-flex justify-content-around"
-        >
-          <Col
-            xs={3}
-            style={{ height: "100px", width: "100px", backgroundColor: "blue" }}
-          >
-            Box 1
-          </Col>
-          <Col
-            xs={3}
-            style={{ height: "100px", width: "100px", backgroundColor: "blue" }}
-          >
-            Box 2
-          </Col>
-          <Col
-            xs={3}
-            style={{ height: "100px", width: "100px", backgroundColor: "blue" }}
-          >
-            Box 3
-          </Col>
-        </Row> */}
       </Container>
     </>
   );

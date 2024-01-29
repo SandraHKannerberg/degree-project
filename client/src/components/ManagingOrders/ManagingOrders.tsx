@@ -1,7 +1,7 @@
 import { useUserContext } from "../../context/UserContext";
 import { useOrderContext } from "../../context/OrderContext";
-import { useEffect } from "react";
-import { Col, Container, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Pagination, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NoAdminAccess from "../Errors/NoAdminAccess";
 import "./ManagingOrders.css";
@@ -12,6 +12,18 @@ import "./ManagingOrders.css";
 function ManagingOrders() {
   const { orders, getOrders, message, markAsShipped } = useOrderContext();
   const { loggedInUser } = useUserContext();
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 15; //Orders per page
+
+  // Count index for first and last product on current page
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     getOrders();
@@ -63,7 +75,7 @@ function ManagingOrders() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order, index) => (
+                  {currentOrders.map((order, index) => (
                     <tr key={index}>
                       <td
                         className="order-fontsize"
@@ -102,6 +114,23 @@ function ManagingOrders() {
                   ))}
                 </tbody>
               </Table>
+
+              {/* Pagination */}
+              <Pagination className="justify-content-center">
+                {Array.from(
+                  { length: Math.ceil(orders.length / ordersPerPage) },
+                  (_, index) => (
+                    <Pagination.Item
+                      key={index}
+                      active={index + 1 === currentPage}
+                      onClick={() => paginate(index + 1)}
+                      className="customize-pagination"
+                    >
+                      {index + 1}
+                    </Pagination.Item>
+                  )
+                )}
+              </Pagination>
             </Col>
           </Col>
         </>

@@ -9,6 +9,7 @@ import {
   Modal,
   InputGroup,
   Alert,
+  Pagination,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
@@ -49,6 +50,21 @@ function ManagingProducts() {
   // States for the delete modal
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 15; //Products per page
+
+  // Count index for first and last product on current page
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     getAllProducts();
@@ -195,7 +211,7 @@ function ManagingProducts() {
           <h3 className="text-center mb-4">Edit or delete products</h3>
 
           <Accordion className="shadow mb-4 d-flex flex-column justify-content-center align-items-center">
-            {products.map((product) => (
+            {currentProducts.map((product) => (
               <Accordion.Item
                 key={product._id}
                 eventKey={product._id}
@@ -400,6 +416,23 @@ function ManagingProducts() {
               </Accordion.Item>
             ))}
           </Accordion>
+
+          {/* Pagination */}
+          <Pagination className="justify-content-center">
+            {Array.from(
+              { length: Math.ceil(products.length / productsPerPage) },
+              (_, index) => (
+                <Pagination.Item
+                  key={index}
+                  active={index + 1 === currentPage}
+                  onClick={() => paginate(index + 1)}
+                  className="customize-pagination"
+                >
+                  {index + 1}
+                </Pagination.Item>
+              )
+            )}
+          </Pagination>
 
           {/* Conform delete modal */}
           <Modal show={showConfirmDelete} onHide={handleCloseConfirmDelete}>
