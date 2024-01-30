@@ -35,12 +35,13 @@ function Orders() {
               className="d-flex mx-3"
               style={{
                 marginTop: "9rem",
+                minHeight: "60vh",
               }}
             >
               <Sidebar></Sidebar>
               <Col>
-                <p>{message}</p>
                 <h1>My Orderhistory</h1>
+                <p>{message}</p>
                 {orders.map((order, orderIndex) => (
                   <Row
                     key={orderIndex}

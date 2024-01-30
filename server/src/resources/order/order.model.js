@@ -19,7 +19,6 @@ const OrderSchema = new Schema(
       unique: true,
       default: uuidv4,
     },
-    // customer: { type: Schema.Types.ObjectId, ref: "user", required: true },
     customer: { type: String, required: true },
     email: { type: String, required: true },
     orderItems: { type: [OrderItemSchema], required: true },
