@@ -72,6 +72,13 @@ function LogInForm() {
     }
   }, [errorLogin]);
 
+  // Button accept keyDown ENTER
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <>
       {/* If already log in - show the name of the user */}
@@ -167,6 +174,7 @@ function LogInForm() {
 
           <Row className="mx-1">
             <Button
+              type="submit"
               style={{
                 backgroundColor: "#3F2E3E",
                 border: "none",
@@ -176,6 +184,7 @@ function LogInForm() {
               }}
               className="shadow"
               onClick={handleLogin}
+              onKeyDown={handleKeyPress}
             >
               Log In
             </Button>
