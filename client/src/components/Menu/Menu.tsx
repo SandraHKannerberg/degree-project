@@ -23,8 +23,9 @@ function Menu() {
           expand={expand}
           className="mb-3"
           style={{
-            backgroundColor: "#DFD3C3",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            background:
+              "radial-gradient(circle, rgba(223,211,195,1) 0%, rgba(239,225,209,1) 100%)",
           }}
           key={index}
         >

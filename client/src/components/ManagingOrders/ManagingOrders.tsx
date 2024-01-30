@@ -41,9 +41,6 @@ function ManagingOrders() {
         <>
           {/* Wrapped container around orderhistory */}
           <Col xs={12} className="mt-4">
-            {/* Message if no orders exists */}
-            {message}
-
             <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
               <Col className="mt-3 mx-3">
                 <h5>Go back</h5>
@@ -54,6 +51,8 @@ function ManagingOrders() {
               className="d-flex flex-column align-items-center"
               style={{ width: "100vw" }}
             >
+              {/* Message if no orders exists */}
+              {message}
               <h3 className="text-center mb-4">Orders</h3>
             </Col>
 

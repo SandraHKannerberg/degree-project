@@ -6,8 +6,13 @@ function Footer() {
   return (
     <Container
       fluid
-      style={{ backgroundColor: "#DFD3C3", minHeight: "30vh", marginBottom: 0 }}
-      className="w-100"
+      style={{
+        background:
+          "linear-gradient(0deg, rgba(223,211,195,1) 0%, rgba(239,225,209,1) 100%)",
+        minHeight: "30vh",
+        marginBottom: 0,
+      }}
+      className="w-100 shadow"
     >
       <Row className="text-center mt-2 pt-3">
         <Col>
