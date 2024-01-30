@@ -53,66 +53,54 @@ function AddProductForm() {
   const handleCloseSuccess = () => setSuccess(false);
   const handleCloseError = () => setError(false);
 
-  const sendNewProductToDataBase = async (productData: NewProduct) => {
-    const {
+  const handleSaveNewProduct = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    //New product data required inputs
+    const newProductData: NewProduct = {
       title,
       brand,
       description,
       price,
       inStock,
       image,
-      careAdvice,
-      features,
-      categories,
-    } = productData;
+      categories: [selectedCategory],
+    };
+
+    // CareAdvice not required - Add if value entered
+    if (careAdvice) {
+      newProductData.careAdvice = careAdvice;
+    }
+
+    // Features not required - Add if value entered
+    if (features && features.length > 0) {
+      newProductData.features = features;
+    }
 
     try {
+      // Fetch createProduct from backend
       const productResponse = await fetch("/api/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          title: title,
-          brand: brand,
-          description: description,
-          price: price,
-          image: image,
-          inStock: inStock,
-          careAdvice: careAdvice,
-          features: features,
-          categories: categories,
-        }),
+        body: JSON.stringify(newProductData),
       });
 
       if (productResponse.ok) {
         await productResponse.json();
+
         setSuccess(true);
         resetForm();
+      } else {
+        throw new Error("Failed to create product");
       }
-
-      if (productResponse.status === 400) setError(true);
     } catch (error) {
-      console.error("Error adding new product to the database:", error);
+      console.error("Error creating product:", error);
+      setError(true);
     }
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const newProduct: NewProduct = {
-      title,
-      brand,
-      description,
-      price,
-      inStock,
-      image,
-      careAdvice,
-      features,
-      categories: [selectedCategory],
-    };
-
-    sendNewProductToDataBase(newProduct);
   };
 
   // Select categories in a select input
@@ -136,7 +124,7 @@ function AddProductForm() {
           </Row>
 
           <Row className="p-3 mb-5 shadow">
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSaveNewProduct}>
               <h3>Add a new product</h3>
               <Row>
                 <Form.Group controlId="formTitle" className="mb-3">
@@ -159,6 +147,7 @@ function AddProductForm() {
                     name="brand"
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
+                    required
                   />
                 </Form.Group>
               </Row>
@@ -180,7 +169,7 @@ function AddProductForm() {
                   placeholder="Enter care advice"
                   name="careAdvice"
                   value={careAdvice}
-                  onChange={(e) => setCareAdvice(e.target.value)}
+                  onChange={(e) => setCareAdvice(e.target.value ?? "")}
                 />
               </Form.Group>
               <Form.Group controlId="formFeatures" className="mb-3">
@@ -190,11 +179,12 @@ function AddProductForm() {
                   placeholder="Enter features"
                   name="features"
                   value={features.join(", ")}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const value = e.target.value.trim(); // Trimma strängen för att hantera tomma inmatningar
                     setFeatures(
-                      e.target.value.split(",").map((item) => item.trim())
-                    )
-                  }
+                      value ? value.split(",").map((item) => item.trim()) : []
+                    );
+                  }}
                 />
               </Form.Group>
               <Form.Group controlId="formPrice" className="mb-3">
