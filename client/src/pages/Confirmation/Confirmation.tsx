@@ -83,7 +83,7 @@ function Confirmation() {
       <Container
         fluid
         className="my-5"
-        style={{ minHeight: "35vh", marginTop: "10rem" }}
+        style={{ minHeight: "50vh", marginTop: "10rem" }}
       >
         {isLoading ? (
           // Display loader while verifying payment
