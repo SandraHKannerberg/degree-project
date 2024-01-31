@@ -46,7 +46,7 @@ To run the project follow the instructions below.
 
 - Open Terminal and navigate to the folder where you want to save the repo. Then run the command: </br>
 
-git clone https://github.com/SandraHKannerberg/degree-project.git
+      git clone https://github.com/SandraHKannerberg/degree-project.git
 
 **Server**
 
@@ -54,15 +54,15 @@ git clone https://github.com/SandraHKannerberg/degree-project.git
 
 - Navigate to serverfolder within the repo by running the command:  </br>
 
-cd server
+      cd server
 
 - To get all dependencies run the command: </br>
 
-npm install
+      npm install
   
 - When the installation are done, run the command below to start the server and connect to database: </br>
 
-npm start
+      npm start
 
 The server are now up and running on loclahost and connected to the database
 
@@ -72,14 +72,14 @@ The server are now up and running on loclahost and connected to the database
 
 - Navigate to clientfolder within the repo by running the command: </br>
 
-cd client
+      cd client
 
 - To get all dependencies run the command: </br>
 
-npm install
+      npm install
 
 - When the installation are done, run the command: </br>
 
-npm run dev
+      npm run dev
 
   The project are now up and running om localhost and you can open the application in your browser
