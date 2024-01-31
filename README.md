@@ -48,21 +48,27 @@ To run the project follow the instructions below.
 
       git clone https://github.com/SandraHKannerberg/degree-project.git
 
-**Requires**
+**The project requires**
 
-To be able to run the pproject, keys are required:
+To be able to run the project, secretkeys are required:
 
 - MONGODB_CONNECTION_STRING
 - STRIPE_SECRET_KEY
 - COOKIE_SECRET_KEY
 
-They all are secret
+Open your code editor, for example Visual Studio Code. </br>
+Create an .env-file in the server folder. In the .env-file write the secretkeys along with the value of each key: </br>
+
+MONGODB_CONNECTION_STRING=yoursecretkeyvalue </br>
+STRIPE_SECRET_KEY=yoursecretkeyvalue </br>
+COOKIE_SECRET_KEY=yoursecretkeyvalue </br>
+
 
 **Server**
 
 - Open Terminal and navigate to the repo/project folder
 
-- Navigate to serverfolder within the repo by running the command:  </br>
+- Navigate to server folder within the repo by running the command:  </br>
 
       cd server
 
@@ -80,7 +86,7 @@ The server are now up and running on loclahost and connected to the database
 
 - Open Terminal and navigate to the repo/project folder
 
-- Navigate to clientfolder within the repo by running the command: </br>
+- Navigate to client folder within the repo by running the command: </br>
 
       cd client
 
