@@ -4,6 +4,7 @@ import { Button, Container, Row, Col, Nav } from "react-bootstrap";
 import { ArrowRight } from "react-bootstrap-icons";
 import "./Home.css";
 
+//Landingpage
 function Home() {
   return (
     <>

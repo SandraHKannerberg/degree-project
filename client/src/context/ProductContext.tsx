@@ -48,7 +48,6 @@ export interface IProductContext {
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
   getAllCategories: () => void;
-  updateProductInDatabase: (id: string) => void;
   deleteProductFromDatabase: (id: string) => void;
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
@@ -77,7 +76,6 @@ const defaultValues = {
   categories: [],
   setCategories: () => {},
   getAllCategories: () => {},
-  updateProductInDatabase: () => {},
   deleteProductFromDatabase: () => {},
   title: "",
   setTitle: () => {},
@@ -168,57 +166,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // -----------------------------------Admin functions ----------------------------------------//
 
-  // Function to handle updateProduct, with fetch to backend and save info to database
-  const updateProductInDatabase = (id: string) => {
-    const url = "/api/products/" + id;
-
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        _id: id,
-        image: image,
-        title: title,
-        brand: brand,
-        description: description,
-        price: price,
-        inStock: inStock,
-        careAdvice: careAdvice,
-        features: features,
-        deleted: false,
-      }),
-    })
-      .then((response) => {
-        if (!response || response.status === 400) {
-          setSuccess(false);
-          throw new Error(
-            "ERROR - Something went wrong, the product with " +
-              id +
-              " is not updated"
-          );
-        }
-        if (
-          image ||
-          brand ||
-          title ||
-          description ||
-          price ||
-          inStock ||
-          careAdvice ||
-          features
-        ) {
-          setSuccess(true);
-          getAllProducts();
-        }
-      })
-
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
     const url = "/api/products/" + id;
@@ -264,7 +211,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         setCareAdvice,
         features,
         setFeatures,
-        updateProductInDatabase,
         deleteProductFromDatabase,
         success,
         setSuccess,

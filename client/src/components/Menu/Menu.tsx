@@ -3,7 +3,7 @@ import { useProductContext } from "../../context/ProductContext";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-// Component for menu
+// Component for menu. Show the categories
 function Menu() {
   const { categories, getAllCategories } = useProductContext();
   const [showOffcanvas, setShowOffcanvas] = useState(false);

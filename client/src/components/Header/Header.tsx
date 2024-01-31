@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Menu from "../Menu/Menu";
 
-// Header component with Logotype, User-icon, Shoppingcart and menu of categories
+// Header component with Logotype, User-icon (for login or signup), Shoppingcart and menu of categories
 function Header() {
   return (
     <Container

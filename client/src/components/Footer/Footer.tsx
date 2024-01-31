@@ -2,6 +2,8 @@ import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { Facebook, Instagram, Linkedin } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
+// Footer with link to About page and ContactUs page
+// Subscribe-section and socialmedia-icons are just for show
 function Footer() {
   return (
     <Container

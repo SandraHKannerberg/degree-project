@@ -1,7 +1,6 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
-import "./Sidebar.css";
 
 // Sidebar as a menu when logged in
 function Sidebar() {
@@ -29,6 +28,7 @@ function Sidebar() {
             )}
           </Row>
           <Row className="mb-2 mx-1">
+            {/* Logged in as admin */}
             {loggedInUser.isAdmin ? (
               <Row className="d-flex align-items-center justify-content-center gap-2">
                 <Col lg={12}>
@@ -100,6 +100,7 @@ function Sidebar() {
                 </Col>
               </Row>
             ) : (
+              // Logged in as regular user
               <Link to={"/loggedin/orders"} style={{ padding: 0 }}>
                 <Button
                   style={{

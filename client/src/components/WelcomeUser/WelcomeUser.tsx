@@ -3,7 +3,7 @@ import { useUserContext } from "../../context/UserContext";
 import { Heart } from "react-bootstrap-icons";
 import youryogaspace from "../../assets/your-yoga-space.png";
 
-// Component with Welcome content when you log in
+// Component with Welcome content when you log in as a regular user
 function WelcomeUser() {
   const { loggedInUser } = useUserContext();
 

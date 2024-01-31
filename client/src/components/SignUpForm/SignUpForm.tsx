@@ -5,7 +5,6 @@ import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import Logotype from "../Logotype/Logotype";
 
 //Component with the form to sign up as a new user
-
 function SignUpForm() {
   const {
     firstName,
@@ -131,7 +130,10 @@ function SignUpForm() {
     <Container className="h-100 mt-0 p-3">
       {/* If registration success show Welcome text here */}
       {successInfo ? (
-        <h5 className="mt-3" style={{ color: "#74cb88" }}>
+        <h5
+          className="mt-3 text-center"
+          style={{ color: "#EfE1D1", fontWeight: "bold" }}
+        >
           {successInfo}
         </h5>
       ) : (

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Hook to use localStorage
 export default function useLocalStorage<T>(
   key: string,
   initialValue: T | (() => T)

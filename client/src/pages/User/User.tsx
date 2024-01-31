@@ -6,6 +6,7 @@ import WelcomeUser from "../../components/WelcomeUser/WelcomeUser";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import NoAccess401 from "../../components/Errors/NoAccess401";
 
+// Page for a logged in regular user
 function User() {
   const { loggedInUser } = useUserContext();
 

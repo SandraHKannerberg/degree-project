@@ -3,6 +3,7 @@ import error404 from "../../assets/404.png";
 import LazyLoad from "react-lazy-load";
 import Header from "../Header/Header";
 
+//Show this component if you try to go to an URL that doesn't exists in this project
 function NoPage404() {
   return (
     <Container

@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 import NoAccess401 from "../Errors/NoAccess401";
 
 // Component to show orderhistory.You need to be logged in to have access to the orderhistory
-// Regular users can see their own orders, not others
+// Regular users can see their own orders
 function Orders() {
   const { orders, getOrders, message } = useOrderContext();
   const { loggedInUser } = useUserContext();
@@ -28,7 +28,7 @@ function Orders() {
           minHeight: "60vh",
         }}
       >
-        {/* Orderhistory for regular user */}
+        {/* Orderhistory for user */}
         {loggedInUser && orders && (
           <>
             <Row

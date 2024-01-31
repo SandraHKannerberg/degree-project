@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import NoPage404 from "../../components/Errors/NoPage404";
 
+// Show products filtered by category
 function ProductsCategory() {
   const { id } = useParams();
   const [category, setCategory] = useState<Category>();

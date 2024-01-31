@@ -7,12 +7,14 @@ type ProductProps = {
   product: Product;
 };
 
+// ProductCard that render every product in the shop with shortened info on the products
 function ProductCard({ product }: ProductProps) {
   // Check in stock status
   function inStockStatus(inStock: number) {
     let status: string;
     let inStockValue: string;
 
+    // InStock indicatorn shown in the productcard
     if (inStock <= 3) {
       inStockValue = "🔴 ";
       status = "Not in stock";
