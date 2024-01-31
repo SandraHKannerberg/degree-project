@@ -1,5 +1,7 @@
 const { OrderModel } = require("./order.model");
 
+// *********** ENDPOINTS ORDERS *********** //
+
 // Get all orders
 const getAllOrders = async (req, res) => {
   try {

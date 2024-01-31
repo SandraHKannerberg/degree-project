@@ -61,7 +61,7 @@ const createCheckOutSession = async (req, res) => {
       },
       shipping_options: shippingOptions, // Available Shipping-options
       line_items: lineItems, // With data from database
-      customer: req.session.stripeCustomerId,
+      customer: req.session.stripeCustomerId, //If the customer are logged in this prescribe the email in the checkout
       customer_email: req.body.email,
       mode: "payment",
       payment_method_types: ["card"],
