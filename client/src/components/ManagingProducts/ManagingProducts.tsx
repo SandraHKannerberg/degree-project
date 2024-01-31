@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
-import NoAdminAccess from "../Errors/NoAdminAccess";
+import NoAccess401 from "../Errors/NoAccess401";
 import "./ManagningProducts.css";
 
 // As admin you can managing existing products here
@@ -453,7 +453,7 @@ function ManagingProducts() {
           </Modal>
         </Container>
       )}
-      {!loggedInUser?.isAdmin ? <NoAdminAccess></NoAdminAccess> : null}
+      {!loggedInUser?.isAdmin ? <NoAccess401></NoAccess401> : null}
     </Container>
   );
 }

@@ -3,7 +3,7 @@ import { NewProduct, useProductContext } from "../../context/ProductContext";
 import { useUserContext } from "../../context/UserContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import NoAdminAccess from "../Errors/NoAdminAccess";
+import NoAccess401 from "../Errors/NoAccess401";
 
 // As admin you can add a new product
 function AddProductForm() {
@@ -283,7 +283,7 @@ function AddProductForm() {
           </Modal>
         </Container>
       ) : (
-        <NoAdminAccess></NoAdminAccess>
+        <NoAccess401></NoAccess401>
       )}
     </>
   );

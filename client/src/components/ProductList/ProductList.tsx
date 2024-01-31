@@ -55,7 +55,15 @@ function ProductList() {
           lg={3}
           className="d-flex justify-content-center mx-4"
         >
-          <span className="input-group-text">
+          <span
+            className="input-group-text"
+            style={{
+              backgroundColor: "#A78295",
+              borderRadius: 0,
+              color: "#EFE1D1",
+              fontSize: "20px",
+            }}
+          >
             <Search></Search>
           </span>
           <input

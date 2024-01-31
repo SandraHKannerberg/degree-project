@@ -5,7 +5,7 @@ import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
 import { OrderProvider } from "./context/OrderContext";
 import { UserProvider } from "./context/UserContext";
-import NoPage from "./components/Errors/NoPage";
+import NoPage404 from "./components/Errors/NoPage404";
 import Loader from "./components/Loader/Loader";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
@@ -148,7 +148,7 @@ function App() {
                   }
                 />
                 {/* Fallback */}
-                <Route path="*" element={<NoPage />} />
+                <Route path="*" element={<NoPage404 />} />
               </Routes>
             </OrderProvider>
           </ProductProvider>

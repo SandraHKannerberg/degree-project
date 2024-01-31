@@ -3,7 +3,7 @@ import error404 from "../../assets/404.png";
 import LazyLoad from "react-lazy-load";
 import Header from "../Header/Header";
 
-function NoPage() {
+function NoPage404() {
   return (
     <Container
       fluid
@@ -35,4 +35,4 @@ function NoPage() {
   );
 }
 
-export default NoPage;
+export default NoPage404;

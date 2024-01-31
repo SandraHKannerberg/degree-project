@@ -5,6 +5,7 @@ import Header from "../../components/Header/Header";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import NoPage404 from "../../components/Errors/NoPage404";
 
 function ProductsCategory() {
   const { id } = useParams();
@@ -117,7 +118,9 @@ function ProductsCategory() {
       </Container>
       <Footer />
     </>
-  ) : null;
+  ) : (
+    <NoPage404></NoPage404>
+  );
 }
 
 export default ProductsCategory;

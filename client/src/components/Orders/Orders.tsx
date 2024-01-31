@@ -5,7 +5,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer/Footer";
-import NoUserAccess from "../Errors/NoUserAccess";
+import NoAccess401 from "../Errors/NoAccess401";
 
 // Component to show orderhistory.You need to be logged in to have access to the orderhistory
 // Regular users can see their own orders, not others
@@ -113,7 +113,7 @@ function Orders() {
           </>
         )}
 
-        {!loggedInUser ? <NoUserAccess></NoUserAccess> : null}
+        {!loggedInUser ? <NoAccess401></NoAccess401> : null}
 
         <Footer></Footer>
       </Container>

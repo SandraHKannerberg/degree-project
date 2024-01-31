@@ -3,7 +3,7 @@ import { useOrderContext } from "../../context/OrderContext";
 import { useEffect, useState } from "react";
 import { Col, Container, Dropdown, Pagination, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import NoAdminAccess from "../Errors/NoAdminAccess";
+import NoAccess401 from "../Errors/NoAccess401";
 import "./ManagingOrders.css";
 
 // Component for managing orders
@@ -150,7 +150,7 @@ function ManagingOrders() {
         </>
       )}
 
-      {!loggedInUser?.isAdmin ? <NoAdminAccess></NoAdminAccess> : null}
+      {!loggedInUser?.isAdmin ? <NoAccess401></NoAccess401> : null}
     </Container>
   );
 }
