@@ -43,7 +43,7 @@ function ProductList() {
   return (
     <Container fluid style={{ padding: 0, marginTop: "7.5rem" }}>
       <Banner></Banner>
-      {/* Search */}
+      {/* Search area*/}
       <Row
         style={{ marginTop: "2rem" }}
         className="d-flex justify-content-center"

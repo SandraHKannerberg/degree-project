@@ -1,6 +1,7 @@
 import logotype from "../../assets/logotype-lotus.png";
 import { Link } from "react-router-dom";
 
+//Logotype component.
 function Logotype() {
   return (
     <>

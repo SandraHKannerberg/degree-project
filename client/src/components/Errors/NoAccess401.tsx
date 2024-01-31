@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 
+//Show this component if you try to go to a page you have no access to
 function NoAccess401() {
   return (
     <Container fluid style={{ height: "100vh" }}>

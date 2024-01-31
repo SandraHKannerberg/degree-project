@@ -51,6 +51,10 @@ function ManagingProducts() {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
 
+  //Sates if error occured with update
+  const [errorUpdate, setErrorUpdate] = useState("");
+  const [failed, setFailed] = useState(false);
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 15; //Products per page
@@ -91,6 +95,15 @@ function ManagingProducts() {
     }
   }, [success]);
 
+  // Timeout for info alert error update
+  useEffect(() => {
+    if (failed === true) {
+      setTimeout(() => {
+        setFailed(false);
+      }, 5000); // 5sec
+    }
+  }, [failed]);
+
   // Function to handle updateProduct, with fetch to backend and save info to database
   const updateProduct = (id: string) => {
     const url = "/api/products/" + id;
@@ -120,6 +133,10 @@ function ManagingProducts() {
       .then((response) => {
         if (!response || response.status === 400) {
           setSuccess(false);
+          setFailed(true);
+          setErrorUpdate(
+            "ERROR Occured - The product with " + id + " is not updated"
+          );
           throw new Error(
             "ERROR - Something went wrong, the product with " +
               id +
@@ -129,6 +146,7 @@ function ManagingProducts() {
         // If the requierd fields have values the update are approved
         if (image || brand || title || description || price || inStock) {
           setSuccess(true);
+          setFailed(false);
           getAllProducts();
         }
       })
@@ -239,7 +257,7 @@ function ManagingProducts() {
                       </span>
                     </Col>
 
-                    {/* // Tool buttons */}
+                    {/* Tool buttons */}
                     <div className="d-flex justify-content-end gap-3 mx-3">
                       <span
                         style={{
@@ -403,6 +421,19 @@ function ManagingProducts() {
                             <p className="m-0">
                               Saved! The product was successfully updated.
                             </p>
+                          </Alert>
+                        </td>
+                        <td
+                          style={{ backgroundColor: "#f8ede3" }}
+                          className="d-flex justify-content-center align-items-center"
+                        >
+                          {/* Info alert to confirm when update is done */}
+                          <Alert
+                            variant="danger"
+                            show={failed}
+                            className="d-flex justify-content-center align-items-center w-50"
+                          >
+                            <p className="m-0">{errorUpdate}</p>
                           </Alert>
                         </td>
                       </tr>

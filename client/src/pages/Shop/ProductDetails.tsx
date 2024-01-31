@@ -8,6 +8,7 @@ import { HeartFill } from "react-bootstrap-icons";
 import AddToCartBtn from "../../components/AddToCartBtn/AddToCartBtn";
 import NoPage404 from "../../components/Errors/NoPage404";
 
+// Page to show a single product with all information about it
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product>();
@@ -39,6 +40,7 @@ function ProductDetails() {
     let status: string;
     let inStockValue: string;
 
+    //Show inStock indicator
     if (inStock <= 3) {
       inStockValue = "🔴 ";
       status = "Not in stock";
@@ -81,7 +83,10 @@ function ProductDetails() {
                   </Col>
                   <Col className="d-flex justify-content-end">
                     <p>
-                      {inStockStatus(product.inStock)} --- {product.price} SEK
+                      {inStockStatus(product.inStock)} ---{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        {product.price} SEK
+                      </span>
                     </p>
                   </Col>
                 </Row>

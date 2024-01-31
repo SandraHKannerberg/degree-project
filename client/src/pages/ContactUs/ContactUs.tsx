@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
+//Basic ContactUs page
 function ContactUs() {
   return (
     <>

@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const { app } = require("./app");
 
-const PORT = process.env.PORT;
+const PORT = 3000;
 const databaseURL = process.env.MONGODB_CONNECTION_STRING;
 
 main().catch((err) => console.log(err));

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NoAccess401 from "../Errors/NoAccess401";
 
-// As admin you can add a new product
+// Component to add new product. Require admin login
 function AddProductForm() {
   const {
     title,
@@ -37,6 +37,7 @@ function AddProductForm() {
     getAllCategories();
   }, []);
 
+  // Reset the inputs
   const resetForm = () => {
     setTitle("");
     setBrand("");
@@ -48,6 +49,7 @@ function AddProductForm() {
     setFeatures([]);
   };
 
+  //States for success or error
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const handleCloseSuccess = () => setSuccess(false);
@@ -180,7 +182,7 @@ function AddProductForm() {
                   name="features"
                   value={features.join(", ")}
                   onChange={(e) => {
-                    const value = e.target.value.trim(); // Trimma strängen för att hantera tomma inmatningar
+                    const value = e.target.value.trim();
                     setFeatures(
                       value ? value.split(",").map((item) => item.trim()) : []
                     );
@@ -254,6 +256,7 @@ function AddProductForm() {
             </Form>
           </Row>
 
+          {/* Confirmation modal */}
           <Modal show={success} onHide={handleCloseSuccess} backdrop="static">
             <Modal.Header closeButton>
               <Modal.Title>Complete</Modal.Title>
@@ -268,6 +271,7 @@ function AddProductForm() {
             </Modal.Footer>
           </Modal>
 
+          {/* Modal if error occured */}
           <Modal show={error} onHide={handleCloseError} backdrop="static">
             <Modal.Header closeButton>
               <Modal.Title>Error</Modal.Title>
@@ -283,6 +287,7 @@ function AddProductForm() {
           </Modal>
         </Container>
       ) : (
+        // 401 page if not logged in with admin auth
         <NoAccess401></NoAccess401>
       )}
     </>

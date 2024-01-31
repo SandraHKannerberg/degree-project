@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const { initStripe } = require("../../stripe");
 const stripe = initStripe();
 
+// *********** ENDPOINTS USERS *********** //
+
 // Register a new user
 async function registerNewUser(req, res) {
   // Check if the user exists, search if e-mail is registred

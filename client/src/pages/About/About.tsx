@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import about from "../../assets/about.png";
 import LazyLoad from "react-lazy-load";
 
+//Aboutpage with info about the company
 function About() {
   return (
     <>
