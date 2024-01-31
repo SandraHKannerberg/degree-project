@@ -7,7 +7,7 @@ In this project I have been working with a MERN-stack and create a fictional e-c
 
 # Description
 
-The webshop allows you to place and complete an order, both as a guest or an inlogged user by checkout with Stripe </br>
+The webshop allows you to place and complete an order, both as a guest or an inlogged user by checkout with Stripe. </br>
 To mention some of the funcionality on the webpage: </br>
 
 - You can sign up as a user </br>
@@ -16,6 +16,7 @@ To mention some of the funcionality on the webpage: </br>
 - The webpage are full responsive </br>
 - InStock indicator </br>
 - LazyLoading and pagination </br>
+- Search function in productlist. It is located in the menu selection All </br>
 
 # Technologies
 
@@ -32,7 +33,7 @@ admin@admin.com </br>
 admin123 </br>
 
 You can signup as a regular user or login to an existing demo-user account by using credentials: </br>
-user@mymail.com </br>
+user@mailen.com </br>
 user123 </br>
 
 # Installation
@@ -44,31 +45,32 @@ To run the project follow the instructions below.
 - Clone the repo from GitHub: https://github.com/SandraHKannerberg/degree-project.git
 
 - Open Terminal and navigate to the folder where you want to save the repo. Then run the command:
-  git clone https://github.com/SandraHKannerberg/degree-project.git
+   $ git clone https://github.com/SandraHKannerberg/degree-project.git
 
 **Server**
 
 - Open Terminal and navigate to the repo/project folder
 
 - Navigate to serverfolder within the repo by running the command:
-  cd server
+  $ cd server
 
 - To get all dependencies run the command:
-  npm install
+  $ npm install
+  
 - When the installation are done, run the command below to start the server and connect to database:
-  npm start
+  $ npm start
 
 **Client**
 
 - Open Terminal and navigate to the repo/project folder
 
 - Navigate to clientfolder within the repo by running the command:
-  cd client
+  $ cd client
 
 - To get all dependencies run the command:
-  npm install
+  $ npm install
 
 - When the installation are done, run the command:
-  npm run dev
+  $ npm run dev
 
   The project are now up and running om localhost and you can open the application in your browser
