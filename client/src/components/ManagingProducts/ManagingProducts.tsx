@@ -95,23 +95,27 @@ function ManagingProducts() {
   const updateProduct = (id: string) => {
     const url = "/api/products/" + id;
 
+    const requestBody = {
+      _id: id,
+      // Includes the inputs with value
+      ...(image && { image }),
+      ...(title && { title }),
+      ...(brand && { brand }),
+      ...(description && { description }),
+      ...(price && { price }),
+      ...(inStock && { inStock }),
+      // Add careAdvice and features only if they have a value since they are not required
+      ...(careAdvice && { careAdvice }),
+      ...(features.length > 0 && { features }),
+      deleted: false,
+    };
+
     fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        _id: id,
-        image: image,
-        title: title,
-        brand: brand,
-        description: description,
-        price: price,
-        inStock: inStock,
-        careAdvice: careAdvice,
-        features: features,
-        deleted: false,
-      }),
+      body: JSON.stringify(requestBody),
     })
       .then((response) => {
         if (!response || response.status === 400) {
@@ -122,16 +126,8 @@ function ManagingProducts() {
               " is not updated"
           );
         }
-        if (
-          image ||
-          brand ||
-          title ||
-          description ||
-          price ||
-          inStock ||
-          careAdvice ||
-          features
-        ) {
+        // If the requierd fields have values the update are approved
+        if (image || brand || title || description || price || inStock) {
           setSuccess(true);
           getAllProducts();
         }
