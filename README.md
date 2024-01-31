@@ -48,6 +48,16 @@ To run the project follow the instructions below.
 
       git clone https://github.com/SandraHKannerberg/degree-project.git
 
+**Requires**
+
+To be able to run the pproject, keys are required:
+
+- MONGODB_CONNECTION_STRING
+- STRIPE_SECRET_KEY
+- COOKIE_SECRET_KEY
+
+They all are secret
+
 **Server**
 
 - Open Terminal and navigate to the repo/project folder
