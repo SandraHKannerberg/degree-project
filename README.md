@@ -40,37 +40,46 @@ user123 </br>
 
 To run the project follow the instructions below.
 
-- First of all you need to have NodeJS installed. If you don't have it follow the link to Node documentation https://nodejs.org/en
+- First of all you need to have NodeJS installed. Refer to https://nodejs.org/en/ to install nodejs
 
 - Clone the repo from GitHub: https://github.com/SandraHKannerberg/degree-project.git
 
-- Open Terminal and navigate to the folder where you want to save the repo. Then run the command:
-   $ git clone https://github.com/SandraHKannerberg/degree-project.git
+- Open Terminal and navigate to the folder where you want to save the repo. Then run the command: </br>
+
+git clone https://github.com/SandraHKannerberg/degree-project.git
 
 **Server**
 
 - Open Terminal and navigate to the repo/project folder
 
-- Navigate to serverfolder within the repo by running the command:
-  $ cd server
+- Navigate to serverfolder within the repo by running the command:  </br>
 
-- To get all dependencies run the command:
-  $ npm install
+cd server
+
+- To get all dependencies run the command: </br>
+
+npm install
   
-- When the installation are done, run the command below to start the server and connect to database:
-  $ npm start
+- When the installation are done, run the command below to start the server and connect to database: </br>
+
+npm start
+
+The server are now up and running on loclahost and connected to the database
 
 **Client**
 
 - Open Terminal and navigate to the repo/project folder
 
-- Navigate to clientfolder within the repo by running the command:
-  $ cd client
+- Navigate to clientfolder within the repo by running the command: </br>
 
-- To get all dependencies run the command:
-  $ npm install
+cd client
 
-- When the installation are done, run the command:
-  $ npm run dev
+- To get all dependencies run the command: </br>
+
+npm install
+
+- When the installation are done, run the command: </br>
+
+npm run dev
 
   The project are now up and running om localhost and you can open the application in your browser
