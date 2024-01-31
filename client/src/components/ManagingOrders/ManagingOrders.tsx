@@ -1,7 +1,7 @@
 import { useUserContext } from "../../context/UserContext";
 import { useOrderContext } from "../../context/OrderContext";
 import { useEffect, useState } from "react";
-import { Col, Container, Pagination, Table } from "react-bootstrap";
+import { Col, Container, Dropdown, Pagination, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NoAdminAccess from "../Errors/NoAdminAccess";
 import "./ManagingOrders.css";
@@ -92,7 +92,22 @@ function ManagingOrders() {
                         className="order-fontsize"
                         style={{ fontSize: "14px" }}
                       >
-                        {order.customer}
+                        {/* Dropdown to show deliveryaddress */}
+                        <Dropdown>
+                          <Dropdown.Toggle
+                            variant="outlined-secondary"
+                            id="dropdown-basic"
+                          >
+                            {order.customer}
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              {order.deliveryAddress.street}{" "}
+                              {order.deliveryAddress.postal_code},{" "}
+                              {order.deliveryAddress.city}
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
                       </td>
                       <td
                         className="order-fontsize"
