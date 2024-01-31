@@ -4,7 +4,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { Person, PersonFillCheck, PersonFillGear } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import LogInForm from "../LogInForm/LogInForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SignUpForm from "../SignUpForm/SignUpForm";
 import "./LogInOffcanvas.css";
 
@@ -14,6 +14,7 @@ function LogInOffcanvas() {
   const [show, setShow] = useState(false); // State for Offcanvas
   const { loggedInUser, logout } = useUserContext();
   const [showConfirm, setShowConfirm] = useState(false); // State for toast (confirm message)
+  const navigate = useNavigate();
 
   // Open vs. close the offcanvas
   const handleClose = () => setShow(false);
@@ -22,6 +23,9 @@ function LogInOffcanvas() {
   const handleLogout = async () => {
     await logout();
     setShowConfirm(true);
+
+    //Redirect to shop
+    navigate("/shop");
   };
 
   // Timeout for logged out confirm toast
