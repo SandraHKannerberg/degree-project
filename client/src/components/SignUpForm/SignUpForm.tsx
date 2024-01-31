@@ -120,6 +120,13 @@ function SignUpForm() {
     }
   }, [successInfo]);
 
+  // Button accept keyDown ENTER
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter") {
+      handleRegistrationNewUser();
+    }
+  };
+
   return (
     <Container className="h-100 mt-0 p-3">
       {/* If registration success show Welcome text here */}
@@ -330,6 +337,7 @@ function SignUpForm() {
           {/* Button to Submit the registration */}
           <Row className="mx-1">
             <Button
+              type="submit"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -339,6 +347,7 @@ function SignUpForm() {
               }}
               className="shadow zoom-effect"
               onClick={handleRegistrationNewUser}
+              onKeyDown={handleKeyPress}
             >
               Submit
             </Button>

@@ -1,9 +1,9 @@
 import { useUserContext } from "../../context/UserContext";
 import { useOrderContext } from "../../context/OrderContext";
-import { useEffect } from "react";
-import { Col, Container, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Dropdown, Pagination, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import NoAdminAccess from "../Errors/NoAdminAccess";
+import NoAccess401 from "../Errors/NoAccess401";
 import "./ManagingOrders.css";
 
 // Component for managing orders
@@ -12,6 +12,18 @@ import "./ManagingOrders.css";
 function ManagingOrders() {
   const { orders, getOrders, message, markAsShipped } = useOrderContext();
   const { loggedInUser } = useUserContext();
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 15; //Orders per page
+
+  // Count index for first and last product on current page
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     getOrders();
@@ -29,9 +41,6 @@ function ManagingOrders() {
         <>
           {/* Wrapped container around orderhistory */}
           <Col xs={12} className="mt-4">
-            {/* Message if no orders exists */}
-            {message}
-
             <Link to={"/admin"} style={{ padding: 0 }} className="menu-link">
               <Col className="mt-3 mx-3">
                 <h5>Go back</h5>
@@ -42,6 +51,8 @@ function ManagingOrders() {
               className="d-flex flex-column align-items-center"
               style={{ width: "100vw" }}
             >
+              {/* Message if no orders exists */}
+              {message}
               <h3 className="text-center mb-4">Orders</h3>
             </Col>
 
@@ -63,7 +74,7 @@ function ManagingOrders() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order, index) => (
+                  {currentOrders.map((order, index) => (
                     <tr key={index}>
                       <td
                         className="order-fontsize"
@@ -81,7 +92,22 @@ function ManagingOrders() {
                         className="order-fontsize"
                         style={{ fontSize: "14px" }}
                       >
-                        {order.customer}
+                        {/* Dropdown to show deliveryaddress */}
+                        <Dropdown>
+                          <Dropdown.Toggle
+                            variant="outlined-secondary"
+                            id="dropdown-basic"
+                          >
+                            {order.customer}
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              {order.deliveryAddress.street}{" "}
+                              {order.deliveryAddress.postal_code},{" "}
+                              {order.deliveryAddress.city}
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
                       </td>
                       <td
                         className="order-fontsize"
@@ -102,12 +128,29 @@ function ManagingOrders() {
                   ))}
                 </tbody>
               </Table>
+
+              {/* Pagination */}
+              <Pagination className="justify-content-center">
+                {Array.from(
+                  { length: Math.ceil(orders.length / ordersPerPage) },
+                  (_, index) => (
+                    <Pagination.Item
+                      key={index}
+                      active={index + 1 === currentPage}
+                      onClick={() => paginate(index + 1)}
+                      className="customize-pagination"
+                    >
+                      {index + 1}
+                    </Pagination.Item>
+                  )
+                )}
+              </Pagination>
             </Col>
           </Col>
         </>
       )}
 
-      {!loggedInUser?.isAdmin ? <NoAdminAccess></NoAdminAccess> : null}
+      {!loggedInUser?.isAdmin ? <NoAccess401></NoAccess401> : null}
     </Container>
   );
 }

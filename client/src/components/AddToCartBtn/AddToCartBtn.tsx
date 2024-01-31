@@ -20,7 +20,9 @@ function AddToCartBtn({ product }: ProductProps) {
         color: "#EFE1D1",
         fontWeight: 500,
       }}
-      onClick={() => addToCart(product._id, product.title, product.price)}
+      onClick={() =>
+        addToCart(product._id, product.title, product.price, product.image)
+      }
     >
       Add to cart
     </Button>

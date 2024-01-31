@@ -1,14 +1,16 @@
 import { Col, Container, Row } from "react-bootstrap";
 import error404 from "../../assets/404.png";
 import LazyLoad from "react-lazy-load";
+import Header from "../Header/Header";
 
-function NoPage() {
+function NoPage404() {
   return (
     <Container
       fluid
       className="d-flex justify-content-center align-items-center"
       style={{ height: "50vh", marginTop: "10rem" }}
     >
+      <Header></Header>
       <Row className="d-flex justify-content-center align-items-center">
         <Col className="d-flex flex-column justify-content-center align-items-center">
           <h1 className="text-center">
@@ -33,4 +35,4 @@ function NoPage() {
   );
 }
 
-export default NoPage;
+export default NoPage404;

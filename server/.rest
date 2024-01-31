@@ -71,15 +71,29 @@ GET http://localhost:3000/api/categories/658d55f76bba5c7dbc0e6bbe
 
 //** TESTING USERS ENDPOINTS */
 
-// Create a new user
+// Create a new user with admin auth
 POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "firstName": "Testar",
-  "lastName": "Testing",
-  "email": "testar@mail.com",
-  "password": "test123",
+  "firstName": "Admin",
+  "lastName": "Admin",
+  "email": "admin@admin.com",
+  "password": "admin123",
+  "isAdmin": true
+}
+
+###
+
+// Create a new user, not admin
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+  "firstName": "User",
+  "lastName": "Usersson",
+  "email": "user@mailen.com",
+  "password": "user123",
   "isAdmin": false
 }
 

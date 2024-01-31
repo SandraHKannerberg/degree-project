@@ -9,12 +9,13 @@ import {
   Modal,
   InputGroup,
   Alert,
+  Pagination,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Trash, Pen } from "react-bootstrap-icons";
 import { useUserContext } from "../../context/UserContext";
 import { useProductContext } from "../../context/ProductContext";
-import NoAdminAccess from "../Errors/NoAdminAccess";
+import NoAccess401 from "../Errors/NoAccess401";
 import "./ManagningProducts.css";
 
 // As admin you can managing existing products here
@@ -50,6 +51,21 @@ function ManagingProducts() {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState("");
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 15; //Products per page
+
+  // Count index for first and last product on current page
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -79,23 +95,27 @@ function ManagingProducts() {
   const updateProduct = (id: string) => {
     const url = "/api/products/" + id;
 
+    const requestBody = {
+      _id: id,
+      // Includes the inputs with value
+      ...(image && { image }),
+      ...(title && { title }),
+      ...(brand && { brand }),
+      ...(description && { description }),
+      ...(price && { price }),
+      ...(inStock && { inStock }),
+      // Add careAdvice and features only if they have a value since they are not required
+      ...(careAdvice && { careAdvice }),
+      ...(features.length > 0 && { features }),
+      deleted: false,
+    };
+
     fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        _id: id,
-        image: image,
-        title: title,
-        brand: brand,
-        description: description,
-        price: price,
-        inStock: inStock,
-        careAdvice: careAdvice,
-        features: features,
-        deleted: false,
-      }),
+      body: JSON.stringify(requestBody),
     })
       .then((response) => {
         if (!response || response.status === 400) {
@@ -106,16 +126,8 @@ function ManagingProducts() {
               " is not updated"
           );
         }
-        if (
-          image ||
-          brand ||
-          title ||
-          description ||
-          price ||
-          inStock ||
-          careAdvice ||
-          features
-        ) {
+        // If the requierd fields have values the update are approved
+        if (image || brand || title || description || price || inStock) {
           setSuccess(true);
           getAllProducts();
         }
@@ -195,7 +207,7 @@ function ManagingProducts() {
           <h3 className="text-center mb-4">Edit or delete products</h3>
 
           <Accordion className="shadow mb-4 d-flex flex-column justify-content-center align-items-center">
-            {products.map((product) => (
+            {currentProducts.map((product) => (
               <Accordion.Item
                 key={product._id}
                 eventKey={product._id}
@@ -401,6 +413,23 @@ function ManagingProducts() {
             ))}
           </Accordion>
 
+          {/* Pagination */}
+          <Pagination className="justify-content-center">
+            {Array.from(
+              { length: Math.ceil(products.length / productsPerPage) },
+              (_, index) => (
+                <Pagination.Item
+                  key={index}
+                  active={index + 1 === currentPage}
+                  onClick={() => paginate(index + 1)}
+                  className="customize-pagination"
+                >
+                  {index + 1}
+                </Pagination.Item>
+              )
+            )}
+          </Pagination>
+
           {/* Conform delete modal */}
           <Modal show={showConfirmDelete} onHide={handleCloseConfirmDelete}>
             <Modal.Header closeButton>
@@ -424,7 +453,7 @@ function ManagingProducts() {
           </Modal>
         </Container>
       )}
-      {!loggedInUser?.isAdmin ? <NoAdminAccess></NoAdminAccess> : null}
+      {!loggedInUser?.isAdmin ? <NoAccess401></NoAccess401> : null}
     </Container>
   );
 }

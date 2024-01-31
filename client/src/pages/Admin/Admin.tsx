@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header";
 import { useUserContext } from "../../context/UserContext";
 import WelcomeAdmin from "../../components/WelcomeAdmin/WelcomeAdmin";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import NoAdminAccess from "../../components/Errors/NoAdminAccess";
+import NoAccess401 from "../../components/Errors/NoAccess401";
 
 // Page for admin - managing orders and products
 function Admin() {
@@ -33,7 +33,7 @@ function Admin() {
             </Col>
           </Row>
         ) : (
-          <NoAdminAccess></NoAdminAccess>
+          <NoAccess401></NoAccess401>
         )}
       </Container>
     </>

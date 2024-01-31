@@ -1,4 +1,4 @@
-import logotype from "../../assets/logotype.png";
+import logotype from "../../assets/logotype-lotus.png";
 import { Link } from "react-router-dom";
 
 function Logotype() {

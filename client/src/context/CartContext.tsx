@@ -13,12 +13,13 @@ export interface CartItem {
   name: string; //Product title from database
   price: number; //Price from database
   quantity: number;
+  image: string; //ImageURL from product
 }
 
 export interface ICartContext {
   cartItems: CartItem[];
   setCartItems: Dispatch<SetStateAction<CartItem[]>>;
-  addToCart: (id: string, name: string, price: number) => void;
+  addToCart: (id: string, name: string, price: number, image: string) => void;
   getCartItemQuantity: (id: string) => void;
   calculateTotalPrice: () => void;
   decreaseCartQuantity: (id: string) => void;
@@ -72,7 +73,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
   }
 
   // Function to add a product to shoppingcart or increase the quantity if the product already in cart
-  function addToCart(id: string, name: string, price: number) {
+  function addToCart(id: string, name: string, price: number, image: string) {
     //Get the quantity
     const quantity = getCartItemQuantity(id);
 
@@ -85,6 +86,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
           name: name,
           price: price,
           quantity: 1,
+          image: image,
         },
       ]);
     } else {

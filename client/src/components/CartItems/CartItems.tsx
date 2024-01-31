@@ -1,6 +1,5 @@
 import { Col, Row } from "react-bootstrap";
 import { useCartContext } from "../../context/CartContext";
-import { useProductContext } from "../../context/ProductContext";
 import CheckoutBtn from "../CheckoutBtn/CheckoutBtn";
 import { Trash, PlusCircle, DashCircle } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
@@ -14,7 +13,6 @@ function CartItems() {
     removeFromCart,
     calculateTotalPrice,
   } = useCartContext();
-  const { products } = useProductContext();
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -31,9 +29,6 @@ function CartItems() {
       {/* Render cart items in shoppingcart with image, title, price, quantity and buttons to increase / decrease qty or remove item */}
       <ul style={{ padding: 0 }}>
         {cartItems.map((cartItem, index) => {
-          const item = products.find((product) => product._id === cartItem.id);
-          if (item === null) return null;
-
           return (
             <Row
               key={index}
@@ -45,7 +40,7 @@ function CartItems() {
             >
               <Col style={{ padding: 0, margin: 0 }}>
                 <img
-                  src={item?.image}
+                  src={cartItem.image}
                   style={{
                     width: "60px",
                     height: "60px",
@@ -71,7 +66,12 @@ function CartItems() {
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() =>
-                    addToCart(cartItem.id, cartItem.name, cartItem.price)
+                    addToCart(
+                      cartItem.id,
+                      cartItem.name,
+                      cartItem.price,
+                      cartItem.image
+                    )
                   }
                 >
                   <PlusCircle />

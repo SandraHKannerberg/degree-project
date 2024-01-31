@@ -73,16 +73,16 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
       const response = await fetch("/api/orders");
       const orderData = await response.json();
 
+      console.log(orderData);
+
       // If a user has no order - show this message
       if (response.status === 203) {
         setMessage("No orders to show");
-        setOrders([]);
+        // setOrders([]);
       }
 
       // If OK and there are orders to show create the orderlist
       if (response.status === 200) {
-        setMessage("");
-
         //Create orderlist
         const orderList = orderData.map((order: Order) => {
           // Formatte the date from database

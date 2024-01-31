@@ -4,7 +4,7 @@ import Header from "../../components/Header/Header";
 import { useUserContext } from "../../context/UserContext";
 import WelcomeUser from "../../components/WelcomeUser/WelcomeUser";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import NoUserAccess from "../../components/Errors/NoUserAccess";
+import NoAccess401 from "../../components/Errors/NoAccess401";
 
 function User() {
   const { loggedInUser } = useUserContext();
@@ -33,7 +33,7 @@ function User() {
             </Col>
           </Row>
         ) : (
-          <NoUserAccess></NoUserAccess>
+          <NoAccess401></NoAccess401>
         )}
       </Container>
       <Footer />

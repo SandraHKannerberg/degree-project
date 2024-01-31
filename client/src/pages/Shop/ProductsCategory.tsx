@@ -1,16 +1,30 @@
 import { useEffect, useState } from "react";
 import { Category, useProductContext } from "../../context/ProductContext";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Pagination, Row } from "react-bootstrap";
 import Header from "../../components/Header/Header";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import NoPage404 from "../../components/Errors/NoPage404";
 
 function ProductsCategory() {
   const { id } = useParams();
   const [category, setCategory] = useState<Category>();
 
   const { products, setProducts } = useProductContext();
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12; //Products per page
+
+  // Count index for first and last product on current page
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     //Get all products in a specific category
@@ -78,16 +92,35 @@ function ProductsCategory() {
           lg={4}
           className="d-flex justify-content-center px-4 gy-4 mt-2 flex-wrap"
         >
-          {products.map((product, index) => (
+          {currentProducts.map((product, index) => (
             <Col key={index} className="mb-3">
               <ProductCard product={product} key={product._id} />
             </Col>
           ))}
         </Row>
+
+        {/* Pagination */}
+        <Pagination className="justify-content-center">
+          {Array.from(
+            { length: Math.ceil(products.length / productsPerPage) },
+            (_, index) => (
+              <Pagination.Item
+                key={index}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+                className="customize-pagination"
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </Container>
       <Footer />
     </>
-  ) : null;
+  ) : (
+    <NoPage404></NoPage404>
+  );
 }
 
 export default ProductsCategory;

@@ -11,7 +11,14 @@ const getAllOrders = async (req, res) => {
     const query = req.session.isAdmin ? {} : { email: customerMail };
     // Find orders in database based on the query above
     const orders = await OrderModel.find(query).populate("customer");
-    res.status(200).json(orders);
+
+    if (orders.length === 0) {
+      console.log("No orders found for the customer");
+      res.status(203).json("No orders to show");
+    } else {
+      console.log("Orders find by query", orders);
+      res.status(200).json(orders);
+    }
   } catch (error) {
     console.log("Error occurred. Can't show orders", error);
     return res.status(400).json("Error occurred with showing orders");

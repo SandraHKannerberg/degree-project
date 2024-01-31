@@ -41,3 +41,15 @@ body {
 .zoom-effect:hover {
   transform: scale(1.1);
 }
+
+/**CSS Style for pagination*/
+.pagination .page-item .page-link {
+  background-color: #a78295 !important;
+  color: #3f2e3e;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #85586f !important;
+  border-color: #efe1d1 !important;
+  color: #efe1d1 !important;
+}

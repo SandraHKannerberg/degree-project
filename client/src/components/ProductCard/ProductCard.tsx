@@ -33,7 +33,10 @@ function ProductCard({ product }: ProductProps) {
         <Card.Img variant="top" src={product.image} />
       </Link>
       <Card.Body className="d-flex flex-column">
-        <Card.Title className="flex-grow-1" style={{ fontSize: "18px" }}>
+        <Card.Title
+          className="flex-grow-1"
+          style={{ fontSize: "18px", textTransform: "uppercase" }}
+        >
           {product.title}
         </Card.Title>
         <Card.Text className="flex-grow-1 mb-0">{product.brand}</Card.Text>
