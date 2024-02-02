@@ -5,7 +5,6 @@ import Header from "../../components/Header/Header";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-import NoPage404 from "../../components/Errors/NoPage404";
 
 // Show products filtered by category
 function ProductsCategory() {
@@ -119,9 +118,7 @@ function ProductsCategory() {
       </Container>
       <Footer />
     </>
-  ) : (
-    <NoPage404></NoPage404>
-  );
+  ) : null;
 }
 
 export default ProductsCategory;

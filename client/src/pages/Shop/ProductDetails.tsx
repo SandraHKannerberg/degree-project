@@ -6,7 +6,6 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { HeartFill } from "react-bootstrap-icons";
 import AddToCartBtn from "../../components/AddToCartBtn/AddToCartBtn";
-import NoPage404 from "../../components/Errors/NoPage404";
 
 // Page to show a single product with all information about it
 function ProductDetails() {
@@ -60,7 +59,9 @@ function ProductDetails() {
       <Header />
       <>
         {!product ? (
-          <NoPage404></NoPage404>
+          <Container style={{ marginTop: "10rem", minHeight: "55vh" }}>
+            <h2 className="text-center">Can't find this product</h2>
+          </Container>
         ) : (
           <Container style={{ marginTop: "10rem" }}>
             <Row className="d-flex justify-content-center my-5">
