@@ -92,9 +92,16 @@ function ProductDetails() {
                 </Row>
 
                 <Col>
-                  <Col className="d-flex justify-content-end">
-                    <AddToCartBtn product={product}></AddToCartBtn>
-                  </Col>
+                  <Row className="justify-content-end">
+                    {/* Don't show AddToCart-button if inStock status are red. Then show a infotext */}
+                    {product.inStock > 3 ? (
+                      <Col xs={6} className="d-flex justify-content-end">
+                        <AddToCartBtn product={product}></AddToCartBtn>
+                      </Col>
+                    ) : (
+                      <span>Available soon</span>
+                    )}
+                  </Row>
 
                   <h5 className="mt-4">Description</h5>
                   <p>{product.description}</p>
