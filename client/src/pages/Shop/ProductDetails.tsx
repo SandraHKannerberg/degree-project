@@ -66,11 +66,12 @@ function ProductDetails() {
           <Container style={{ marginTop: "10rem" }}>
             <Row className="d-flex justify-content-center my-5">
               {/* Column 1 with product image */}
-              <Col lg={5} className="d-flex justify-content-center mb-5">
+              <Col sm={8} lg={4} className="d-flex justify-content-center mb-5">
                 <img
                   src={product.image}
                   alt="Product image"
                   className="img-fluid shadow"
+                  style={{ objectFit: 'cover', width: '100%', height: '100%', aspectRatio: '1 / 1' }} 
                 />
               </Col>
               {/* Column 2 with product details */}
