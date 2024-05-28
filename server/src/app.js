@@ -39,10 +39,10 @@ app.use("/api", checkOutRouter);
 app.use("/api", orderRouter);
 
 // Error
-app.use((req, res) => {
-  console.log("404-ERROR OCCURED: Missing Resource");
-  res.status(404).json("Missing resource");
-});
+// app.use((req, res) => {
+//   console.log("404-ERROR OCCURED: Missing Resource");
+//   res.status(404).json("Missing resource");
+// });
 
 // Error handler
 app.use(errorRequestHandler);
