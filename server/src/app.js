@@ -31,6 +31,11 @@ app.use(
   })
 );
 
+// Test
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
 // Add routers
 app.use("/api", productRouter);
 app.use("/api", categoryRouter);
