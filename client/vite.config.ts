@@ -10,7 +10,7 @@ export default defineConfig({
         // target: "http://localhost:3000",
         target: "https://degree-project.onrender.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
       },
       },
     },

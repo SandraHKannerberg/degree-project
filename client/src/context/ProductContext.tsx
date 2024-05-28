@@ -114,10 +114,12 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const [features, setFeatures] = useState<string[]>([]);
   const [success, setSuccess] = useState(false);
 
+  const URL = "https://degree-project.onrender.com";
+
   //Get all products
   const getAllProducts = async () => {
     try {
-      const responseFetchProducts = await fetch("https://degree-project.onrender.com/api/products");
+      const responseFetchProducts = await fetch(`${URL}/api/products`);
 
       // Check response status
       if (!responseFetchProducts.ok) {
@@ -135,7 +137,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const getAllCategories = async () => {
     try {
       // Get categories from localStorage (cached data)
-      const cachedCategories = localStorage.getItem("categories");
+      const cachedCategories = localStorage.getItem(`${URL}/api/categories`);
 
       // If there is cached data, set it to state and return
       if (cachedCategories) {
@@ -143,7 +145,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return;
       }
 
-      const responseFetchCategories = await fetch("/api/categories");
+      const responseFetchCategories = await fetch(`${URL}/api/categories`);
 
       // Response status?
       if (!responseFetchCategories.ok) {
