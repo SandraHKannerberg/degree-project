@@ -63,7 +63,7 @@ function ProductDetails() {
             <h2 className="text-center">Can't find this product</h2>
           </Container>
         ) : (
-          <Container style={{ marginTop: "10rem" }}>
+          <Container style={{ marginTop: "10rem", minHeight: "60vh" }}>
             <Row className="d-flex justify-content-center my-5">
               {/* Column 1 with product image */}
               <Col sm={8} lg={4} className="d-flex justify-content-center mb-5">
