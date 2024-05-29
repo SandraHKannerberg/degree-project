@@ -19,7 +19,7 @@ const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "https://degree-project-frontend.onrender.com" }));
 app.use(
   cookieSession({
     name: "session",
