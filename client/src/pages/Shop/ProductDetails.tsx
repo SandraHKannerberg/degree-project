@@ -12,11 +12,13 @@ function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product>();
 
+  const URL = "https://degree-project.onrender.com";
+
   // Fetch details for selected product
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const apiUrl = `/api/products/${id}`;
+        const apiUrl = `${URL}/api/products/${id}`;
         const response = await fetch(apiUrl);
 
         if (!response.ok) {

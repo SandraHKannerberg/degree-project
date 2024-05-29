@@ -26,6 +26,8 @@ function Confirmation() {
     orderNumber: "",
   });
 
+  const URL = "https://degree-project.onrender.com";
+
   // Function to verify the payment and fetch order-details if payment = success
   const verifyThePayment = async () => {
     try {
@@ -37,7 +39,7 @@ function Confirmation() {
       }
 
       // Fetch from server to verify-session
-      const response = await fetch("/api/verify-session", {
+      const response = await fetch(`${URL}/api/verify-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

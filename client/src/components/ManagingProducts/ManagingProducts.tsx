@@ -67,6 +67,8 @@ function ManagingProducts() {
     indexOfLastProduct
   );
 
+  const URL = "https://degree-project.onrender.com";
+
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -106,7 +108,7 @@ function ManagingProducts() {
 
   // Function to handle updateProduct, with fetch to backend and save info to database
   const updateProduct = (id: string) => {
-    const url = "/api/products/" + id;
+    const url = `${URL}/api/products/` + id;
 
     const requestBody = {
       _id: id,
