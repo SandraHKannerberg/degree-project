@@ -3,7 +3,7 @@ const stripe = initStripe();
 const { OrderModel } = require("../order/order.model");
 const { ProductModel } = require("../product/product.model");
 
-const CLIENT_URL = "http://localhost:5173";
+const CLIENT_URL = "https://degree-project-frontend.onrender.com";
 const DEFAULT_CURRENCY = "SEK";
 
 // *********** ENDPOINTS CHECKOUT *********** //
