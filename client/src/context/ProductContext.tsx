@@ -119,7 +119,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   //Get all products
   const getAllProducts = async () => {
     try {
-      const responseFetchProducts = await fetch(`${URL}/api/products`);
+      const responseFetchProducts = await fetch('/api/products');
 
       // Check response status
       if (!responseFetchProducts.ok) {

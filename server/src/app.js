@@ -14,12 +14,14 @@ const { orderRouter } = require("./resources/order/order.router");
 
 const { errorRequestHandler } = require("./error");
 
+// Keys
 const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
+const clientUrl= process.env.CLIENT_URL;
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors({ origin: "https://degree-project-frontend.onrender.com" }));
+app.use(cors({ origin: clientUrl }));
 app.use(
   cookieSession({
     name: "session",
