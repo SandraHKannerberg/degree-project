@@ -182,6 +182,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: 'include',
           body: JSON.stringify(user),
         });
         const userData = await response.json();
@@ -208,6 +209,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
       });
 
       if (response.status === 204) {
