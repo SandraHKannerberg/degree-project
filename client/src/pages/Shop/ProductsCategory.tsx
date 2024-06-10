@@ -26,14 +26,12 @@ function ProductsCategory() {
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const URL = "https://degree-project.onrender.com";
-
   useEffect(() => {
     //Get all products in a specific category
     const getProductsByCategory = async () => {
       try {
         const responseFetchProducts = await fetch(
-          `${URL}/api/products/byCategory/${id}`
+          `/api/products/byCategory/${id}`
         );
 
         // Check response status
@@ -57,7 +55,7 @@ function ProductsCategory() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const apiUrl = `${URL}/api/categories/${id}`;
+        const apiUrl = `/api/categories/${id}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
         setCategory(data);

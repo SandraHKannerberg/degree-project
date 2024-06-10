@@ -84,8 +84,6 @@ const defaultValues = {
   setErrorPswInfo: () => {},
 };
 
-const URL = "https://degree-project.onrender.com";
-
 export const UserContext = createContext<IUserContext>(defaultValues);
 
 export const useUserContext = () => useContext(UserContext);
@@ -106,7 +104,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to check if someone is logged in
   const authorization = async () => {
     try {
-      const response = await fetch(`${URL}/api/users/authorize`);
+      const response = await fetch('/api/users/authorize');
       if (response.status === 200) {
         const authData = await response.json();
         setLoggedInUser(authData);
@@ -133,7 +131,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const registrationNewUser = async (newUser: NewUserType) => {
     if (newUser) {
       try {
-        const response = await fetch(`${URL}/api/users/register`, {
+        const response = await fetch('/api/users/register', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -172,7 +170,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const login = async (user: UserType) => {
     if (user) {
       try {
-        const response = await fetch(`${URL}/api/users/login`, {
+        const response = await fetch('/api/users/login', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -198,7 +196,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle logout
   const logout = async () => {
     try {
-      const response = await fetch(`${URL}/api/users/logout`, {
+      const response = await fetch('/api/users/logout', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

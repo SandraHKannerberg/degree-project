@@ -42,8 +42,6 @@ const defaultValues = {
   handlePayment: () => {},
 };
 
-const URL = "https://degree-project.onrender.com";
-
 export const CartContext = createContext<ICartContext>(defaultValues);
 
 export const useCartContext = () => useContext(CartContext);
@@ -138,7 +136,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       quantity: item.quantity,
     }));
 
-    const response = await fetch(`${URL}/api/create-checkout-session`, {
+    const response = await fetch('/api/create-checkout-session', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

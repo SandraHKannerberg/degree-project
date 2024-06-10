@@ -59,8 +59,6 @@ const defaultValues = {
   markAsShipped: () => {},
 };
 
-const URL = "https://degree-project.onrender.com";
-
 export const OrderContext = createContext<IOrderContext>(defaultValues);
 
 export const useOrderContext = () => useContext(OrderContext);
@@ -72,10 +70,8 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to get orderhistory
   const getOrders = async () => {
     try {
-      const response = await fetch(`${URL}/api/orders`);
+      const response = await fetch('/api/orders');
       const orderData = await response.json();
-
-      console.log(orderData);
 
       // If a user has no order - show this message
       if (response.status === 203) {
@@ -137,7 +133,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle an order as shipped.
   const markAsShipped = async (id: string) => {
     try {
-      const response = await fetch(`${URL}/api/orders/${id}`, {
+      const response = await fetch('/api/orders/${id}', {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
