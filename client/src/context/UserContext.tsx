@@ -101,10 +101,12 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const [errorEmailInfo, setErrorEmailInfo] = useState("");
   const [errorPswInfo, setErrorPswInfo] = useState("");
 
+  const BACKEND_URL="https://degree-project.onrender.com";
+
   // Function to check if someone is logged in
   const authorization = async () => {
     try {
-      const response = await fetch('/api/users/authorize', {
+      const response = await fetch(`${BACKEND_URL}/api/users/authorize`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +139,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const registrationNewUser = async (newUser: NewUserType) => {
     if (newUser) {
       try {
-        const response = await fetch('/api/users/register', {
+        const response = await fetch(`${BACKEND_URL}/api/users/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -176,7 +178,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const login = async (user: UserType) => {
     if (user) {
       try {
-        const response = await fetch('/api/users/login', {
+        const response = await fetch(`${BACKEND_URL}/api/users/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -202,7 +204,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle logout
   const logout = async () => {
     try {
-      const response = await fetch('/api/users/logout', {
+      const response = await fetch(`${BACKEND_URL}/api/users/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

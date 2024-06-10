@@ -12,11 +12,13 @@ function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product>();
 
+const BACKEND_URL="https://degree-project.onrender.com";
+
   // Fetch details for selected product
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const apiUrl = `/api/products/${id}`;
+        const apiUrl = `${BACKEND_URL}/api/products/${id}`;
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {

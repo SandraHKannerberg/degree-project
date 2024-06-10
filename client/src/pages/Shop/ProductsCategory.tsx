@@ -23,6 +23,8 @@ function ProductsCategory() {
     indexOfLastProduct
   );
 
+  const BACKEND_URL="https://degree-project.onrender.com";
+
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -31,7 +33,7 @@ function ProductsCategory() {
     const getProductsByCategory = async () => {
       try {
         const responseFetchProducts = await fetch(
-          `/api/products/byCategory/${id}`, {
+          `${BACKEND_URL}/api/products/byCategory/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -60,7 +62,7 @@ function ProductsCategory() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const apiUrl = `/api/categories/${id}`;
+        const apiUrl = `${BACKEND_URL}/api/categories/${id}`;
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {

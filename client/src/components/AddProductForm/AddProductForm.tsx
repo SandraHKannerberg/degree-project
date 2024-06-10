@@ -55,7 +55,7 @@ function AddProductForm() {
   const handleCloseSuccess = () => setSuccess(false);
   const handleCloseError = () => setError(false);
 
-  const URL = "https://degree-project.onrender.com";
+  const BACKEND_URL = "https://degree-project.onrender.com";
 
   const handleSaveNewProduct = async (
     event: React.FormEvent<HTMLFormElement>
@@ -85,7 +85,7 @@ function AddProductForm() {
 
     try {
       // Fetch createProduct from backend
-      const productResponse = await fetch(`${URL}/api/products`, {
+      const productResponse = await fetch(`${BACKEND_URL}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

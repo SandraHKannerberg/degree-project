@@ -114,7 +114,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const [features, setFeatures] = useState<string[]>([]);
   const [success, setSuccess] = useState(false);
 
-
   const BACKEND_URL="https://degree-project.onrender.com";
 
   //Get all products

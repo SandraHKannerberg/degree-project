@@ -59,6 +59,8 @@ const defaultValues = {
   markAsShipped: () => {},
 };
 
+const BACKEND_URL="https://degree-project.onrender.com";
+
 export const OrderContext = createContext<IOrderContext>(defaultValues);
 
 export const useOrderContext = () => useContext(OrderContext);
@@ -70,7 +72,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to get orderhistory
   const getOrders = async () => {
     try {
-      const response = await fetch('/api/orders', {
+      const response = await fetch(`${BACKEND_URL}/api/orders`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +141,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle an order as shipped.
   const markAsShipped = async (id: string) => {
     try {
-      const response = await fetch('/api/orders/' + id, {
+      const response = await fetch(`${BACKEND_URL}/api/orders` + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -159,7 +161,6 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
         // Update orders with the new information
         setOrders(updatedOrders);
       } else {
-        // Hantera fel - SKRIV UT EN ALERT PÅ SIDAN !!!!!!!
         console.error("Failed to mark as shipped:", response.status);
       }
     } catch (err) {
