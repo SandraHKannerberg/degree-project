@@ -11,7 +11,6 @@ export default defineConfig({
         target: "https://degree-project.onrender.com",
         changeOrigin: true,
         secure: true,
-        rewrite: path => path.replace(/^\/api/, ''),
       },
       },
     },

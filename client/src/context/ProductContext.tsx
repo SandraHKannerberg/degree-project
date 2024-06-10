@@ -117,7 +117,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   //Get all products
   const getAllProducts = async () => {
     try {
-      const responseFetchProducts = await fetch('/api/products', {
+      const responseFetchProducts = await fetch('https://degree-project.onrender.com/api/products', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
