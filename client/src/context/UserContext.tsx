@@ -110,8 +110,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        },
-        credentials: 'include', 
+        }, 
       });
       if (response.status === 200) {
         const authData = await response.json();
