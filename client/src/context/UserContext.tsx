@@ -111,12 +111,11 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           'Content-Type': 'application/json',
         }, 
-        credentials: 'include',
       });
-      console.log('AUTH', response);
+      console.log('AUTH-RESPONSE', response);
       if (response.status === 200) {
         const authData = await response.json();
-        console.log('AUTH', authData);
+        console.log('AUTH-DATA', authData);
         setLoggedInUser(authData);
       } else if (response.status === 401) {
         // Clear authData when not logged in
