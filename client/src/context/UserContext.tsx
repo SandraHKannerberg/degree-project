@@ -104,7 +104,13 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to check if someone is logged in
   const authorization = async () => {
     try {
-      const response = await fetch('/api/users/authorize');
+      const response = await fetch('/api/users/authorize', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+      });
       if (response.status === 200) {
         const authData = await response.json();
         setLoggedInUser(authData);

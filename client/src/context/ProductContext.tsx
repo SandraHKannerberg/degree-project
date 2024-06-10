@@ -117,7 +117,13 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   //Get all products
   const getAllProducts = async () => {
     try {
-      const responseFetchProducts = await fetch('/api/products');
+      const responseFetchProducts = await fetch('/api/products', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+      });
 
       // Check response status
       if (!responseFetchProducts.ok) {
@@ -143,7 +149,13 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return;
       }
 
-      const responseFetchCategories = await fetch('/api/categories');
+      const responseFetchCategories = await fetch('/api/categories', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+      });
 
       // Response status?
       if (!responseFetchCategories.ok) {
