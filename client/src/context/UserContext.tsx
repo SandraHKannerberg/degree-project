@@ -113,8 +113,10 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         }, 
         credentials: 'include',
       });
+      console.log('AUTH', response);
       if (response.status === 200) {
         const authData = await response.json();
+        console.log('AUTH', authData);
         setLoggedInUser(authData);
       } else if (response.status === 401) {
         // Clear authData when not logged in

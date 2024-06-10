@@ -110,14 +110,34 @@ Content-Type: application/json
 
 ###
 
+POST https://degree-project.onrender.com/api/users/login
+Content-Type: application/json
+
+{
+  "email": "admin@admin.com",
+  "password": "admin123"
+}
+
+###
+
 // Log out here
 POST http://localhost:3000/api/users/logout
 Content-Type: application/json
 
 ###
 
+POST https://degree-project.onrender.com/api/users/logout
+Content-Type: application/json
+
+###
+
 // Check auth
 GET http://localhost:3000/api/users/authorize
+Content-Type: application/json
+
+###
+
+GET https://degree-project.onrender.com/api/users/authorize
 Content-Type: application/json
 
 ###
