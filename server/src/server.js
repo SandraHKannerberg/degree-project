@@ -13,6 +13,7 @@ async function main() {
   await mongoose.connect(databaseURL);
   console.log("DB Connection Successfull!");
   app.listen(PORT || 3001, () =>
-    console.log(`Server is up and running on http://localhost:${PORT}`)
+    // console.log(`Server is up and running on http://localhost:${PORT}`)
+    console.log('Server is up and running')
   );
 }
