@@ -122,7 +122,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', 
       });
 
       // Check response status
@@ -154,7 +153,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', 
       });
 
       // Response status?
