@@ -117,7 +117,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   //Get all products
   const getAllProducts = async () => {
     try {
-      const responseFetchProducts = await fetch('https://degree-project.onrender.com/api/products', {
+      const responseFetchProducts = await fetch(`${process.env.BACKEND_URL}/api/products`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return;
       }
 
-      const responseFetchCategories = await fetch('/api/categories', {
+      const responseFetchCategories = await fetch(`${process.env.BACKEND_URL}/api/categories`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
-    const url = '/api/products/' + id;
+    const url = `${process.env.BACKEND_URL}/api/products` + id;
     fetch(url, { method: "DELETE" })
       .then((response) => {
         if (!response) {
