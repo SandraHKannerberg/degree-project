@@ -31,7 +31,13 @@ function ProductsCategory() {
     const getProductsByCategory = async () => {
       try {
         const responseFetchProducts = await fetch(
-          `/api/products/byCategory/${id}`
+          `/api/products/byCategory/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include', 
+          }
         );
 
         // Check response status
@@ -56,7 +62,13 @@ function ProductsCategory() {
     const fetchCategory = async () => {
       try {
         const apiUrl = `/api/categories/${id}`;
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', 
+        });
         const data = await response.json();
         setCategory(data);
       } catch (error) {

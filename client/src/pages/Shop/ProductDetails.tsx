@@ -17,7 +17,13 @@ function ProductDetails() {
     const fetchProductDetails = async () => {
       try {
         const apiUrl = `/api/products/${id}`;
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', 
+        });
 
         if (!response.ok) {
           // Handle non-successful response
