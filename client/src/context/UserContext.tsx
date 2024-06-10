@@ -128,7 +128,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     authorization();
-  }, []); //Check if loggedIn status change
+  }, [loggedInUser]); //Check if loggedIn status change
 
   // Function to check if logged in user is admin
   const isAdmin = (user: UserType): boolean => {
