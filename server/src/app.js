@@ -21,7 +21,8 @@ const clientUrl= process.env.CLIENT_URL;
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors({ origin: clientUrl }));
+// app.use(cors({ origin: clientUrl }));
+app.use(cors());
 app.use(
   cookieSession({
     name: "session",
