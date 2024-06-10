@@ -35,8 +35,7 @@ function ProductsCategory() {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-            },
-            credentials: 'include', 
+            }, 
           }
         );
 
@@ -67,7 +66,6 @@ function ProductsCategory() {
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include', 
         });
         const data = await response.json();
         setCategory(data);
