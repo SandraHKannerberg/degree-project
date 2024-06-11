@@ -3,9 +3,7 @@ const stripe = initStripe();
 const { OrderModel } = require("../order/order.model");
 const { ProductModel } = require("../product/product.model");
 
-const CLIENT_URL="https://degree-project-frontend.onrender.com";
-
-// const CLIENT_URL = "https://degree-project-frontend.onrender.com";
+const CLIENT_URL = "https://lotusharmony-ecommerce.netlify.app/shop";
 const DEFAULT_CURRENCY = "SEK";
 
 // *********** ENDPOINTS CHECKOUT *********** //

@@ -16,14 +16,14 @@ const { errorRequestHandler } = require("./error");
 
 // Keys
 const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
+const CLIENT_URL = "https://lotusharmony-ecommerce.netlify.app/shop";
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-// app.use(cors({ origin: clientUrl }));
 
 app.use(cors({
-  origin: "https://degree-project-frontend.onrender.com",
+  origin: CLIENT_URL,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
