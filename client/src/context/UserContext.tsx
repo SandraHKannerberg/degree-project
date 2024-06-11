@@ -111,6 +111,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           'Content-Type': 'application/json',
         }, 
+        credentials: 'include',
       });
       console.log('AUTH-RESPONSE', response);
       if (response.status === 200) {
@@ -211,6 +212,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
       });
 
       if (response.status === 204) {
