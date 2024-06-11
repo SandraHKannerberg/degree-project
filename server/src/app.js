@@ -16,7 +16,7 @@ const { errorRequestHandler } = require("./error");
 
 // Keys
 const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
-const CLIENT_URL = "https://lotusharmony-ecommerce.netlify.app/shop";
+const CLIENT_URL = "https://lotusharmony-ecommerce.netlify.app";
 
 const app = express();
 app.use(express.json());
