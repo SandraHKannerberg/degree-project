@@ -7,11 +7,13 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        // target: "http://localhost:3000",
-        target: "https://degree-project.onrender.com",
+        target: "http://localhost:3000",
         changeOrigin: true,
         secure: true,
       },
       },
     },
+    build: {
+      outDir: 'dist'
+    }
 });
