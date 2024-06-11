@@ -118,8 +118,11 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   //Get all products
   const getAllProducts = async () => {
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     try {
-      const responseFetchProducts = await fetch('/api/products', {
+      const responseFetchProducts = await fetch(`${apiUrl}/products`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
