@@ -15,9 +15,11 @@ function ProductDetails() {
   // Fetch details for selected product
   useEffect(() => {
     const fetchProductDetails = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
+
       try {
-        const apiUrl = `https://degree-project.onrender.com/api/products/${id}`;
-        const response = await fetch(apiUrl, {
+        const url = `${apiUrl}/products/${id}`;
+        const response = await fetch(url, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

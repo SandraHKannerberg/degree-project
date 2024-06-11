@@ -42,7 +42,7 @@ const defaultValues = {
   handlePayment: () => {},
 };
 
-const BACKEND_URL="https://degree-project.onrender.com";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const CartContext = createContext<ICartContext>(defaultValues);
 
@@ -138,7 +138,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       quantity: item.quantity,
     }));
 
-    const response = await fetch(`${BACKEND_URL}/api/create-checkout-session`, {
+    const response = await fetch(`${apiUrl}/create-checkout-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

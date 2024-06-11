@@ -26,7 +26,7 @@ function Confirmation() {
     orderNumber: "",
   });
 
-  const BACKEND_URL="https://degree-project.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Function to verify the payment and fetch order-details if payment = success
   const verifyThePayment = async () => {
@@ -39,7 +39,7 @@ function Confirmation() {
       }
 
       // Fetch from server to verify-session
-      const response = await fetch(`${BACKEND_URL}/api/verify-session`, {
+      const response = await fetch(`${apiUrl}/verify-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

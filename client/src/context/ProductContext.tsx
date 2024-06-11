@@ -114,12 +114,10 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const [features, setFeatures] = useState<string[]>([]);
   const [success, setSuccess] = useState(false);
 
-  // const BACKEND_URL="https://degree-project.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   //Get all products
   const getAllProducts = async () => {
-
-    const apiUrl = import.meta.env.VITE_API_URL;
 
     try {
       const responseFetchProducts = await fetch(`${apiUrl}/products`, {
@@ -153,7 +151,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return;
       }
 
-      const responseFetchCategories = await fetch('/api/categories', {
+      const responseFetchCategories = await fetch(`${apiUrl}/categories`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -183,7 +181,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
-    const url = '/api/products' + id;
+    const url = `${apiUrl}/products` + id;
     fetch(url, { method: "DELETE" })
       .then((response) => {
         if (!response) {

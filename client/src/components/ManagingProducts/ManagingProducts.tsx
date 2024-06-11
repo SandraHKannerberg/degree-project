@@ -67,7 +67,7 @@ function ManagingProducts() {
     indexOfLastProduct
   );
 
-  const BACKEND_URL = "https://degree-project.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -108,7 +108,7 @@ function ManagingProducts() {
 
   // Function to handle updateProduct, with fetch to backend and save info to database
   const updateProduct = (id: string) => {
-    const url = `${BACKEND_URL}/api/products/` + id;
+    const url = `${apiUrl}/products/` + id;
 
     const requestBody = {
       _id: id,
