@@ -64,7 +64,7 @@ Server
 - COOKIE_SECRET_KEY
 
 Open your code editor, for example Visual Studio Code. </br>
-Create an .env-file in the server folder. In the .env-file enter the secretkeys along with the value of each key: </br>
+Create an .env-file in the server folder and an .env-file in the client folder. In the .env-file enter the secretkeys along with the value of each key: </br>
 
 MONGODB_CONNECTION_STRING=thesecretkeyvalue </br>
 STRIPE_SECRET_KEY=thesecretkeyvalue </br>
