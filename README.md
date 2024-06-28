@@ -55,6 +55,10 @@ To run the project follow the instructions below.
 
 To be able to run the project, you need access to secretkeys:
 
+Frontend
+- VITE_API_URL
+
+Server
 - MONGODB_CONNECTION_STRING
 - STRIPE_SECRET_KEY
 - COOKIE_SECRET_KEY
