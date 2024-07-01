@@ -47,10 +47,11 @@ app.use(
     secret: process.env.COOKIE_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24, // 24 Hours
-    sameSite: "none",
-    secure: true},
-   store: store
+    cookie: { 
+      maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+      sameSite: "none",
+      secure: true
+    },
   })
 );
 
