@@ -122,6 +122,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     try {
       const responseFetchProducts = await fetch(`${apiUrl}/products`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -153,6 +154,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
       const responseFetchCategories = await fetch(`${apiUrl}/categories`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -182,7 +184,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
     const url = `${apiUrl}/products` + id;
-    fetch(url, { method: "DELETE" })
+    fetch(url, { method: "DELETE",  credentials: 'include', })
       .then((response) => {
         if (!response) {
           throw new Error(

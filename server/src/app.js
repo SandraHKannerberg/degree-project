@@ -29,14 +29,28 @@ app.use(cors({
   credentials: true
 }));
 
+app.set("trust proxy", 1);
+
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: [cookieSecretKey],
+//     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+//     sameSite: "none",
+//     httpOnly: true,
+//     secure: true,
+//   })
+// );
+
 app.use(
   cookieSession({
-    name: "session",
-    keys: [cookieSecretKey],
-    maxAge: 1000 * 60 * 60 * 24, // 24 Hours
-    sameSite: "None",
-    httpOnly: true,
-    secure: false,
+    secret: process.env.COOKIE_SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+    sameSite: "none",
+    secure: true},
+   store: store
   })
 );
 

@@ -143,6 +143,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
       try {
         const response = await fetch(`${apiUrl}/users/register`, {
           method: "POST",
+          credentials: 'include',
           headers: {
             "Content-Type": "application/json",
           },
