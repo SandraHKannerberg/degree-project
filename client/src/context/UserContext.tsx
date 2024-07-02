@@ -106,17 +106,15 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to check if someone is logged in
   const authorization = async () => {
     try {
-      const response = await fetch(`${apiUrl}/users/authorize`, {
+      const response = await fetch('/api/users/authorize', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        }, 
+        },
         credentials: 'include',
       });
-      console.log('AUTH-RESPONSE', response);
       if (response.status === 200) {
         const authData = await response.json();
-        console.log('AUTH-DATA', authData);
         setLoggedInUser(authData);
       } else if (response.status === 401) {
         // Clear authData when not logged in
@@ -141,7 +139,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const registrationNewUser = async (newUser: NewUserType) => {
     if (newUser) {
       try {
-        const response = await fetch(`${apiUrl}/users/register`, {
+        const response = await fetch('/api/users/register', {
           method: "POST",
           credentials: 'include',
           headers: {
@@ -181,7 +179,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const login = async (user: UserType) => {
     if (user) {
       try {
-        const response = await fetch(`${apiUrl}/users/login`, {
+        const response = await fetch('/api/users/login', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -208,7 +206,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle logout
   const logout = async () => {
     try {
-      const response = await fetch(`${apiUrl}/users/logout`, {
+      const response = await fetch('/api/users/logout', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

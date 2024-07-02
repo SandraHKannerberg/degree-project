@@ -18,7 +18,7 @@ function ProductDetails() {
       const apiUrl = import.meta.env.VITE_API_URL;
 
       try {
-        const url = `${apiUrl}/products/${id}`;
+        const url = `/api/products/${id}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {

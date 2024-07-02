@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 
 app.use(cors({
   origin: CLIENT_URL,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  // allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
@@ -44,13 +44,15 @@ app.set("trust proxy", 1);
 
 app.use(
   cookieSession({
+    name: "session",
     secret: process.env.COOKIE_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: { 
       maxAge: 1000 * 60 * 60 * 24, // 24 Hours
-      sameSite: "none",
-      secure: true
+      sameSite: "None",
+      secure: true,
+      httpOnly: true,
     },
   })
 );

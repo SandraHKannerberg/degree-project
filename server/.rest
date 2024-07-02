@@ -6,13 +6,13 @@ GET http://localhost:3000/api/products
 ###
 
 // Request to get a specific product by id
-GET http://localhost:3000/api/products/658d700621a2186757280e60
+GET http://localhost:3000/api/products/65f457a3d60b4e792a86d49d
 Content-Type: application/json
 
 ###
 
 // Request to get products by category
-GET http://localhost:3000/api/products/byCategory/658d55f76bba5c7dbc0e6bbe
+GET http://localhost:3000/api/products/byCategory/65f4521ed8424ab92c43438d
 Content-Type: application/json
 
 ###
@@ -104,7 +104,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "admin@mail.com",
+  "email": "admin@admin.com",
   "password": "admin123"
 }
 
