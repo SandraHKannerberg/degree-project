@@ -15,10 +15,10 @@ function ProductDetails() {
   // Fetch details for selected product
   useEffect(() => {
     const fetchProductDetails = async () => {
-      // const apiUrl = import.meta.env.VITE_API_URL;
+      const apiUrl = import.meta.env.VITE_API_URL;
 
       try {
-        const url = `/api/products/${id}`;
+        const url = `${apiUrl}/api/products/${id}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {

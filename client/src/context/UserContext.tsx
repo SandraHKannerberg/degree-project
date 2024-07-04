@@ -101,12 +101,12 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const [errorEmailInfo, setErrorEmailInfo] = useState("");
   const [errorPswInfo, setErrorPswInfo] = useState("");
 
-  // const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Function to check if someone is logged in
   const authorization = async () => {
     try {
-      const response = await fetch('/api/users/authorize', {
+      const response = await fetch(`${apiUrl}/api/users/authorize`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const registrationNewUser = async (newUser: NewUserType) => {
     if (newUser) {
       try {
-        const response = await fetch('/api/users/register', {
+        const response = await fetch(`${apiUrl}/api/users/register`, {
           method: "POST",
           credentials: 'include',
           headers: {
@@ -179,7 +179,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const login = async (user: UserType) => {
     if (user) {
       try {
-        const response = await fetch('/api/users/login', {
+        const response = await fetch(`${apiUrl}/api/users/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -206,7 +206,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle logout
   const logout = async () => {
     try {
-      const response = await fetch('/api/users/logout', {
+      const response = await fetch(`${apiUrl}/api/users/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

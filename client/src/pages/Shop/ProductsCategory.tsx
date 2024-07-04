@@ -23,7 +23,7 @@ function ProductsCategory() {
     indexOfLastProduct
   );
 
-  // const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -33,7 +33,7 @@ function ProductsCategory() {
     const getProductsByCategory = async () => {
       try {
         const responseFetchProducts = await fetch(
-          `/api/products/byCategory/${id}`, {
+          `${apiUrl}/api/products/byCategory/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function ProductsCategory() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const url = `/api/categories/${id}`;
+        const url = `${apiUrl}/api/categories/${id}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
