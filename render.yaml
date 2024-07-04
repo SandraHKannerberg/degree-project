@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: frontend
+    env: static
+    staticPublishPath: dist
+    buildCommand: npm install && npm run build
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+      - type: rewrite
+        source: /api/*
+        destination: https://degree-project.onrender.com:splat
+    envVars:
+      - key: VITE_API_URL
+        value: https://degree-project.onrender.com
+
+  - type: web
+    name: backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
