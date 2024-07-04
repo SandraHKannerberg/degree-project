@@ -59,7 +59,7 @@ const defaultValues = {
   markAsShipped: () => {},
 };
 
-// const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const OrderContext = createContext<IOrderContext>(defaultValues);
 
@@ -72,7 +72,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to get orderhistory
   const getOrders = async () => {
     try {
-      const response = await fetch('/api/orders', {
+      const response = await fetch(`${apiUrl}/orders`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle an order as shipped.
   const markAsShipped = async (id: string) => {
     try {
-      const response = await fetch('/api/orders' + id, {
+      const response = await fetch(`${apiUrl}/orders` + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
