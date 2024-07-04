@@ -138,7 +138,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       quantity: item.quantity,
     }));
 
-    const response = await fetch(`${apiUrl}/create-checkout-session`, {
+    const response = await fetch(`${apiUrl}/api/create-checkout-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

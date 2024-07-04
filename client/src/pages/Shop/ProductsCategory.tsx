@@ -33,7 +33,7 @@ function ProductsCategory() {
     const getProductsByCategory = async () => {
       try {
         const responseFetchProducts = await fetch(
-          `${apiUrl}/products/byCategory/${id}`, {
+          `${apiUrl}/api/products/byCategory/${id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function ProductsCategory() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const url = `${apiUrl}/categories/${id}`;
+        const url = `${apiUrl}/api/categories/${id}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
