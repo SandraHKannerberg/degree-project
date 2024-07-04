@@ -114,7 +114,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const [features, setFeatures] = useState<string[]>([]);
   const [success, setSuccess] = useState(false);
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
 
   //Get all products
   const getAllProducts = async () => {

@@ -101,7 +101,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
   const [errorEmailInfo, setErrorEmailInfo] = useState("");
   const [errorPswInfo, setErrorPswInfo] = useState("");
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
 
   // Function to check if someone is logged in
   const authorization = async () => {

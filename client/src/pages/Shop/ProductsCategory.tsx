@@ -23,7 +23,7 @@ function ProductsCategory() {
     indexOfLastProduct
   );
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
