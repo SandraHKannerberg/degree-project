@@ -143,7 +143,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const getAllCategories = async () => {
     try {
       // Get categories from localStorage (cached data)
-      const cachedCategories = localStorage.getItem('/api/categories');
+      const cachedCategories = localStorage.getItem(`${apiUrl}/api/categories`);
 
       // If there is cached data, set it to state and return
       if (cachedCategories) {
@@ -151,7 +151,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return;
       }
 
-      const responseFetchCategories = await fetch('/api/categories', {
+      const responseFetchCategories = await fetch(`${apiUrl}/api/categories`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -181,7 +181,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
-    const url = "/api/products/" + id;
+    const url = `${apiUrl}/api/products` + id;
     fetch(url, { method: "DELETE" })
       .then((response) => {
         if (!response) {
