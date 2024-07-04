@@ -120,7 +120,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   const getAllProducts = async () => {
 
     try {
-      const responseFetchProducts = await fetch(`${apiUrl}/products`, {
+      const responseFetchProducts = await fetch(`${apiUrl}/api/products`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
