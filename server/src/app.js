@@ -17,6 +17,7 @@ const { errorRequestHandler } = require("./error");
 // Keys
 const cookieSecretKey = process.env.COOKIE_SECRET_KEY;
 const CLIENT_URL = process.env.CLIENT_URL;
+const DOMAIN = process.env.DOMAIN;
 
 const app = express();
 app.use(express.json());
@@ -38,9 +39,9 @@ app.use(
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
     sameSite: "none",
     httpOnly: false,
-    secure: true,
+    // secure: true,
     path: '/',
-    domain: [CLIENT_URL],
+    domain: [DOMAIN],
   })
 );
 
