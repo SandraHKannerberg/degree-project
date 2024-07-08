@@ -37,7 +37,10 @@ app.use(
     keys: [cookieSecretKey],
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
     sameSite: "none",
+    httpOnly: false,
     secure: true,
+    path: '/',
+    domain: [CLIENT_URL],
   })
 );
 
