@@ -12,7 +12,12 @@ async function main() {
   mongoose.set("strictQuery", true);
   await mongoose.connect(databaseURL);
   console.log("DB Connection Successfull!");
-  app.listen(PORT || 3001, () =>
-    console.log(`Server is up and running on http://localhost:${PORT}`)
-  );
+  app.listen(PORT || 3001, () => {
+    if (process.env.NODE_ENV === 'production') {
+      console.log('Server is up and running -- production mode');
+    } else {
+      console.log(`Server is up and running on http://localhost:${PORT}`);
+    }
+  });
+  console.log('MODE: ', process.env.NODE_ENV);
 }
