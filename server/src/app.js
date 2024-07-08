@@ -25,16 +25,20 @@ app.use(bodyParser.json());
 
 app.use(cors({
   origin: [CLIENT_URL],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  Headers: true,
+  exposedHeaders: 'Set-Cookie',
+  methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Access-Control-Allow-Origin',
+    'Content-Type',
+    'Authorization'
+  ]
 }));
-
-
 
 app.use(
   cookieSession({
-    name: "session",
+    name: "_session",
     keys: [cookieSecretKey],
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
     sameSite: "none",
