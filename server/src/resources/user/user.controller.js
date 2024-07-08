@@ -80,7 +80,7 @@ async function login(req, res) {
     // Save info about the user to the session (an encrypted cookie stored on the client)
     req.session = user;
     console.log('Session set:', req.session);
-    console.log('Set-Cookie header:', res.getHeaders()['set-cookie']);
+    console.log('Set-Cookie header:', res.getHeaders());
     res.status(200).json(user);
   } catch (err) {
     console.error("Error occurred - log in failed:", err);
