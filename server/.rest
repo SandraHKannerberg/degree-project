@@ -110,7 +110,7 @@ Content-Type: application/json
 
 ###
 
-POST https://degree-project.onrender.com/api/users/login
+POST http://lotus-api.sandrahkannerberg.se/api/users/login
 Content-Type: application/json
 
 {
