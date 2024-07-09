@@ -41,7 +41,7 @@ app.use(
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
     sameSite: "none",
     httpOnly: true,
-    secure: true,
+    secure: false,
     path: '/',
     domain: [DOMAIN],
   })
