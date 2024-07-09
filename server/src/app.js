@@ -26,8 +26,6 @@ app.use(bodyParser.json());
 app.use(cors({
   origin: [CLIENT_URL],
   credentials: true,
-  // Headers: true,
-  // exposedHeaders: 'Set-Cookie',
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
     'Access-Control-Allow-Origin',
@@ -43,7 +41,7 @@ app.use(
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
     sameSite: "none",
     httpOnly: true,
-    secure: false,
+    secure: true,
     path: '/',
     domain: [DOMAIN],
   })
