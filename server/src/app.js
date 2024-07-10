@@ -26,12 +26,12 @@ app.use(bodyParser.json());
 app.use(cors({
   origin: CLIENT_URL,
   credentials: true,
-  methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Access-Control-Allow-Origin',
-    'Content-Type',
-    'Authorization'
-  ]
+  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  // allowedHeaders: [
+  //   'Access-Control-Allow-Origin',
+  //   'Content-Type',
+  //   'Authorization'
+  // ]
 }));
 
 app.use(
