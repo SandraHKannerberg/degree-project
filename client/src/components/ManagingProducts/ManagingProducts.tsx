@@ -108,7 +108,7 @@ function ManagingProducts() {
 
   // Function to handle updateProduct, with fetch to backend and save info to database
   const updateProduct = (id: string) => {
-    const url = `${apiUrl}/products/` + id;
+    const url = `${apiUrl}/api/products/` + id;
 
     const requestBody = {
       _id: id,

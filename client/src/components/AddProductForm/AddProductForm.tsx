@@ -85,7 +85,7 @@ function AddProductForm() {
 
     try {
       // Fetch createProduct from backend
-      const productResponse = await fetch(`${apiUrl}/products`, {
+      const productResponse = await fetch(`${apiUrl}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
