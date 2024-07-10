@@ -111,7 +111,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        // credentials: 'include',
+        credentials: 'include',
       });
       if (response.status === 200) {
         const authData = await response.json();

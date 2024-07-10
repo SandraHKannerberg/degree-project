@@ -77,6 +77,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include'
       });
       const orderData = await response.json();
 
