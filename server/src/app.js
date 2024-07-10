@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: [CLIENT_URL],
+  origin: CLIENT_URL,
   credentials: true,
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
