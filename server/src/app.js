@@ -39,9 +39,9 @@ app.use(
     name: "_session",
     keys: [cookieSecretKey],
     maxAge: 1000 * 60 * 60 * 24, // 24 Hours
-    sameSite: "none",
+    sameSite: "strict",
     httpOnly: true,
-    secure: true,
+    secure: false,
     path: '/',
     domain: [DOMAIN],
   })
