@@ -93,11 +93,11 @@ function Confirmation() {
     <>
       <Header />
       <Menu />
-      <Container
+      {/* <Container
         fluid
         className="my-5"
         style={{ minHeight: "50vh", marginTop: "10rem" }}
-      >
+      > */}
         {/* {isLoading ? (
           // Display loader while verifying payment
           <div
@@ -172,7 +172,7 @@ function Confirmation() {
                     </span>
                   </Card.Text>
                 </Card.Body> */}
-              </Card>
+              {/* </Card>
             </Col>
             <Col lg={4} className="d-flex justify-content-center my-3">
               <Button
@@ -222,7 +222,7 @@ function Confirmation() {
             </Col>
           </Row>
         )}
-      </Container>
+      </Container> */}
       <Footer />
     </>
   );
