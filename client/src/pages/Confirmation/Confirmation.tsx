@@ -45,7 +45,6 @@ function Confirmation() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ sessionId }),
-        credentials: 'include'
       });
 
       const { verified, orderDetails } = await response.json();
