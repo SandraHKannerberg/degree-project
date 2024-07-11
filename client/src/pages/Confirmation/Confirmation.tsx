@@ -1,33 +1,32 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
-import { useEffect } from "react";
-// import { useEffect, useState } from "react";
-// import {
-//   Button,
-//   Card,
-//   Col,
-//   Container,
-//   Nav,
-//   Row,
-//   Spinner,
-// } from "react-bootstrap";
-// import { useCartContext } from "../../context/CartContext";
-// import { PatchCheckFill, Stars } from "react-bootstrap-icons";
-// import errorpayment from "../../assets/error-payment.png";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Nav,
+  Row,
+  Spinner,
+} from "react-bootstrap";
+import { useCartContext } from "../../context/CartContext";
+import { PatchCheckFill, Stars } from "react-bootstrap-icons";
+import errorpayment from "../../assets/error-payment.png";
 
 // Confirmation page --- Different content depending on payment status
 function Confirmation() {
-  // const { emptyCart } = useCartContext();
-  // const [isPaymentVerified, setIsPaymentVerified] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [confirmationDetails, setConfirmationDetails] = useState({
-  //   email: "",
-  //   totalAmount: 0,
-  //   orderNumber: "",
-  // });
+  const { emptyCart } = useCartContext();
+  const [isPaymentVerified, setIsPaymentVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [confirmationDetails, setConfirmationDetails] = useState({
+    email: "",
+    totalAmount: 0,
+    orderNumber: "",
+  });
 
-  // const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Function to verify the payment and fetch order-details if payment = success
   const verifyThePayment = async () => {
@@ -41,48 +40,50 @@ function Confirmation() {
       }
 
       console.log(sessionId);
+  
+      // Fetch from server to verify-session
+      const response = await fetch(`${apiUrl}/verify-session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({ sessionId })
+      });
+
+      console.log('RESPONSE-1', response);
+
+      const { verified, orderDetails } = await response.json();
+
+      console.log('RESPONSE-2', response);
+
+      console.log('VERIFIED', verified);
+
+      //Check if payment is verified
+      if (verified) {
+        setIsPaymentVerified(true);
+
+        console.log('VERIFIED-BOOL', isPaymentVerified);
+
+        // Extract order details
+        const { email, totalAmount, orderNumber } = orderDetails;
+
+        //If payment is verified remove session-id from loaclStorage
+        localStorage.removeItem("session-id");
+        //If payment is verified empty shoppingcart
+        emptyCart();
+
+        // Set state to be able to use order details in the UI at successfull payment
+        setConfirmationDetails({ email, totalAmount, orderNumber });
+      } else {
+        setIsPaymentVerified(false);
+      }
     } catch (error) {
       console.error("Error during payment verification:", error);
+    } finally {
+      // Set loading to false once verification is complete
+      setIsLoading(false);
     }
-    //   // Fetch from server to verify-session
-    //   const response = await fetch(`${apiUrl}/verify-session`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     credentials: 'include',
-    //     body: JSON.stringify({ sessionId })
-    //   });
-
-    //   const { verified, orderDetails } = await response.json();
-
-    //   console.log('VERIFIED', verified);
-
-    //   //Check if payment is verified
-    //   if (verified) {
-    //     setIsPaymentVerified(true);
-
-    //     console.log('VERIFIED-BOOL', isPaymentVerified);
-
-    //     // Extract order details
-    //     const { email, totalAmount, orderNumber } = orderDetails;
-
-    //     //If payment is verified remove session-id from loaclStorage
-    //     localStorage.removeItem("session-id");
-    //     //If payment is verified empty shoppingcart
-    //     emptyCart();
-
-    //     // Set state to be able to use order details in the UI at successfull payment
-    //     setConfirmationDetails({ email, totalAmount, orderNumber });
-    //   } else {
-    //     setIsPaymentVerified(false);
-    //   }
-    // } catch (error) {
-    //   console.error("Error during payment verification:", error);
-    // } finally {
-    //   // Set loading to false once verification is complete
-    //   setIsLoading(false);
-    // }
   }
 
 
@@ -94,12 +95,12 @@ function Confirmation() {
     <>
       <Header />
       <Menu />
-      {/* <Container
+      <Container
         fluid
         className="my-5"
         style={{ minHeight: "50vh", marginTop: "10rem" }}
-      > */}
-        {/* {isLoading ? (
+      >
+        {isLoading ? (
           // Display loader while verifying payment
           <div
             className="text-center"
@@ -115,8 +116,8 @@ function Confirmation() {
             style={{ marginTop: "10rem" }}
           >
             <Col lg={5} className="d-flex justify-content-center mb-3">
-              <Card className="h-100 shadow"> */}
-                {/* <Card.Body
+              <Card className="h-100 shadow">
+                <Card.Body
                   className="d-flex flex-column"
                   style={{ padding: 0, color: "#331d2c" }}
                 >
@@ -172,8 +173,8 @@ function Confirmation() {
                       {confirmationDetails.orderNumber}
                     </span>
                   </Card.Text>
-                </Card.Body> */}
-              {/* </Card>
+                </Card.Body>
+              </Card>
             </Col>
             <Col lg={4} className="d-flex justify-content-center my-3">
               <Button
@@ -223,7 +224,7 @@ function Confirmation() {
             </Col>
           </Row>
         )}
-      </Container> */}
+      </Container>
       <Footer />
     </>
   );

@@ -176,8 +176,8 @@ POST https://lotus-api.sandrahkannerberg.se/api/verify-session
 Content-Type: application/json
 
 {
-  "sessionId": "cs_test_b1difFZqAmnR6vNkB5WDdCCIlxu1Q2z4uNAI6S7dJJqCqfTAa50TiuEXHW",
-  "customer": "test@mail.com",
+  "sessionId": "cs_test_b1SL6uORmcvwe1OwdG4Bbz68c2jlpykz1sMToBkCqIeWMr8KCBI1wMb6p2",
+  "customer": "demodemo@demo.com",
   "items": [
     {
       "name": "YOGA MAT",
