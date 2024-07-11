@@ -116,6 +116,8 @@ const verifySession = async (req, res) => {
       req.body.sessionId
     );
 
+    console.log('LINE-ITEMS', line_items);
+
     // Create new order
     const newOrder = new OrderModel({
       customer: session.customer_details.name,
@@ -152,12 +154,11 @@ const verifySession = async (req, res) => {
       stripePaymentIntentId: session.payment_intent,
     });
 
+    console.log("ORDER: ", newOrder);
     // Save order in MongoDB
     await newOrder.save();
 
-    console.log("ORDER: ", newOrder);
-
-    res.status(200).json({
+    const response = {
       verified: true,
       message: "New order successfully created",
       orderDetails: {
@@ -165,7 +166,21 @@ const verifySession = async (req, res) => {
         totalAmount: newOrder.totalAmount,
         orderNumber: newOrder.orderNumber,
       },
-    });
+    };
+    
+    console.log(response);
+    
+    res.status(200).json(response);
+
+    // res.status(200).json({
+    //   verified: true,
+    //   message: "New order successfully created",
+    //   orderDetails: {
+    //     email: newOrder.email,
+    //     totalAmount: newOrder.totalAmount,
+    //     orderNumber: newOrder.orderNumber,
+    //   },
+    // });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ verified: false, error: "Internal Server Error" });
