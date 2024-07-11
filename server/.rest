@@ -156,14 +156,14 @@ GET http://localhost:3000/api/orders/659d020ad08dc70fd5d6efa8
 ###
 
 //** TESTING STRIPE CHECKOUT */
-POST http://localhost:3000/api/create-checkout-session
+POST https://lotus-api.sandrahkannerberg.se/api/create-checkout-session
 Content-Type: application/json
 
 {
   "items": [
     {
-      "name": "PRACTICE TRAVEL MAT, GREY",
-      "price": 499,
+      "name": "YOGA MAT",
+      "price": 199,
       "quantity": 1
     }
 ]
@@ -172,16 +172,16 @@ Content-Type: application/json
 ###
 
 //** TESTING VERIFY SESSION */
-POST http://localhost:3000/api/verify-session
+POST https://lotus-api.sandrahkannerberg.se/api/verify-session
 Content-Type: application/json
 
 {
-  "sessionId": "cs_test_b14zGnpllsvKxAGOYF8YxUYKf3i0UJsArOJDLS0ctP7Umyj5HuK7THJZbq",
+  "sessionId": "cs_test_b1difFZqAmnR6vNkB5WDdCCIlxu1Q2z4uNAI6S7dJJqCqfTAa50TiuEXHW",
   "customer": "test@mail.com",
   "items": [
     {
-      "name": "PRACTICE TRAVEL MAT, GREY",
-      "price": 499,
+      "name": "YOGA MAT",
+      "price": 199,
       "quantity": 1
     }
 ]

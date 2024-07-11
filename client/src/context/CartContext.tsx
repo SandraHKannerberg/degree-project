@@ -143,6 +143,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include',
       body: JSON.stringify({ items: cartToStripe }),
     });
 

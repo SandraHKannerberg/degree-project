@@ -35,49 +35,55 @@ function Confirmation() {
       const sessionId = localStorage.getItem("session-id");
 
       if (!sessionId) {
+        console.log('STOPP');
         return;
       }
 
-      // Fetch from server to verify-session
-      const response = await fetch(`${apiUrl}/verify-session`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: 'include',
-        body: JSON.stringify({ sessionId })
-      });
-
-      const { verified, orderDetails } = await response.json();
-
-      console.log('VERIFIED', verified);
-
-      //Check if payment is verified
-      if (verified) {
-        setIsPaymentVerified(true);
-
-        console.log('VERIFIED-BOOL', isPaymentVerified);
-
-        // Extract order details
-        const { email, totalAmount, orderNumber } = orderDetails;
-
-        //If payment is verified remove session-id from loaclStorage
-        localStorage.removeItem("session-id");
-        //If payment is verified empty shoppingcart
-        emptyCart();
-
-        // Set state to be able to use order details in the UI at successfull payment
-        setConfirmationDetails({ email, totalAmount, orderNumber });
-      } else {
-        setIsPaymentVerified(false);
-      }
+      console.log(sessionId);
     } catch (error) {
       console.error("Error during payment verification:", error);
-    } finally {
-      // Set loading to false once verification is complete
-      setIsLoading(false);
     }
-  };
+    //   // Fetch from server to verify-session
+    //   const response = await fetch(`${apiUrl}/verify-session`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     credentials: 'include',
+    //     body: JSON.stringify({ sessionId })
+    //   });
+
+    //   const { verified, orderDetails } = await response.json();
+
+    //   console.log('VERIFIED', verified);
+
+    //   //Check if payment is verified
+    //   if (verified) {
+    //     setIsPaymentVerified(true);
+
+    //     console.log('VERIFIED-BOOL', isPaymentVerified);
+
+    //     // Extract order details
+    //     const { email, totalAmount, orderNumber } = orderDetails;
+
+    //     //If payment is verified remove session-id from loaclStorage
+    //     localStorage.removeItem("session-id");
+    //     //If payment is verified empty shoppingcart
+    //     emptyCart();
+
+    //     // Set state to be able to use order details in the UI at successfull payment
+    //     setConfirmationDetails({ email, totalAmount, orderNumber });
+    //   } else {
+    //     setIsPaymentVerified(false);
+    //   }
+    // } catch (error) {
+    //   console.error("Error during payment verification:", error);
+    // } finally {
+    //   // Set loading to false once verification is complete
+    //   setIsLoading(false);
+    // }
+  }
+
 
   useEffect(() => {
     verifyThePayment();
