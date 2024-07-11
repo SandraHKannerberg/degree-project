@@ -182,7 +182,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
     const url = `${apiUrl}/api/products/` + id;
-    fetch(url, { method: "DELETE" })
+    fetch(url, { method: "DELETE",  credentials: 'include' })
       .then((response) => {
         if (!response) {
           throw new Error(
