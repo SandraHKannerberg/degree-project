@@ -42,7 +42,7 @@ function Confirmation() {
       console.log(sessionId);
   
       // Fetch from server to verify-session
-      const response = await fetch(`${apiUrl}/verify-session`, {
+      const response = await fetch(`${apiUrl}/api/verify-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,19 +51,15 @@ function Confirmation() {
         body: JSON.stringify({ sessionId })
       });
 
-      console.log('RESPONSE-1', response);
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
 
       const { verified, orderDetails } = await response.json();
-
-      console.log('RESPONSE-2', response);
-
-      console.log('VERIFIED', verified);
 
       //Check if payment is verified
       if (verified) {
         setIsPaymentVerified(true);
-
-        console.log('VERIFIED-BOOL', isPaymentVerified);
 
         // Extract order details
         const { email, totalAmount, orderNumber } = orderDetails;
