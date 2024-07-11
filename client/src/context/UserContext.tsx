@@ -210,6 +210,7 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           "Content-Type": "application/json",
         },
+         credentials: 'include'
       });
 
       if (response.status === 204) {
