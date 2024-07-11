@@ -141,7 +141,6 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
       try {
         const response = await fetch(`${apiUrl}/api/users/register`, {
           method: "POST",
-          credentials: 'include',
           headers: {
             "Content-Type": "application/json",
           },
@@ -211,7 +210,6 @@ export const UserProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
       });
 
       if (response.status === 204) {

@@ -91,6 +91,7 @@ function AddProductForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newProductData),
+        credentials: 'include'
       });
 
       if (productResponse.ok) {

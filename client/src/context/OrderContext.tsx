@@ -149,6 +149,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
         body: JSON.stringify({
           shipped: true,
         }),
+        credentials: 'include'
       });
 
       // Respond from server is OK (200) Update shipped boolean to true for the specific order
