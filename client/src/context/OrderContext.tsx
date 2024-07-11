@@ -141,7 +141,7 @@ export const OrderProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to handle an order as shipped.
   const markAsShipped = async (id: string) => {
     try {
-      const response = await fetch(`${apiUrl}/api/orders` + id, {
+      const response = await fetch(`${apiUrl}/api/orders/` + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
