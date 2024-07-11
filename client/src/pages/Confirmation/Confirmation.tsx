@@ -44,14 +44,18 @@ function Confirmation() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sessionId }),
+        body: JSON.stringify({ sessionId })
       });
 
       const { verified, orderDetails } = await response.json();
 
+      console.log('VERIFIED', verified);
+
       //Check if payment is verified
       if (verified) {
         setIsPaymentVerified(true);
+
+        console.log('VERIFIED-BOOL', isPaymentVerified);
 
         // Extract order details
         const { email, totalAmount, orderNumber } = orderDetails;
