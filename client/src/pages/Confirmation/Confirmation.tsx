@@ -1,19 +1,20 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
-import { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Nav,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import { useEffect } from "react";
+// import { useEffect, useState } from "react";
+// import {
+//   Button,
+//   Card,
+//   Col,
+//   Container,
+//   Nav,
+//   Row,
+//   Spinner,
+// } from "react-bootstrap";
 // import { useCartContext } from "../../context/CartContext";
 // import { PatchCheckFill, Stars } from "react-bootstrap-icons";
-import errorpayment from "../../assets/error-payment.png";
+// import errorpayment from "../../assets/error-payment.png";
 
 // Confirmation page --- Different content depending on payment status
 function Confirmation() {
