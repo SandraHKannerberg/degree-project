@@ -11,22 +11,22 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import { useCartContext } from "../../context/CartContext";
-import { PatchCheckFill, Stars } from "react-bootstrap-icons";
+// import { useCartContext } from "../../context/CartContext";
+// import { PatchCheckFill, Stars } from "react-bootstrap-icons";
 import errorpayment from "../../assets/error-payment.png";
 
 // Confirmation page --- Different content depending on payment status
 function Confirmation() {
-  const { emptyCart } = useCartContext();
-  const [isPaymentVerified, setIsPaymentVerified] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [confirmationDetails, setConfirmationDetails] = useState({
-    email: "",
-    totalAmount: 0,
-    orderNumber: "",
-  });
+  // const { emptyCart } = useCartContext();
+  // const [isPaymentVerified, setIsPaymentVerified] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [confirmationDetails, setConfirmationDetails] = useState({
+  //   email: "",
+  //   totalAmount: 0,
+  //   orderNumber: "",
+  // });
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // const apiUrl = import.meta.env.VITE_API_URL;
 
   // Function to verify the payment and fetch order-details if payment = success
   const verifyThePayment = async () => {
@@ -98,7 +98,7 @@ function Confirmation() {
         className="my-5"
         style={{ minHeight: "50vh", marginTop: "10rem" }}
       >
-        {isLoading ? (
+        {/* {isLoading ? (
           // Display loader while verifying payment
           <div
             className="text-center"
@@ -114,8 +114,8 @@ function Confirmation() {
             style={{ marginTop: "10rem" }}
           >
             <Col lg={5} className="d-flex justify-content-center mb-3">
-              <Card className="h-100 shadow">
-                <Card.Body
+              <Card className="h-100 shadow"> */}
+                {/* <Card.Body
                   className="d-flex flex-column"
                   style={{ padding: 0, color: "#331d2c" }}
                 >
@@ -171,7 +171,7 @@ function Confirmation() {
                       {confirmationDetails.orderNumber}
                     </span>
                   </Card.Text>
-                </Card.Body>
+                </Card.Body> */}
               </Card>
             </Col>
             <Col lg={4} className="d-flex justify-content-center my-3">
