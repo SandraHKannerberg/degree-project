@@ -148,6 +148,16 @@ function LogInOffcanvas() {
           padding: 0,
         }}
       >
+        <Offcanvas.Header     
+        style={{
+          backgroundColor: "#85586f",
+          color: "#EFE1D1",
+          display: "flex",
+          justifyContent: "flex-end"
+        }} 
+        closeButton
+        >
+        </Offcanvas.Header>
         <Offcanvas.Body className="p-0 d-flex flex-column align-items-center">
           {/* Menu (tabs) to choose Log In or Sign Up */}
           <Tabs
