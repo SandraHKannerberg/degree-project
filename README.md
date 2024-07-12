@@ -1,7 +1,7 @@
 # Lotus Harmony – fullstack e-commerce project
 
-Link to demo: https://lotusharmony.sandrahkannerberg.se/
-Repo: https://github.com/SandraHKannerberg/degree-project.git
+Link to demo: https://lotusharmony.sandrahkannerberg.se/ </br>
+Repo: https://github.com/SandraHKannerberg/degree-project.git </br>
 
 I have been studying web development for two years and this is my degree project. </br>
 In this project I have been working with a MERN-stack and create a fictional e-commerce from scratch selling yoga products. </br>
