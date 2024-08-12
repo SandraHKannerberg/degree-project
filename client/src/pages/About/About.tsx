@@ -9,7 +9,7 @@ function About() {
   return (
     <>
       <Header></Header>
-      <Container fluid style={{ padding: 0, marginTop: "10rem" }}>
+      <Container fluid style={{ padding: 0, marginTop: "10rem", minHeight: "55vh" }}>
         <Row className="d-flex flex-column align-items-center justify-content-center p-3">
           <h1 style={{ textAlign: "center", fontFamily: "Julius Sans One" }}>
             Lotus Harmony

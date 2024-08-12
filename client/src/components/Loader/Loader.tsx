@@ -1,7 +1,6 @@
 import Header from "../Header/Header";
 import Menu from "../Menu/Menu";
 import { Container, Spinner } from "react-bootstrap";
-import Footer from "../Footer/Footer";
 
 // When slow loading show this Loader component. Fallback to every routes in App.tsx
 function Loader() {
@@ -22,7 +21,6 @@ function Loader() {
           <p>Please wait while loading...</p>
         </div>
       </Container>
-      <Footer></Footer>
     </>
   );
 }

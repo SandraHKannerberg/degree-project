@@ -93,8 +93,7 @@ function Footer() {
           className="d-flex justify-content-center alig-items-center pt-3"
         >
           <p style={{ fontSize: "12px" }}>
-            Copyright &copy; Degree project 2024 - Sandra Höst Kannerberg -
-            Medieinstitutet
+            Copyright &copy; Sandra Höst Kannerberg - Degree project 2024, Medieinstitutet
           </p>
         </Col>
       </Row>
