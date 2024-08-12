@@ -5,13 +5,14 @@ import Header from "../../components/Header/Header";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import Loader from "../../components/Loader/Loader";
 
 // Show products filtered by category
 function ProductsCategory() {
   const { id } = useParams();
   const [category, setCategory] = useState<Category>();
 
-  const { products, setProducts } = useProductContext();
+  const { products, setProducts, loading, setLoading } = useProductContext();
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12; //Products per page
 
@@ -51,6 +52,7 @@ function ProductsCategory() {
 
         const productsByCategory = await responseFetchProducts.json();
         setProducts(productsByCategory);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -71,6 +73,7 @@ function ProductsCategory() {
         });
         const data = await response.json();
         setCategory(data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -78,6 +81,11 @@ function ProductsCategory() {
 
     fetchCategory();
   }, [id]);
+
+  if (loading) {
+    console.log("Loading...");
+    return <Loader />;
+}
 
   return category ? (
     <>
