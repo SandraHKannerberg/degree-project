@@ -4,10 +4,11 @@ import { Col, Container, Pagination, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import ProductCard from "../ProductCard/ProductCard";
 import Banner from "../Banner/Banner";
+import Loader from "../Loader/Loader";
 
 // Show all products in the shop
 function ProductList() {
-  const { products, getAllProducts } = useProductContext();
+  const { products, getAllProducts, loading, setLoading } = useProductContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -15,7 +16,7 @@ function ProductList() {
 
   useEffect(() => {
     getAllProducts();
-  }, []);
+  }, [getAllProducts]);
 
   // Search function
   useEffect(() => {
@@ -39,6 +40,11 @@ function ProductList() {
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    console.log('Loading....')
+    return <Loader />;
+}
 
   return (
     <Container fluid style={{ padding: 0, marginTop: "7.5rem" }}>
