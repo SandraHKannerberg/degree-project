@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 
 // Show all products in the shop
 function ProductList() {
-  const { products, getAllProducts, loading, setLoading } = useProductContext();
+  const { products, getAllProducts, loading } = useProductContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
