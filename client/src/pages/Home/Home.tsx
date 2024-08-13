@@ -2,10 +2,10 @@ import Header from "../../components/Header/Header";
 import LogotypeLightColor from "../../components/Logotype/LogotypeLightColor";
 import Banner from "../../components/Banner/Banner";
 import yoga from "../../assets/yoga.mp4";
-import { Button, Container, Row, Col, Nav } from "react-bootstrap";
-import { ArrowRight } from "react-bootstrap-icons";
+import { Container, Row } from "react-bootstrap";
 import "./Home.css";
 import Footer from "../../components/Footer/Footer";
+import ShopByCategory from "../../components/ShopByCategory/ShopByCategory";
 
 //Landingpage
 function Home() {
@@ -87,24 +87,9 @@ function Home() {
             </Button>
           </Col> */}
         </Row>
-        <Row>
-          <h1>Shop by category</h1>
-          <Button
-            size="lg"
-            style={{
-              backgroundColor: "#85586f",
-              border: "none",
-              borderRadius: 0,
-              color: "#EFE1D1",
-              flex: "display",
-              justifyContent: "center",
-              alignItems: "center",
-              fontWeight: 500,
-            }}
-          >
-            <Nav.Link href="/shop">See all products</Nav.Link>
-          </Button>
-        </Row>
+
+        <ShopByCategory></ShopByCategory>
+
         <Row>
           <Banner></Banner>
         </Row>

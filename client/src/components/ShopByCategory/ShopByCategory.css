@@ -1,0 +1,14 @@
+.shop-by-category-wrapper {
+  height: fit-content;
+}
+
+.category-container {
+  height: 100%;
+  gap: 3rem;
+}
+
+.category-box {
+  height: 300px;
+  width: 300px;
+  background-color: #a78295;
+}
