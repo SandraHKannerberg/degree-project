@@ -60,7 +60,7 @@ function Menu() {
                     className="menu-link"
                     onClick={handleCloseOffcanvas}
                   >
-                    All
+                    Shop
                   </NavLink>
                   {categories.map((category) => (
                     <NavLink

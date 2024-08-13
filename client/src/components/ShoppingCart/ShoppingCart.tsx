@@ -57,16 +57,19 @@ function ShoppingCart() {
           <Offcanvas.Title>ShoppingCart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {cartTotalQuantity !== 0 && (
-            <p>
-              You have{" "}
-              <span style={{ fontWeight: "bold" }}>
-                {cartTotalQuantity} items
-              </span>{" "}
-              in your shoppingcart
-            </p>
-          )}
-          {cartTotalQuantity === 0 && <p>Your shoppingcart is empty</p>}
+          <p>
+  {cartTotalQuantity === 0 ? (
+    "Your shopping cart is empty"
+  ) : (
+    <>
+      You have{" "}
+      <span style={{ fontWeight: "bold" }}>
+        {cartTotalQuantity} {cartTotalQuantity === 1 ? "item" : "items"}
+      </span>{" "}
+      in your shopping cart
+    </>
+  )}
+</p>
           <CartItems></CartItems>
         </Offcanvas.Body>
       </Offcanvas>

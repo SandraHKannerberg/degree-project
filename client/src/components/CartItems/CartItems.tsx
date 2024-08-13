@@ -56,7 +56,7 @@ function CartItems() {
                 {cartItem.quantity}
               </Col>
               <Col className="p-2" style={{ fontSize: "14px", padding: 0 }}>
-                {cartItem.price} kr
+                {cartItem.price} SEK
               </Col>
               <Col
                 className="d-flex gap-1"
@@ -102,7 +102,7 @@ function CartItems() {
       {cartItems.length > 0 && (
         <Row className="mt-5 mb-3" style={{ borderTop: "2px solid #EFE1D1" }}>
           <h5 className="mt-2 d-flex justify-content-end">
-            TOTALPRICE --- {totalPrice} kr
+            TOTAL --- {totalPrice} SEK
           </h5>
         </Row>
       )}
