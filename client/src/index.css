@@ -55,3 +55,9 @@ body {
   border-color: #efe1d1 !important;
   color: #efe1d1 !important;
 }
+
+@media screen and (max-width: 450px) {
+  .slogan {
+    font-size: 13px;
+  }
+}

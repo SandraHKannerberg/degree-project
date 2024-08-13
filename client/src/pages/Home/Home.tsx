@@ -1,8 +1,11 @@
 import Header from "../../components/Header/Header";
+import LogotypeLightColor from "../../components/Logotype/LogotypeLightColor";
+import Banner from "../../components/Banner/Banner";
 import yoga from "../../assets/yoga.mp4";
 import { Button, Container, Row, Col, Nav } from "react-bootstrap";
 import { ArrowRight } from "react-bootstrap-icons";
 import "./Home.css";
+import Footer from "../../components/Footer/Footer";
 
 //Landingpage
 function Home() {
@@ -13,23 +16,42 @@ function Home() {
         fluid
         style={{
           padding: 0,
-          margin: 0,
+          marginTop: "10rem",
         }}
       >
         <Row
-          className="video-background mx-0 d-flex justify-content-center w-100"
           style={{
-            padding: 0,
-            marginTop: "7.5rem",
+            flex: "display",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
           }}
         >
+          <LogotypeLightColor></LogotypeLightColor>
+          <h1 style={{ textAlign: "center", fontFamily: "Julius Sans One" }}>
+            Lotus Harmony
+          </h1>
+
+          <p
+            style={{
+              textAlign: "center",
+              fontStyle: "italic",
+              marginBottom: "3rem",
+            }}
+          >
+            Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga
+            Journey Begins
+          </p>
+        </Row>
+        <Row className="video-background mx-0 d-flex justify-content-center w-100">
           <video className="video" autoPlay loop muted>
             <source src={yoga} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
 
           {/* Title (company name) and go to shop button - section */}
-          <Col
+          {/* <Col
             className="d-flex align-items-end justify-content-end flex-column"
             style={{ margin: "3rem", marginBottom: "5rem" }}
           >
@@ -63,9 +85,34 @@ function Home() {
                 />
               </Nav.Link>
             </Button>
-          </Col>
+          </Col> */}
+        </Row>
+        <Row>
+          <h1>Shop by category</h1>
+          <Button
+            size="lg"
+            style={{
+              backgroundColor: "#85586f",
+              border: "none",
+              borderRadius: 0,
+              color: "#EFE1D1",
+              flex: "display",
+              justifyContent: "center",
+              alignItems: "center",
+              fontWeight: 500,
+            }}
+          >
+            <Nav.Link href="/shop">See all products</Nav.Link>
+          </Button>
+        </Row>
+        <Row>
+          <Banner></Banner>
+        </Row>
+        <Row>
+          <h1>Inspiration - Focus / Relax / Mindfullness / Inhale Exhale</h1>
         </Row>
       </Container>
+      <Footer></Footer>
     </>
   );
 }
