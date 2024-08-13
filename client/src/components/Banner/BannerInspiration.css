@@ -1,0 +1,11 @@
+.inspiration-wrapper {
+  height: 500px;
+}
+
+.inspiration-container {
+  height: 100%;
+  width: 80vw;
+  display: flex;
+  background-color: darkgray;
+  padding: 0;
+}

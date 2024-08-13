@@ -6,6 +6,7 @@ import { Container, Row } from "react-bootstrap";
 import "./Home.css";
 import Footer from "../../components/Footer/Footer";
 import ShopByCategory from "../../components/ShopByCategory/ShopByCategory";
+import BannerInspiration from "../../components/Banner/BannerInspiration";
 
 //Landingpage
 function Home() {
@@ -90,12 +91,10 @@ function Home() {
 
         <ShopByCategory></ShopByCategory>
 
-        <Row>
+        {/* <Row>
           <Banner></Banner>
-        </Row>
-        <Row>
-          <h1>Inspiration - Focus / Relax / Mindfullness / Inhale Exhale</h1>
-        </Row>
+        </Row> */}
+        <BannerInspiration></BannerInspiration>
       </Container>
       <Footer></Footer>
     </>
