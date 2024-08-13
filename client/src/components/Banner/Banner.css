@@ -1,0 +1,7 @@
+.banner-container {
+  height: 100%;
+  width: 80vw;
+  display: flex;
+  background-color: #a78295;
+  padding: 0;
+}

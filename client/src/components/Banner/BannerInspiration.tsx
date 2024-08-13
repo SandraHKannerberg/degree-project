@@ -1,15 +1,16 @@
 import { Row } from "react-bootstrap";
-import "./BannerInspiration.css";
-import relax from "../../assets/relax.jpg";
+import "./Banner.css";
+import yogaPose from "../../assets/yoga-pose.jpg";
 import yoga from "../../assets/yoga-mat.jpg";
 
 function BannerInspiration() {
   return (
-    <Row className="inspiration-wrapper d-flex justify-content-center align-items-center mt-5 mb-5">
-      <Row className="inspiration-container d-flex justify-content-center mt-5 mb-5">
+    <Row className="d-flex justify-content-center align-items-center mt-5 mb-5">
+      <h5 className="text-center mb-3">Find your strength</h5>
+      <Row className="banner-container d-flex justify-content-center mb-5">
         <img
-          src={relax}
-          alt="Relax"
+          src={yogaPose}
+          alt="Yoga"
           style={{
             width: "50%",
             height: "100%",
@@ -19,7 +20,7 @@ function BannerInspiration() {
         />
         <img
           src={yoga}
-          alt="Stones in nature"
+          alt="Yoga"
           style={{
             width: "50%",
             height: "100%",
