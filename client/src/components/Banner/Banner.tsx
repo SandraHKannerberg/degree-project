@@ -16,7 +16,7 @@ function Banner() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Col xs={12} md={12} style={{ marginTop: "4rem" }}>
+      {/* <Col xs={12} md={12} style={{ marginTop: "4rem" }}>
         <h1
           className="mt-3"
           style={{ textAlign: "center", fontFamily: "Julius Sans One" }}
@@ -27,7 +27,7 @@ function Banner() {
           Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga
           Journey Begins
         </p>
-      </Col>
+      </Col> */}
 
       <Col
         xs={12}

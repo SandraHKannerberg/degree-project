@@ -3,7 +3,6 @@ import { Product, useProductContext } from "../../context/ProductContext";
 import { Col, Container, Pagination, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import ProductCard from "../ProductCard/ProductCard";
-import Banner from "../Banner/Banner";
 import Loader from "../Loader/Loader";
 
 // Show all products in the shop
@@ -47,8 +46,27 @@ function ProductList() {
 }
 
   return (
-    <Container fluid style={{ padding: 0, marginTop: "7.5rem" }}>
-      <Banner></Banner>
+    <Container fluid style={{ padding: 0, marginTop: "10rem" }}>
+      <Row className="p-3"    style={{
+                flex: "display",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100vw",
+                textAlign: "center",
+              }}>
+        <h1  className="mt-3"
+            style={{ fontFamily: "Julius Sans One" }}
+          >
+            Lotus Harmony
+        </h1>
+   
+        <p className="slogan" style={{ fontStyle: "italic" }}>
+          Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga
+          Journey Begins
+        </p>
+
+        </Row>
       {/* Search area*/}
       <Row
         style={{ marginTop: "2rem" }}

@@ -15,6 +15,15 @@ body {
   color: #331d2c;
 }
 
+.page-wrapper {
+  margin-top: 10rem;
+  padding: 0;
+}
+
+.title-large {
+  font-family: "Julius Sans One";
+}
+
 /**CSS Style for links in menu*/
 .menu-link {
   text-decoration: none;
@@ -54,4 +63,10 @@ body {
   background-color: #85586f !important;
   border-color: #efe1d1 !important;
   color: #efe1d1 !important;
+}
+
+@media screen and (max-width: 450px) {
+  .slogan {
+    font-size: 13px;
+  }
 }

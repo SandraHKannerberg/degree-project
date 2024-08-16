@@ -1,0 +1,32 @@
+.banner-container {
+  height: 100%;
+  width: 80vw;
+  display: flex;
+  background-color: #a78295;
+  padding: 0;
+}
+
+.banner-box {
+  width: 50%;
+  max-height: 100%;
+  object-fit: cover;
+  padding: 0;
+}
+
+.banner-text {
+  color: #f8ede3;
+  font-weight: lighter;
+}
+
+@media screen and (max-width: 850px) {
+  .banner-container {
+    flex-direction: column;
+    width: 95vw;
+  }
+
+  .banner-box {
+    width: 100%;
+    object-fit: cover;
+    padding: 0;
+  }
+}
