@@ -6,14 +6,27 @@
   height: 100%;
   width: 80vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 2rem;
   padding: 0;
   margin: 0;
 }
 
 .category-box {
-  height: 400px;
-  width: 400px;
+  height: 450px;
+  width: 450px;
   background-color: #a78295;
   padding: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .category-container {
+    width: 95vw;
+  }
+
+  .category-box {
+    height: 375px;
+    width: 375px;
+  }
 }

@@ -14,7 +14,7 @@ function ShopByCategory() {
 
   return (
     <Row className="shop-by-category-wrapper d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
-      <h5 className="text-center mb-3"> Shop by category</h5>
+      <h5 className="text-center mb-3 mt-5"> Shop by category</h5>
       <Row className="category-container">
         {categories.map((category) => (
           <div className="category-box d-flex justify-content-center align-items-center">
@@ -51,7 +51,7 @@ function ShopByCategory() {
         ))}
       </Row>
 
-      <Col className="d-flex justify-content-center mt-4">
+      <Col className="d-flex justify-content-center mt-4 mb-5">
         <NavLink className="menu-link" to="/shop">
           <Button
             size="lg"

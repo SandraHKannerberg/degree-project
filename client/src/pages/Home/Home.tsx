@@ -7,41 +7,19 @@ import Footer from "../../components/Footer/Footer";
 import ShopByCategory from "../../components/ShopByCategory/ShopByCategory";
 import BannerInspiration from "../../components/Banner/BannerInspiration";
 import BannerSubscribe from "../../components/Banner/BannerSubscribe";
-import BannerMember from "../../components/Banner/BannerMember";
+import BannerSignup from "../../components/Banner/BannerSignup";
 
 //Landingpage
 function Home() {
   return (
     <>
       <Header />
-      <Container
-        fluid
-        style={{
-          padding: 0,
-          marginTop: "10rem",
-        }}
-      >
-        <Row
-          style={{
-            flex: "display",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
+      <Container fluid className="page-wrapper">
+        <Row className="d-flex flex-column justify-content-center align-items-center text-center">
           <LogotypeLightColor></LogotypeLightColor>
-          <h1 style={{ textAlign: "center", fontFamily: "Julius Sans One" }}>
-            Lotus Harmony
-          </h1>
+          <h1 className="text-center title-large">Lotus Harmony</h1>
 
-          <p
-            style={{
-              textAlign: "center",
-              fontStyle: "italic",
-              marginBottom: "3rem",
-            }}
-          >
+          <p className="text-center fst-italic mb-5">
             Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga
             Journey Begins
           </p>
@@ -57,7 +35,7 @@ function Home() {
 
         <BannerInspiration></BannerInspiration>
         <BannerSubscribe></BannerSubscribe>
-        <BannerMember></BannerMember>
+        <BannerSignup></BannerSignup>
       </Container>
       <Footer></Footer>
     </>
