@@ -5,21 +5,19 @@ import { NavLink } from "react-router-dom";
 
 // Component for menu. Show the categories
 function Menu() {
-  const { categories, getAllCategories } = useProductContext();
+  const { loading, categories, getAllCategories } = useProductContext();
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   useEffect(() => {
     getAllCategories();
   }, []);
 
+  if (loading) {
+    return <div>Loading categories...</div>;
+  }
+
   const handleCloseOffcanvas = () => {
     setShowOffcanvas(false);
-  };
-
-  const categoryTexts: { [key: string]: string } = {
-    "1": "Yoga Tools",
-    "2": "Yoga Accessories",
-    "3": "Yoga Kit",
   };
 
   return (
@@ -68,33 +66,33 @@ function Menu() {
                   >
                     Shop
                   </NavLink>
+                  {loading ? (
+                    <div>Loading categories...</div>
+                  ) : (
+                    categories.map((category) => (
+                      <>
+                        <NavLink
+                          key={category._id}
+                          to={`/categories/${category._id}`}
+                          className="menu-link"
+                          onClick={handleCloseOffcanvas}
+                        >
+                          {category.title}
+                        </NavLink>
+                      </>
+                    ))
+                  )}
                   {/* {categories.map((category) => (
-                    <NavLink
-                      key={category._id}
-                      to={`/categories/${category._id}`}
-                      className="menu-link"
-                      onClick={handleCloseOffcanvas}
-                    >
-                      {category.title} || categoryTexts
-                    </NavLink>
-                  ))} */}
-
-                  {categories.map((category) => {
-                    const categoryId = category._id.toString();
-                    const linkText =
-                      categoryTexts[categoryId] || category.title;
-
-                    return (
+                    <React.Fragment key={category._id}>
                       <NavLink
-                        key={categoryId}
-                        to={`/categories/${categoryId}`}
+                        to={`/categories/${category._id}`}
                         className="menu-link"
                         onClick={handleCloseOffcanvas}
                       >
-                        {linkText}
+                        {category.title}
                       </NavLink>
-                    );
-                  })}
+                    </React.Fragment>
+                  ))} */}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
