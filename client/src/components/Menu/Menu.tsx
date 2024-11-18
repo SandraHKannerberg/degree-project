@@ -62,7 +62,7 @@ function Menu() {
                   >
                     Shop
                   </NavLink>
-                  {categories.map((category) => (
+                  {/* {categories.map((category) => (
                     <NavLink
                       key={category._id}
                       to={`/categories/${category._id}`}
@@ -71,7 +71,37 @@ function Menu() {
                     >
                       {category.title}
                     </NavLink>
+                  ))} */}
+                    {categories.map((category) => (
+                    <>
+                      <NavLink
+                      key={category._id}
+                      to={`/categories/${category._id}`}
+                      className="menu-link"
+                      onClick={handleCloseOffcanvas}
+                      >
+                      Yoga Tools
+                      </NavLink>
+                      <NavLink
+                      key={category._id}
+                      to={`/categories/${category._id}`}
+                      className="menu-link"
+                      onClick={handleCloseOffcanvas}
+                      >
+                      Yoga Accessories
+                      </NavLink>
+                      <NavLink
+                      key={category._id}
+                      to={`/categories/${category._id}`}
+                      className="menu-link"
+                      onClick={handleCloseOffcanvas}
+                      >
+                      Yoga Kit
+                      </NavLink>
+                      </>
+
                   ))}
+                  
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
