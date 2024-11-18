@@ -34,11 +34,12 @@ function ProductsCategory() {
     const getProductsByCategory = async () => {
       try {
         const responseFetchProducts = await fetch(
-          `${apiUrl}/api/products/byCategory/${id}`, {
-            method: 'GET',
+          `${apiUrl}/api/products/byCategory/${id}`,
+          {
+            method: "GET",
             headers: {
-              'Content-Type': 'application/json',
-            }, 
+              "Content-Type": "application/json",
+            },
           }
         );
 
@@ -66,9 +67,9 @@ function ProductsCategory() {
       try {
         const url = `${apiUrl}/api/categories/${id}`;
         const response = await fetch(url, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
         const data = await response.json();
@@ -83,9 +84,8 @@ function ProductsCategory() {
   }, [id]);
 
   if (loading) {
-    console.log("Loading...");
     return <Loader />;
-}
+  }
 
   return category ? (
     <>

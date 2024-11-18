@@ -17,9 +17,11 @@ function ShopByCategory() {
       <h5 className="text-center mb-3 mt-5"> Shop by category</h5>
       <Row className="category-container">
         {categories.map((category) => (
-          <div className="category-box d-flex justify-content-center align-items-center">
+          <div
+            key={category._id}
+            className="category-box d-flex justify-content-center align-items-center"
+          >
             <NavLink
-              key={category._id}
               to={`/categories/${category._id}`}
               className="menu-link d-flex flex-column"
             >

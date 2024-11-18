@@ -5,16 +5,12 @@ import { NavLink } from "react-router-dom";
 
 // Component for menu. Show the categories
 function Menu() {
-  const { loading, categories, getAllCategories } = useProductContext();
+  const { categories, getAllCategories } = useProductContext();
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   useEffect(() => {
     getAllCategories();
   }, []);
-
-  if (loading) {
-    return <div>Loading categories...</div>;
-  }
 
   const handleCloseOffcanvas = () => {
     setShowOffcanvas(false);
@@ -66,33 +62,16 @@ function Menu() {
                   >
                     Shop
                   </NavLink>
-                  {loading ? (
-                    <div>Loading categories...</div>
-                  ) : (
-                    categories.map((category) => (
-                      <>
-                        <NavLink
-                          key={category._id}
-                          to={`/categories/${category._id}`}
-                          className="menu-link"
-                          onClick={handleCloseOffcanvas}
-                        >
-                          {category.title}
-                        </NavLink>
-                      </>
-                    ))
-                  )}
-                  {/* {categories.map((category) => (
-                    <React.Fragment key={category._id}>
-                      <NavLink
-                        to={`/categories/${category._id}`}
-                        className="menu-link"
-                        onClick={handleCloseOffcanvas}
-                      >
-                        {category.title}
-                      </NavLink>
-                    </React.Fragment>
-                  ))} */}
+                  {categories.map((category) => (
+                    <NavLink
+                      key={category._id}
+                      to={`/categories/${category._id}`}
+                      className="menu-link"
+                      onClick={handleCloseOffcanvas}
+                    >
+                      {category.title}
+                    </NavLink>
+                  ))}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

@@ -122,28 +122,106 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const getAllCategories = async () => {
+    try {
+      console.log("Fetching categories...");
+
+      // Get from localStorage
+      const cachedCategories = localStorage.getItem("categories");
+
+      if (cachedCategories) {
+        console.log("Loaded from cache:", JSON.parse(cachedCategories));
+        setCategories(JSON.parse(cachedCategories));
+        return;
+      }
+
+      const responseFetchCategories = await fetch(`${apiUrl}/api/categories`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!responseFetchCategories.ok) {
+        const errorText = await responseFetchCategories.text();
+        throw new Error(
+          `Failed to fetch categories. Server response: ${errorText}`
+        );
+      }
+
+      const categoriesData = await responseFetchCategories.json();
+      console.log("Fetched from API:", categoriesData);
+
+      // Save to localStorage
+      localStorage.setItem("categories", JSON.stringify(categoriesData));
+
+      setCategories(categoriesData);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  };
+
+  // const getAllCategories = useCallback(async () => {
+  //   setLoading(true);
+  //   try {
+  //     const cachedCategories = localStorage.getItem(`${apiUrl}/api/categories`);
+
+  //     if (cachedCategories) {
+  //       setCategories(JSON.parse(cachedCategories));
+  //       return;
+  //     }
+
+  //     const responseFetchCategories = await fetch(`${apiUrl}/api/categories`, {
+  //       method: "GET",
+  //       headers: { "Content-Type": "application/json" },
+  //     });
+
+  //     if (!responseFetchCategories.ok) {
+  //       const errorText = await responseFetchCategories.text();
+  //       throw new Error(
+  //         `Failed to fetch categories. Server response: ${errorText}`
+  //       );
+  //     }
+
+  //     const categoriesData = await responseFetchCategories.json();
+
+  //     localStorage.setItem("categories", JSON.stringify(categoriesData));
+
+  //     setCategories(categoriesData);
+  //   } catch (err) {
+  //     console.error(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   getAllCategories();
+  // }, []);
+
   //Get all products
   const getAllProducts = useCallback(async () => {
     try {
-        const responseFetchProducts = await fetch(`${apiUrl}/api/products`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+      const responseFetchProducts = await fetch(`${apiUrl}/api/products`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (!responseFetchProducts.ok) {
-            throw new Error("Failed to fetch products");
-        }
+      if (!responseFetchProducts.ok) {
+        throw new Error("Failed to fetch products");
+      }
 
-        const products = await responseFetchProducts.json();
-        setProducts(products);
+      const products = await responseFetchProducts.json();
+      setProducts(products);
     } catch (err) {
-        console.log(err);
+      console.log(err);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-}, []);
+  }, []);
+
   // const getAllProducts = async () => {
 
   //   try {
@@ -171,43 +249,43 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   // };
 
   //Get all categories in the shop and save them in localStorage to sustainably save category-data at refresh
-  const getAllCategories = useCallback(async () => {
-    try {
-        // Get categories from localStorage (cached data)
-        const cachedCategories = localStorage.getItem(`${apiUrl}/api/categories`);
+  //   const getAllCategories = useCallback(async () => {
+  //     try {
+  //         // Get categories from localStorage (cached data)
+  //         const cachedCategories = localStorage.getItem(`${apiUrl}/api/categories`);
 
-        // If there is cached data, set it to state and return
-        if (cachedCategories) {
-            setCategories(JSON.parse(cachedCategories));
-            setLoading(false); // Ensure loading is set to false if cached data is used
-            return;
-        }
+  //         // If there is cached data, set it to state and return
+  //         if (cachedCategories) {
+  //             setCategories(JSON.parse(cachedCategories));
+  //             setLoading(false); // Ensure loading is set to false if cached data is used
+  //             return;
+  //         }
 
-        const responseFetchCategories = await fetch(`${apiUrl}/api/categories`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+  //         const responseFetchCategories = await fetch(`${apiUrl}/api/categories`, {
+  //             method: 'GET',
+  //             headers: {
+  //                 'Content-Type': 'application/json',
+  //             },
+  //         });
 
-        // Check response status
-        if (!responseFetchCategories.ok) {
-            const errorText = await responseFetchCategories.text();
-            throw new Error(`Failed to fetch categories. Server response: ${errorText}`);
-        }
+  //         // Check response status
+  //         if (!responseFetchCategories.ok) {
+  //             const errorText = await responseFetchCategories.text();
+  //             throw new Error(`Failed to fetch categories. Server response: ${errorText}`);
+  //         }
 
-        const categoriesData = await responseFetchCategories.json();
+  //         const categoriesData = await responseFetchCategories.json();
 
-        // Save categories in localStorage
-        localStorage.setItem("categories", JSON.stringify(categoriesData));
+  //         // Save categories in localStorage
+  //         localStorage.setItem("categories", JSON.stringify(categoriesData));
 
-        setCategories(categoriesData);
-    } catch (err) {
-        console.log(err);
-    } finally {
-        setLoading(false); // Ensure loading is set to false in both success and error cases
-    }
-}, []);
+  //         setCategories(categoriesData);
+  //     } catch (err) {
+  //         console.log(err);
+  //     } finally {
+  //         setLoading(false); // Ensure loading is set to false in both success and error cases
+  //     }
+  // }, []);
   // const getAllCategories = async () => {
   //   try {
   //     // Get categories from localStorage (cached data)
@@ -254,7 +332,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
   // Function to delete a product in the database from the Admin panel
   const deleteProductFromDatabase = (id: string) => {
     const url = `${apiUrl}/api/products/` + id;
-    fetch(url, { method: "DELETE",  credentials: 'include' })
+    fetch(url, { method: "DELETE", credentials: "include" })
       .then((response) => {
         if (!response) {
           throw new Error(
@@ -300,7 +378,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         success,
         setSuccess,
         loading,
-        setLoading
+        setLoading,
       }}
     >
       {children}
