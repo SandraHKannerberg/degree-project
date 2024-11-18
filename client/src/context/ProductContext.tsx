@@ -128,7 +128,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
       const cachedCategories = localStorage.getItem("categories");
 
       if (cachedCategories) {
-        console.log("Loaded from cache:", JSON.parse(cachedCategories));
         setCategories(JSON.parse(cachedCategories));
         return;
       }
