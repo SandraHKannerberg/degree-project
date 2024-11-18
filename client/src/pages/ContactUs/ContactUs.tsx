@@ -23,7 +23,7 @@ function ContactUs() {
           <Col className="d-flex flex-column justify-content-center align-items-center p-0 mt-4">
             <p>Street 1, 123 45 CITY</p>
             <p>073- 123 45 67</p>
-            <p>mail@lotusharmony.com</p>
+            <p>mail@emailaddress.com</p>
           </Col>
         </Row>
       </Container>
