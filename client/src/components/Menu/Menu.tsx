@@ -16,6 +16,12 @@ function Menu() {
     setShowOffcanvas(false);
   };
 
+  const categoryTexts: { [key: string]: string } = {
+    "1": "Yoga Tools",
+    "2": "Yoga Accessories",
+    "3": "Yoga Kit",
+  };
+
   return (
     <>
       {["md"].map((expand, index) => (
@@ -69,39 +75,26 @@ function Menu() {
                       className="menu-link"
                       onClick={handleCloseOffcanvas}
                     >
-                      {category.title}
+                      {category.title} || categoryTexts
                     </NavLink>
                   ))} */}
-                    {categories.map((category) => (
-                    <>
-                      <NavLink
-                      key={category._id}
-                      to={`/categories/${category._id}`}
-                      className="menu-link"
-                      onClick={handleCloseOffcanvas}
-                      >
-                      Yoga Tools
-                      </NavLink>
-                      <NavLink
-                      key={category._id}
-                      to={`/categories/${category._id}`}
-                      className="menu-link"
-                      onClick={handleCloseOffcanvas}
-                      >
-                      Yoga Accessories
-                      </NavLink>
-                      <NavLink
-                      key={category._id}
-                      to={`/categories/${category._id}`}
-                      className="menu-link"
-                      onClick={handleCloseOffcanvas}
-                      >
-                      Yoga Kit
-                      </NavLink>
-                      </>
 
-                  ))}
-                  
+                  {categories.map((category) => {
+                    const categoryId = category._id.toString();
+                    const linkText =
+                      categoryTexts[categoryId] || category.title;
+
+                    return (
+                      <NavLink
+                        key={categoryId}
+                        to={`/categories/${categoryId}`}
+                        className="menu-link"
+                        onClick={handleCloseOffcanvas}
+                      >
+                        {linkText}
+                      </NavLink>
+                    );
+                  })}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
