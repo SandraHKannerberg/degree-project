@@ -1,7 +1,12 @@
 import { Button, Col, Tab, Tabs, Toast, ToastContainer } from "react-bootstrap";
 import { useUserContext } from "../../context/UserContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { Person, PersonFillCheck, PersonFillGear } from "react-bootstrap-icons";
+import {
+  BoxArrowRight,
+  Person,
+  PersonFillCheck,
+  PersonFillGear,
+} from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import LogInForm from "../LogInForm/LogInForm";
 import { Link, useNavigate } from "react-router-dom";
@@ -56,51 +61,28 @@ function LogInOffcanvas() {
       {loggedInUser && !loggedInUser?.isAdmin ? (
         <Col>
           <Button
-            className="zoom-effect"
-            style={{ background: "none", border: "none" }}
+            className="zoom-effect border-0"
+            style={{ background: "none" }}
+            aria-label="Log out button"
           >
-            <Link
-              to="/loggedin"
-              className="menu-link"
-              style={{
-                color: "#EFE1D1",
-              }}
-            >
-              <PersonFillCheck
-                style={{
-                  border: "none",
-                  borderRadius: 0,
-                  color: "#EFE1D1",
-                  fontSize: "2rem",
-                }}
-              />
+            <Link to="/loggedin" className="text-white">
+              <PersonFillCheck className="border-0 rounded-0 fs-3" />
             </Link>
           </Button>
         </Col>
       ) : null}
 
-      {/* When logged in as admin - show filled Person icon with a gear. */}
+      {/* When logged in as admin - show filled Person icon with a gear. Link to startpage for admin */}
       {loggedInUser?.isAdmin ? (
         <Col>
           <Button
             className="zoom-effect"
             style={{ background: "none", border: "none" }}
+            aria-label="Log out button for admin"
           >
-            <Link
-              to="/admin"
-              className="menu-link"
-              style={{
-                color: "#EFE1D1",
-              }}
-            >
-              <PersonFillGear
-                style={{
-                  border: "none",
-                  borderRadius: 0,
-                  color: "#EFE1D1",
-                  fontSize: "2rem",
-                }}
-              />
+            <Link to="/admin" className="text-white text-decoration-none">
+              <PersonFillGear className="fs-3 border-0 rounded-0" />
+              Dashboard
             </Link>
           </Button>
         </Col>
@@ -109,55 +91,31 @@ function LogInOffcanvas() {
       {/* Not logged in - show a person outlined icon. This icon handle open OffCanvas for login / signup */}
       {!loggedInUser ? (
         <Button
-          className="zoom-effect"
-          style={{ background: "none", border: "none" }}
+          className="zoom-effect border-0 rounded-0"
+          style={{ background: "none" }}
           onClick={handleShow}
+          aria-label="Log in button"
         >
-          <Person
-            style={{
-              border: "none",
-              borderRadius: 0,
-              color: "#EFE1D1",
-              fontSize: "2rem",
-            }}
-          />
+          <Person className="fs-3" />
         </Button>
       ) : (
+        // Log out - icon button
         <Button
-          style={{
-            backgroundColor: "#A78295",
-            border: "none",
-            borderRadius: 0,
-            color: "#EFE1D1",
-            fontWeight: 500,
-          }}
-          className="shadow zoom-effect"
+          className="zoom-effect border-0"
+          style={{ background: "none" }}
           onClick={handleLogout}
+          aria-label="Log out button"
         >
-          Log Out
+          <BoxArrowRight className="fs-3" />
         </Button>
       )}
 
       {/* Offcanvas with login-form or signup-form to register new user depending if you want to log in or sign up */}
-      <Offcanvas
-        show={show}
-        onHide={handleClose}
-        style={{
-          backgroundColor: "#A78295",
-          color: "#EFE1D1",
-          padding: 0,
-        }}
-      >
-        <Offcanvas.Header     
-        style={{
-          backgroundColor: "#85586f",
-          color: "#EFE1D1",
-          display: "flex",
-          justifyContent: "flex-end"
-        }} 
-        closeButton
-        >
-        </Offcanvas.Header>
+      <Offcanvas show={show} onHide={handleClose} className="bg-light-clr p-0">
+        <Offcanvas.Header
+          className="bg-accent-clr d-flex justify-content-end"
+          closeButton
+        ></Offcanvas.Header>
         <Offcanvas.Body className="p-0 d-flex flex-column align-items-center">
           {/* Menu (tabs) to choose Log In or Sign Up */}
           <Tabs
@@ -166,24 +124,15 @@ function LogInOffcanvas() {
             style={{
               borderBottom: "1px solid #fff",
               backgroundColor: "#85586f",
-              border: "none",
             }}
-            className="w-100 pt-4 px-4 mb-0"
+            className="w-100 pt-4 px-4 mb-0 border-0"
             fill
           >
-            <Tab
-              eventKey="signup"
-              title={<div className="tab-label bg-custom-tab">Sign Up</div>}
-              className="mb-0 login-tab"
-            >
+            <Tab eventKey="signup" title={<div>Sign Up</div>} className="mb-0">
               {/* Import the SignUpForm to be able to register a new user */}
               <SignUpForm />
             </Tab>
-            <Tab
-              eventKey="login"
-              title={<div className="tab-label bg-custom-tab">Log In</div>}
-              className="mt-0 login-tab"
-            >
+            <Tab eventKey="login" title={<div>Log In</div>} className="mt-0">
               {/* Import the LogInForm to be able to log in */}
               <LogInForm />
             </Tab>

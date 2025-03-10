@@ -25,8 +25,10 @@ function Header() {
             xs={6}
             className="d-flex justify-content-end align-items-center p-0"
           >
-            <LogInOffcanvas />
-            <ShoppingCart />
+            <div className="d-flex gap-3 align-items-center">
+              <LogInOffcanvas />
+              <ShoppingCart />
+            </div>
           </Col>
         </Row>
       </Container>

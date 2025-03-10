@@ -2,8 +2,9 @@ import { useUserContext, UserType } from "../../context/UserContext";
 import { Envelope, Key } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import Logotype from "../Logotype/Logotype";
+
 import { useNavigate } from "react-router-dom";
+import LogotypeLightColor from "../Logotype/LogotypeLightColor";
 
 //Component with the log in form to be able to log in.
 function LogInForm() {
@@ -88,29 +89,20 @@ function LogInForm() {
         </>
       ) : (
         // If not already logged in - show log in form. Yog log in with e-mail and password
-        <Container className="h-100 mt-0 p-3">
+        <Container className="h-100 mt-0 p-3 d-flex flex-column">
           <Row>
             <Col className="d-flex justify-content-center mt-3">
-              <Logotype />
+              <LogotypeLightColor></LogotypeLightColor>
             </Col>
-            <h2
-              style={{
-                color: "#EFE1D1",
-                fontFamily: "Julius Sans One",
-                textShadow: "1px 1px 2px pink",
-              }}
-              className="text-center"
-            >
-              Club Lotus Harmony
-            </h2>
+            <h2 className="text-center title-font">Club Lotus Harmony</h2>
           </Row>
 
-          <h6 className="text-center my-3">
+          <p className="text-center my-3">
             Enter e-mail and password to log in
-          </h6>
+          </p>
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="email"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -122,18 +114,16 @@ function LogInForm() {
             <Form.Control
               placeholder="E-mail"
               aria-label="E-mail"
-              aria-describedby="basic-addon1"
+              aria-describedby="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={`customize-input ${
-                emailError || errorLogin ? "error-border" : ""
-              }`}
+              className={`${emailError || errorLogin ? "error-border" : ""}`}
             />
           </InputGroup>
           <InputGroup className="mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="password"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -145,14 +135,12 @@ function LogInForm() {
             <Form.Control
               placeholder="Password"
               aria-label="Password"
-              aria-describedby="basic-addon1"
+              aria-describedby="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className={`customize-input ${
-                passwordError || errorLogin ? "error-border" : ""
-              }`}
+              className={`${passwordError || errorLogin ? "error-border" : ""}`}
             />
           </InputGroup>
 
@@ -172,23 +160,15 @@ function LogInForm() {
             </span>
           )}
 
-          <Row className="mx-1">
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#3F2E3E",
-                border: "none",
-                borderRadius: 0,
-                color: "#EFE1D1",
-                fontWeight: 500,
-              }}
-              className="shadow"
-              onClick={handleLogin}
-              onKeyDown={handleKeyPress}
-            >
-              Log In
-            </Button>
-          </Row>
+          <Button
+            variant="dark"
+            type="submit"
+            className="shadow border-0 rounded-0"
+            onClick={handleLogin}
+            onKeyDown={handleKeyPress}
+          >
+            Log In
+          </Button>
         </Container>
       )}
     </>

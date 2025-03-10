@@ -3,6 +3,7 @@ import { useCartContext } from "../../context/CartContext";
 import CheckoutBtn from "../CheckoutBtn/CheckoutBtn";
 import { Trash, Plus, Dash } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
+import "./CartItems.css";
 
 // Component to show content (cart items) in the shoppingcart
 function CartItems() {
@@ -33,15 +34,7 @@ function CartItems() {
             <li key={index}>
               <Row className="d-flex justify-content-between align-items-center my-2 p-0 mx-0">
                 <Col className="m-0 p-0">
-                  <img
-                    src={cartItem.image}
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      objectFit: "cover",
-                      border: "1px solid #331D2C",
-                    }}
-                  />
+                  <img alt="" src={cartItem.image} className="mini-img" />
                 </Col>
                 <Col xs={5} className="font-size-xs">
                   {cartItem.name}
@@ -65,6 +58,7 @@ function CartItems() {
                       )
                     }
                     className="fs-5"
+                    aria-label="Increase quantity"
                   >
                     <Plus />
                   </Button>
@@ -75,6 +69,7 @@ function CartItems() {
                     size="sm"
                     onClick={() => decreaseCartQuantity(cartItem.id)}
                     className="fs-5"
+                    aria-label="Decrease quantity"
                   >
                     <Dash />
                   </Button>
@@ -85,6 +80,7 @@ function CartItems() {
                     size="sm"
                     onClick={() => removeFromCart(cartItem.id)}
                     className="fs-5"
+                    aria-label="Delete product from cart"
                   >
                     <Trash />
                   </Button>
@@ -98,9 +94,9 @@ function CartItems() {
       {/* Totalprice for cart items. (Shippingcost adds in the checkout from Stripe. Dont't show totalprice if shoppingcart is empty */}
       {cartItems.length > 0 && (
         <Row className="mt-5 mb-3" style={{ borderTop: "2px solid #EFE1D1" }}>
-          <h5 className="mt-2 d-flex justify-content-end">
+          <p className="mt-2 d-flex justify-content-end fs-5 fw-semibold">
             TOTAL --- {totalPrice} SEK
-          </h5>
+          </p>
         </Row>
       )}
 

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 // Subscribe-section and socialmedia-icons are just for show
 function Footer() {
   return (
-    <footer className="w-100 shadow bg-light-clr-gradient py-3">
+    <footer className="w-100 shadow bg-light-clr-gradient py-3 mt-4">
       <Container>
         {/* Company Name */}
         <Row className="text-center mt-2 pt-3">
@@ -53,20 +53,14 @@ function Footer() {
         <Row className="d-flex justify-content-around text-center mb-3">
           <Col>
             <h4>
-              <Link
-                to="/about"
-                className="menu-link fs-5 text-dark text-decoration-none"
-              >
+              <Link to="/about" className="menu-link fs-5">
                 About us
               </Link>
             </h4>
           </Col>
           <Col>
             <h4>
-              <Link
-                to="/contact"
-                className="menu-link fs-5 text-dark text-decoration-none"
-              >
+              <Link to="/contact" className="menu-link fs-5">
                 Contact us
               </Link>
             </h4>

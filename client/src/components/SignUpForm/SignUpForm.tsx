@@ -2,7 +2,7 @@ import { useUserContext, NewUserType } from "../../context/UserContext";
 import { Person, Envelope, Key } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import Logotype from "../Logotype/Logotype";
+import LogotypeLightColor from "../Logotype/LogotypeLightColor";
 
 //Component with the form to sign up as a new user
 function SignUpForm() {
@@ -127,7 +127,7 @@ function SignUpForm() {
   };
 
   return (
-    <Container className="h-100 mt-0 p-3">
+    <Container className="h-100 mt-0 p-3 d-flex flex-column">
       {/* If registration success show Welcome text here */}
       {successInfo ? (
         <h5
@@ -140,28 +140,18 @@ function SignUpForm() {
         <>
           <Row>
             <Col className="d-flex justify-content-center mt-3">
-              <Logotype />
+              <LogotypeLightColor></LogotypeLightColor>
             </Col>
-            <h2
-              style={{
-                color: "#EFE1D1",
-                fontFamily: "Julius Sans One",
-                textShadow: "1px 1px 2px pink",
-              }}
-              className="text-center"
-            >
-              Club Lotus Harmony
-            </h2>
-
-            <span className="text-center my-3">
+            <h2 className="text-center title-font">Club Lotus Harmony</h2>
+            <p className="text-center my-3">
               Sign Up today and take advantage of our amazing offers.
-            </span>
+            </p>
           </Row>
 
           {/* Input to enter firstname */}
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="firstname"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -173,7 +163,7 @@ function SignUpForm() {
             <Form.Control
               placeholder="Firstname"
               aria-label="Firstname"
-              aria-describedby="basic-addon1"
+              aria-describedby="firstname"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
@@ -184,7 +174,7 @@ function SignUpForm() {
           {/* Input to enter lastname */}
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="lastname"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -196,7 +186,7 @@ function SignUpForm() {
             <Form.Control
               placeholder="Lastname"
               aria-label="Lastname"
-              aria-describedby="basic-addon1"
+              aria-describedby="lastname"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
@@ -207,7 +197,7 @@ function SignUpForm() {
           {/* Input to enter email */}
           <InputGroup className="mt-2 mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="email"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -219,7 +209,7 @@ function SignUpForm() {
             <Form.Control
               placeholder="E-mail"
               aria-label="E-mail"
-              aria-describedby="basic-addon1"
+              aria-describedby="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -232,7 +222,7 @@ function SignUpForm() {
           {/* Input to choose password */}
           <InputGroup className="mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="password"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -244,7 +234,7 @@ function SignUpForm() {
             <Form.Control
               placeholder="Password"
               aria-label="Password"
-              aria-describedby="basic-addon1"
+              aria-describedby="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -256,7 +246,7 @@ function SignUpForm() {
           </InputGroup>
           <InputGroup className="mb-3">
             <InputGroup.Text
-              id="basic-addon1"
+              id="confirm-password"
               style={{
                 backgroundColor: "#3F2E3E",
                 color: "#EFE1D1",
@@ -270,7 +260,7 @@ function SignUpForm() {
             <Form.Control
               placeholder="Confirm Password"
               aria-label="Confirm Password"
-              aria-describedby="basic-addon1"
+              aria-describedby="confirm-password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -337,23 +327,16 @@ function SignUpForm() {
           )}
 
           {/* Button to Submit the registration */}
-          <Row className="mx-1">
-            <Button
-              type="submit"
-              style={{
-                backgroundColor: "#3F2E3E",
-                color: "#EFE1D1",
-                border: "none",
-                borderRadius: 0,
-                fontWeight: 500,
-              }}
-              className="shadow zoom-effect"
-              onClick={handleRegistrationNewUser}
-              onKeyDown={handleKeyPress}
-            >
-              Submit
-            </Button>
-          </Row>
+
+          <Button
+            variant="dark"
+            type="submit"
+            className="shadow border-0 rounded-0 w-full"
+            onClick={handleRegistrationNewUser}
+            onKeyDown={handleKeyPress}
+          >
+            Submit
+          </Button>
         </>
       )}
     </Container>

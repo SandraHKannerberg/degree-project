@@ -12,14 +12,7 @@ function AddToCartBtn({ product }: ProductProps) {
 
   return (
     <Button
-      className="shadow zoom-effect"
-      style={{
-        backgroundColor: "#85586f",
-        border: "none",
-        borderRadius: 0,
-        color: "#EFE1D1",
-        fontWeight: 500,
-      }}
+      className="shadow zoom-effect bg-dark border-0 rounded-0"
       onClick={() =>
         addToCart(product._id, product.title, product.price, product.image)
       }
