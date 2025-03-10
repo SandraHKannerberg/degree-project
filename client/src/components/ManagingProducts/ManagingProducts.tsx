@@ -131,7 +131,7 @@ function ManagingProducts() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(requestBody),
-      credentials: 'include'
+      credentials: "include",
     })
       .then((response) => {
         if (!response || response.status === 400) {

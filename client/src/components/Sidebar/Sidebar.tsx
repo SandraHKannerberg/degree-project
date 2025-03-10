@@ -21,102 +21,24 @@ function Sidebar() {
             </Link>
           </Row>
           <Row className="mx-1">
-            {loggedInUser.isAdmin ? (
-              <p>Welcome to adminpanel</p>
-            ) : (
-              <p>{loggedInUser.email}</p>
-            )}
+            <p>{loggedInUser.email}</p>
           </Row>
           <Row className="mb-2 mx-1">
-            {/* Logged in as admin */}
-            {loggedInUser.isAdmin ? (
-              <Row className="d-flex align-items-center justify-content-center gap-2">
-                <Col lg={12}>
-                  <Link
-                    to={"/admin/orders"}
-                    style={{ padding: 0, textDecoration: "none" }}
-                  >
-                    <Row>
-                      <Button
-                        style={{
-                          backgroundColor: "#A78295",
-                          border: "none",
-                          borderRadius: 0,
-                          color: "#EFE1D1",
-                          fontWeight: 500,
-                          width: "100%",
-                        }}
-                        className="shadow zoom-effect"
-                      >
-                        Managing Orders
-                      </Button>
-                    </Row>
-                  </Link>
-                </Col>
-
-                <Col lg={12}>
-                  <Link
-                    to={"/admin/products"}
-                    style={{ padding: 0, textDecoration: "none" }}
-                  >
-                    <Row>
-                      <Button
-                        style={{
-                          backgroundColor: "#A78295",
-                          border: "none",
-                          borderRadius: 0,
-                          color: "#EFE1D1",
-                          fontWeight: 500,
-                        }}
-                        className="shadow zoom-effect"
-                      >
-                        Managing Products
-                      </Button>
-                    </Row>
-                  </Link>
-                </Col>
-
-                <Col lg={12}>
-                  <Link
-                    to={"/admin/addproduct"}
-                    style={{ padding: 0, textDecoration: "none" }}
-                  >
-                    <Row>
-                      <Button
-                        style={{
-                          backgroundColor: "#A78295",
-                          border: "none",
-                          borderRadius: 0,
-                          color: "#EFE1D1",
-                          fontWeight: 500,
-                          width: "100%",
-                        }}
-                        className="shadow zoom-effect"
-                      >
-                        Add new product
-                      </Button>
-                    </Row>
-                  </Link>
-                </Col>
-              </Row>
-            ) : (
-              // Logged in as regular user
-              <Link to={"/loggedin/orders"} style={{ padding: 0 }}>
-                <Button
-                  style={{
-                    backgroundColor: "#A78295",
-                    border: "none",
-                    borderRadius: 0,
-                    color: "#EFE1D1",
-                    fontWeight: 500,
-                    width: "100%",
-                  }}
-                  className="shadow zoom-effect"
-                >
-                  My Orders
-                </Button>
-              </Link>
-            )}
+            <Link to={"/loggedin/orders"} style={{ padding: 0 }}>
+              <Button
+                style={{
+                  backgroundColor: "#A78295",
+                  border: "none",
+                  borderRadius: 0,
+                  color: "#EFE1D1",
+                  fontWeight: 500,
+                  width: "100%",
+                }}
+                className="shadow zoom-effect"
+              >
+                My Orders
+              </Button>
+            </Link>
           </Row>
         </Col>
       ) : null}
