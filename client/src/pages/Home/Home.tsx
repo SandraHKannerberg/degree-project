@@ -16,8 +16,8 @@ function Home() {
       <Header />
       <Container fluid className="page-wrapper">
         <Row className="d-flex flex-column justify-content-center align-items-center text-center">
-          <LogotypeLightColor></LogotypeLightColor>
-          <h1 className="text-center title-large">Lotus Harmony</h1>
+          <LogotypeLightColor />
+          <h1 className="text-center title-font">Lotus Harmony</h1>
 
           <p className="text-center fst-italic mb-5">
             Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga
@@ -37,7 +37,7 @@ function Home() {
         <BannerSubscribe></BannerSubscribe>
         <BannerSignup></BannerSignup>
       </Container>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }

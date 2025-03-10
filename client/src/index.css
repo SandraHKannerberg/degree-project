@@ -9,10 +9,32 @@
   box-sizing: border-box;
 }
 
+[role="list"] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #f8ede3;
   font-family: "Quicksand", sans-serif;
   color: #331d2c;
+}
+
+.bg-accent-clr {
+  background-color: #85586f;
+}
+
+.bg-light-clr {
+  background-color: #f8ede3;
+}
+
+.bg-light-clr-gradient {
+  background: linear-gradient(
+    0deg,
+    rgba(223, 211, 195, 1) 0%,
+    rgba(239, 225, 209, 1) 100%
+  );
 }
 
 .page-wrapper {
@@ -20,8 +42,12 @@ body {
   padding: 0;
 }
 
-.title-large {
+.title-font {
   font-family: "Julius Sans One";
+}
+
+.font-size-xs {
+  font-size: 14px;
 }
 
 /**CSS Style for links in menu*/

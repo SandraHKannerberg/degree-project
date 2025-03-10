@@ -19,16 +19,15 @@ function ShoppingCart() {
       {/* Shoppingcarticon */}
       <Button
         onClick={handleShow}
-        style={{ background: "none", border: "none" }}
-        className="zoom-effect"
+        style={{ background: "none" }}
+        className="zoom-effect border-0 hover:bg-danger"
+        aria-label="shopping-cart"
       >
         <Cart
-          style={{
-            border: "none",
-            borderRadius: 0,
-            color: "#EFE1D1",
-            fontSize: "2rem",
-          }}
+          className="fs-3"
+          // style={{
+          //   color: "#EFE1D1",
+          // }}
         ></Cart>
         {/* Badge to show totalt items in cart */}
         <Badge
@@ -50,26 +49,26 @@ function ShoppingCart() {
         show={show}
         onHide={handleClose}
         placement="end"
-        className="w-90 w-md-100"
-        style={{ color: "#331D2C", backgroundColor: "#f8ede3" }}
+        className="w-90 w-md-100 text-dark bg-light-clr"
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>ShoppingCart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <p>
-  {cartTotalQuantity === 0 ? (
-    "Your shopping cart is empty"
-  ) : (
-    <>
-      You have{" "}
-      <span style={{ fontWeight: "bold" }}>
-        {cartTotalQuantity} {cartTotalQuantity === 1 ? "item" : "items"}
-      </span>{" "}
-      in your shopping cart
-    </>
-  )}
-</p>
+            {cartTotalQuantity === 0 ? (
+              "Your shopping cart is empty"
+            ) : (
+              <>
+                You have{" "}
+                <span style={{ fontWeight: "bold" }}>
+                  {cartTotalQuantity}{" "}
+                  {cartTotalQuantity === 1 ? "item" : "items"}
+                </span>{" "}
+                in your shopping cart
+              </>
+            )}
+          </p>
           <CartItems></CartItems>
         </Offcanvas.Body>
       </Offcanvas>

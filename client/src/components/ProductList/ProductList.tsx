@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Product, useProductContext } from "../../context/ProductContext";
-import { Col, Container, Pagination, Row } from "react-bootstrap";
+import { Col, Pagination, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import ProductCard from "../ProductCard/ProductCard";
 import Loader from "../Loader/Loader";
@@ -41,37 +41,13 @@ function ProductList() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   if (loading) {
-    console.log('Loading....')
     return <Loader />;
-}
+  }
 
   return (
-    <Container fluid style={{ padding: 0, marginTop: "10rem" }}>
-      <Row className="p-3"    style={{
-                flex: "display",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100vw",
-                textAlign: "center",
-              }}>
-        <h1  className="mt-3"
-            style={{ fontFamily: "Julius Sans One" }}
-          >
-            Lotus Harmony
-        </h1>
-   
-        <p className="slogan" style={{ fontStyle: "italic" }}>
-          Find Your Zen, Embrace the Harmony - Lotus Harmony, Where Your Yoga
-          Journey Begins
-        </p>
-
-        </Row>
+    <>
       {/* Search area*/}
-      <Row
-        style={{ marginTop: "2rem" }}
-        className="d-flex justify-content-center"
-      >
+      <Row className="d-flex justify-content-center mt-4">
         <Col
           xs={10}
           sm={8}
@@ -110,7 +86,7 @@ function ProductList() {
         sm={2}
         md={3}
         lg={4}
-        className="d-flex justify-content-center px-4 gy-4 mt-2 flex-wrap"
+        className="d-flex justify-content-center px-4 gy-4 flex-wrap my-4"
       >
         {currentProducts.map((product, index) => (
           <Col key={index} className="mb-3">
@@ -135,7 +111,7 @@ function ProductList() {
           )
         )}
       </Pagination>
-    </Container>
+    </>
   );
 }
 

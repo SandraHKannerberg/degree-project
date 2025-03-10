@@ -32,14 +32,11 @@ function ProductCard({ product }: ProductProps) {
   return (
     <Card className="h-100 shadow">
       <Link to={`/product/${product._id}`} key={product._id}>
-        <Card.Img variant="top" src={product.image} />
+        <Card.Img variant="top" src={product.image} alt="" />
       </Link>
       <Card.Body className="d-flex flex-column">
-        <Card.Title
-          className="flex-grow-1"
-          style={{ fontSize: "18px", textTransform: "uppercase" }}
-        >
-          {product.title}
+        <Card.Title className="flex-grow-1">
+          <h2 className="text-uppercase fs-5">{product.title}</h2>
         </Card.Title>
         <Card.Text className="flex-grow-1 mb-0">{product.brand}</Card.Text>
         <Card.Text className="d-flex justify-content-end">
@@ -47,9 +44,7 @@ function ProductCard({ product }: ProductProps) {
         </Card.Text>
         <Row className="justify-content-between">
           <Col xs={6}>
-            <Card.Text style={{ fontSize: "12px" }}>
-              {inStockStatus(product.inStock)}
-            </Card.Text>
+            <Card.Text>{inStockStatus(product.inStock)}</Card.Text>
           </Col>
 
           {/* Don't show AddToCart-button if inStock status are red. Then show a infotext */}
