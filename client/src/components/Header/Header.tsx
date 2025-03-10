@@ -15,9 +15,7 @@ function Header() {
         <Row className="m-0 align-items-center">
           {/* Logotype */}
           <Col xs={6} className="p-0">
-            <a href="/" aria-label="Homepage">
-              <Logotype />
-            </a>
+            <Logotype />
           </Col>
 
           {/* Icons (Login and Cart) */}

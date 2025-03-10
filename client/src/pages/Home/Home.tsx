@@ -30,12 +30,6 @@ function Home() {
             Your browser does not support the video tag.
           </video>
         </Row>
-
-        <ShopByCategory></ShopByCategory>
-
-        <BannerInspiration></BannerInspiration>
-        <BannerSubscribe></BannerSubscribe>
-        <BannerSignup></BannerSignup>
       </Container>
       <Footer />
     </>

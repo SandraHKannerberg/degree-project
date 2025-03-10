@@ -11,7 +11,7 @@ function Footer() {
         {/* Company Name */}
         <Row className="text-center mt-2 pt-3">
           <Col>
-            <h3
+            <h2
               style={{
                 color: "#331d2c",
                 fontFamily: "Julius Sans One",
@@ -19,7 +19,7 @@ function Footer() {
               }}
             >
               Lotus Harmony
-            </h3>
+            </h2>
           </Col>
         </Row>
 
@@ -52,18 +52,14 @@ function Footer() {
         {/* Links */}
         <Row className="d-flex justify-content-around text-center mb-3">
           <Col>
-            <h4>
-              <Link to="/about" className="menu-link fs-5">
-                About us
-              </Link>
-            </h4>
+            <Link to="/about" className="menu-link fs-5">
+              About us
+            </Link>
           </Col>
           <Col>
-            <h4>
-              <Link to="/contact" className="menu-link fs-5">
-                Contact us
-              </Link>
-            </h4>
+            <Link to="/contact" className="menu-link fs-5">
+              Contact us
+            </Link>
           </Col>
         </Row>
 
