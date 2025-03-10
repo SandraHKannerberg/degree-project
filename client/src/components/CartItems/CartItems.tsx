@@ -1,7 +1,7 @@
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import { useCartContext } from "../../context/CartContext";
 import CheckoutBtn from "../CheckoutBtn/CheckoutBtn";
-import { Trash, PlusCircle, DashCircle } from "react-bootstrap-icons";
+import { Trash, Plus, Dash } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 
 // Component to show content (cart items) in the shoppingcart
@@ -27,73 +27,70 @@ function CartItems() {
   return (
     <>
       {/* Render cart items in shoppingcart with image, title, price, quantity and buttons to increase / decrease qty or remove item */}
-      <ul style={{ padding: 0 }}>
+      <ul className="p-0" role="list">
         {cartItems.map((cartItem, index) => {
           return (
-            <Row
-              key={index}
-              className="d-flex justify-content-between align-items-center my-2"
-              style={{
-                padding: 0,
-                margin: 0,
-              }}
-            >
-              <Col style={{ padding: 0, margin: 0 }}>
-                <img
-                  src={cartItem.image}
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    objectFit: "cover",
-                    border: "1px solid #331D2C",
-                  }}
-                />
-              </Col>
-              <Col xs={5} style={{ fontSize: "14px" }}>
-                {cartItem.name}
-              </Col>
-              <Col style={{ fontSize: "14px", padding: 0 }}>
-                {cartItem.quantity}
-              </Col>
-              <Col className="p-2" style={{ fontSize: "14px", padding: 0 }}>
-                {cartItem.price} SEK
-              </Col>
-              <Col
-                className="d-flex gap-1"
-                style={{ fontSize: "20px", padding: 0 }}
-              >
-                {/* Increase quantity */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    addToCart(
-                      cartItem.id,
-                      cartItem.name,
-                      cartItem.price,
-                      cartItem.image
-                    )
-                  }
-                >
-                  <PlusCircle />
-                </div>
+            <li key={index}>
+              <Row className="d-flex justify-content-between align-items-center my-2 p-0 mx-0">
+                <Col className="m-0 p-0">
+                  <img
+                    src={cartItem.image}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      objectFit: "cover",
+                      border: "1px solid #331D2C",
+                    }}
+                  />
+                </Col>
+                <Col xs={5} className="font-size-xs">
+                  {cartItem.name}
+                </Col>
+                <Col className="font-size-xs p-0">{cartItem.quantity}</Col>
+                <Col className="p-2 font-size-xs">{cartItem.price} SEK</Col>
+              </Row>
 
-                {/* Decrease quantity */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => decreaseCartQuantity(cartItem.id)}
-                >
-                  <DashCircle />
-                </div>
+              <Row className="d-flex">
+                <Col className="d-flex gap-2 justify-content-end">
+                  {/* Increase quantity */}
+                  <Button
+                    variant="outline-dark"
+                    size="sm"
+                    onClick={() =>
+                      addToCart(
+                        cartItem.id,
+                        cartItem.name,
+                        cartItem.price,
+                        cartItem.image
+                      )
+                    }
+                    className="fs-5"
+                  >
+                    <Plus />
+                  </Button>
 
-                {/* Delete cart item */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => removeFromCart(cartItem.id)}
-                >
-                  <Trash />
-                </div>
-              </Col>
-            </Row>
+                  {/* Decrease quantity */}
+                  <Button
+                    variant="outline-dark"
+                    size="sm"
+                    onClick={() => decreaseCartQuantity(cartItem.id)}
+                    className="fs-5"
+                  >
+                    <Dash />
+                  </Button>
+
+                  {/* Delete cart item */}
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => removeFromCart(cartItem.id)}
+                    className="fs-5"
+                  >
+                    <Trash />
+                  </Button>
+                </Col>
+              </Row>
+            </li>
           );
         })}
       </ul>

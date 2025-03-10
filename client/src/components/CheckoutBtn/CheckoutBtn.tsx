@@ -9,16 +9,10 @@ const CheckoutButton = () => {
     <>
       <Button
         type="submit"
-        className="shadow zoom-effect"
+        className="shadow dark border-0 rounded-0"
         onClick={handlePayment}
         size="lg"
-        style={{
-          backgroundColor: "#331D2C",
-          border: "none",
-          borderRadius: 0,
-          color: "#EFE1D1",
-          fontWeight: 500,
-        }}
+        variant="dark"
       >
         Go To Checkout
       </Button>
