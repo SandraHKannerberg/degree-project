@@ -9,7 +9,8 @@ function Logotype() {
         <img
           src={logotype}
           alt="Lotus Harmony logotype"
-          style={{ maxHeight: "4rem" }}
+          width="80"
+          height="60"
         />
       </Link>
     </>

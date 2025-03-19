@@ -31,7 +31,11 @@ function ProductCard({ product }: ProductProps) {
 
   return (
     <Card className="h-100 shadow">
-      <Link to={`/product/${product._id}`} key={product._id}>
+      <Link
+        to={`/product/${product._id}`}
+        key={product._id}
+        aria-label={`Go to detailspage for product ${product.title}`}
+      >
         <Card.Img variant="top" src={product.image} alt="" />
       </Link>
       <Card.Body className="d-flex flex-column">

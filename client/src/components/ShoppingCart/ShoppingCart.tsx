@@ -23,12 +23,7 @@ function ShoppingCart() {
         className="zoom-effect border-0 hover:bg-danger"
         aria-label="shopping-cart"
       >
-        <Cart
-          className="fs-3"
-          // style={{
-          //   color: "#EFE1D1",
-          // }}
-        ></Cart>
+        <Cart className="fs-3 text-light-clr"></Cart>
         {/* Badge to show totalt items in cart */}
         <Badge
           bg="dark"

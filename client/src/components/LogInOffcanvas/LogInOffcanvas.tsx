@@ -65,8 +65,8 @@ function LogInOffcanvas() {
             style={{ background: "none" }}
             aria-label="Log out button"
           >
-            <Link to="/loggedin" className="text-white">
-              <PersonFillCheck className="border-0 rounded-0 fs-3" />
+            <Link to="/loggedin" className="text-light-clr">
+              <PersonFillCheck className="border-0 rounded-0 fs-3 text-light-clr" />
             </Link>
           </Button>
         </Col>
@@ -80,8 +80,8 @@ function LogInOffcanvas() {
             style={{ background: "none", border: "none" }}
             aria-label="Log out button for admin"
           >
-            <Link to="/admin" className="text-white text-decoration-none">
-              <PersonFillGear className="fs-3 border-0 rounded-0" />
+            <Link to="/admin" className="text-light-clr text-decoration-none">
+              <PersonFillGear className="fs-3 border-0 rounded-0 text-light-clr" />
               Dashboard
             </Link>
           </Button>
@@ -96,7 +96,7 @@ function LogInOffcanvas() {
           onClick={handleShow}
           aria-label="Log in button"
         >
-          <Person className="fs-3" />
+          <Person className="fs-3 text-light-clr" />
         </Button>
       ) : (
         // Log out - icon button
@@ -106,7 +106,7 @@ function LogInOffcanvas() {
           onClick={handleLogout}
           aria-label="Log out button"
         >
-          <BoxArrowRight className="fs-3" />
+          <BoxArrowRight className="fs-3 text-light-clr" />
         </Button>
       )}
 
@@ -128,11 +128,19 @@ function LogInOffcanvas() {
             className="w-100 pt-4 px-4 mb-0 border-0"
             fill
           >
-            <Tab eventKey="signup" title={<div>Sign Up</div>} className="mb-0">
+            <Tab
+              eventKey="signup"
+              title={<div>Sign Up</div>}
+              className="mb-0 visited:text-light-clr text-decoration-none"
+            >
               {/* Import the SignUpForm to be able to register a new user */}
               <SignUpForm />
             </Tab>
-            <Tab eventKey="login" title={<div>Log In</div>} className="mt-0">
+            <Tab
+              eventKey="login"
+              title={<div>Log In</div>}
+              className="mt-0 visited:text-light-clr text-decoration-none"
+            >
               {/* Import the LogInForm to be able to log in */}
               <LogInForm />
             </Tab>
