@@ -21,7 +21,7 @@ function WelcomeAdmin() {
         className="d-flex flex-column align-items-center justify-content-center"
       >
         <h1 className="text-center">Admin Dashboard</h1>
-        <Row className="w-100 mt-5 d-flex flex-col flex-md-row gap-3 bg-primary">
+        <Row className="w-100 mt-5 d-flex flex-col flex-md-row gap-3">
           <Col className="d-flex flex-column justify-content-center align-items-center text-center">
             <Link
               to={"/admin/orders"}
