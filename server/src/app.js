@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const compression = require("compression");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const crypto = require("crypto");
@@ -22,17 +23,20 @@ const DOMAIN = process.env.DOMAIN;
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(compression());
 
-app.use(cors({
-  origin: CLIENT_URL,
-  credentials: true,
-  methods: ['GET', 'PUT', 'POST', 'DELETE'],
-  // allowedHeaders: [
-  //   'Access-Control-Allow-Origin',
-  //   'Content-Type',
-  //   'Authorization'
-  // ]
-}));
+app.use(
+  cors({
+    origin: CLIENT_URL,
+    credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    // allowedHeaders: [
+    //   'Access-Control-Allow-Origin',
+    //   'Content-Type',
+    //   'Authorization'
+    // ]
+  })
+);
 
 app.use(
   cookieSession({
@@ -42,14 +46,14 @@ app.use(
     sameSite: "strict",
     httpOnly: true,
     secure: false,
-    path: '/',
+    path: "/",
     domain: [DOMAIN],
   })
 );
 
 // Test
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
 });
 
 // Add routers
